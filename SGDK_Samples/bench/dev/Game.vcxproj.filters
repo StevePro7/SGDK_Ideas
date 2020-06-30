@@ -36,14 +36,14 @@
     <ClCompile Include="src\mem_test.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\spr\res\spr_res.c">
-      <Filter>Source Files\content</Filter>
-    </ClCompile>
     <ClCompile Include="..\gfx\res\gfx.c">
       <Filter>Source Files\content</Filter>
     </ClCompile>
     <ClCompile Include="src\math_test.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\gfx\res\spr_res.c">
+      <Filter>Source Files\content</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -55,17 +55,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="src\mem_test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="res\gfx.h">
       <Filter>Header Files\content</Filter>
     </ClInclude>
     <ClInclude Include="res\spr_res.h">
       <Filter>Header Files\content</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\mem_test.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

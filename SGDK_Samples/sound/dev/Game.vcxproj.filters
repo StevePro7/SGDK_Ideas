@@ -28,10 +28,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\main.h">
+    <ClInclude Include="res\resources.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\resources.h">
+    <ClInclude Include="inc\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

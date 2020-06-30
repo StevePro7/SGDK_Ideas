@@ -52,31 +52,31 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="res\gfx.h">
       <Filter>Header Files\content</Filter>
     </ClInclude>
     <ClInclude Include="res\music.h">
       <Filter>Header Files\content</Filter>
     </ClInclude>
-    <ClInclude Include="src\log_tab.h">
+    <ClInclude Include="inc\log_tab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\psg_state.h">
+    <ClInclude Include="inc\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\tracklist.h">
+    <ClInclude Include="inc\psg_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\xd3.h">
+    <ClInclude Include="inc\tracklist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\xgm_tool.h">
+    <ClInclude Include="inc\xd3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\ym_state.h">
+    <ClInclude Include="inc\xgm_tool.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\ym_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

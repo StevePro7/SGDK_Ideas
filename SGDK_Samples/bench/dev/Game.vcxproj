@@ -90,13 +90,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\lib;$(GDK_WIN)\inc;$(ProjectDir)res;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\lib;$(ProjectDir)inc;$(ProjectDir)res;$(GDK_WIN)\inc;$(IncludePath)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>_genesis.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;comdlg32.lib;advapi32.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;odbc32.lib;odbccp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>_genesis.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)..\lib</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -148,7 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\gfx\res\gfx.c" />
-    <ClCompile Include="..\spr\res\spr_res.c" />
+    <ClCompile Include="..\gfx\res\spr_res.c" />
     <ClCompile Include="src\bg_test.c" />
     <ClCompile Include="src\bmp_test.c" />
     <ClCompile Include="src\main.c" />
@@ -161,10 +161,10 @@
     <None Include="src\math_test_a.s" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\main.h" />
+    <ClInclude Include="inc\mem_test.h" />
     <ClInclude Include="res\gfx.h" />
     <ClInclude Include="res\spr_res.h" />
-    <ClInclude Include="src\main.h" />
-    <ClInclude Include="src\mem_test.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

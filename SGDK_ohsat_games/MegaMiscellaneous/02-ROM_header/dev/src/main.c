@@ -2,7 +2,7 @@
 
 int main()
 {
-	VDP_drawText( "ROM header", 10, 10 );
+	VDP_drawText( "Custom ROM Header", 10, 10 );
 	while( 1 )
 	{
 		VDP_waitVSync();
@@ -10,4 +10,3 @@ int main()
 
 	return 0;
 }
-

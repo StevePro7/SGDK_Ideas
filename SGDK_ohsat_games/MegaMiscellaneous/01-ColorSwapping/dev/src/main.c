@@ -33,7 +33,6 @@ void myJoyHandler( u16 joy, u16 changed, u16 state )
 int main()
 {
 	u16 *data = NULL;
-	VDP_drawText( "Miscellaneous 01", 10, 10 );
 
 	//Input
 	JOY_init();

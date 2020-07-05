@@ -1,5 +1,7 @@
 #include "main.h"
 
+// http://gendev.spritesmind.net/forum/viewtopic.php?t=3093
+
 char str_score[ 3 ] = "0";
 
 void updateScoreDisplay( u16 value, u16 x, u16 y )

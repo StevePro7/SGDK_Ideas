@@ -20,7 +20,7 @@ void engine_storage_manager_write()
 	SYS_disableInts();
 	SRAM_enable();
 	VDP_drawText( "write START", 10, 12 );
-	SRAM_writeByte( sRamOffSet, 7 );
+	SRAM_writeByte( sRamOffSet, 8 );
 	VDP_drawText( "write -END-", 10, 13 );
 	SRAM_disable();
 	SYS_enableInts();

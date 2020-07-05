@@ -18,6 +18,7 @@ int main()
 
 	//engine_storage_manager_write();
 	data = engine_storage_manager_read();
+	//data = 0;
 	updateScoreDisplay( data, 2, 1 );
 
 	while( 1 )

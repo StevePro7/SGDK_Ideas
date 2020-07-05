@@ -1,30 +1,27 @@
 #include "storage_manager.h"
 
-#ifdef _CONSOLE
-#include "_genesis.h"
-#else
-#include <genesis.h>
-#endif
-
-unsigned char engine_storage_manager_available()
+s8 engine_storage_manager_read()
 {
-	return 1;
-}
-
-void engine_storage_manager_read()
-{
+	s8 data;
+	u32 sRamOffSet = 0x0000;
+	SYS_disableInts();
+	SRAM_enable();
+	VDP_drawText( "read START", 10, 16 );
+	data = SRAM_readByte( sRamOffSet );
+	VDP_drawText( "read -END-", 10, 17 );
+	SRAM_disable();
+	SYS_enableInts();
+	return data;
 }
 
 void engine_storage_manager_write()
 {
+	u32 sRamOffSet = 0x0000;
+	SYS_disableInts();
 	SRAM_enable();
-	VDP_drawText( "write", 10, 12 );
+	VDP_drawText( "write START", 10, 12 );
+	SRAM_writeByte( sRamOffSet, 7 );
+	VDP_drawText( "write -END-", 10, 13 );
 	SRAM_disable();
-}
-
-void engine_storage_manager_erase()
-{
-	SRAM_enable();
-	VDP_drawText( "read", 10, 12 );
-	SRAM_disable();
+	SYS_enableInts();
 }

@@ -1,0 +1,38 @@
+How to compile
+15/04/2019
+
+
+moon-watcher
+https://twitter.com/moonwatchermd
+https://github.com/moon-watcher
+
+
+AbbayeMD
+http://gendev.spritesmind.net/page-genres.html
+
+
+download
+http://gendev.spritesmind.net/files/genres_2.0.zip
+
+Unzip
+copy
+bin\genres.exe	to SGDK\bin
+inc\genres.h	to SGDK\inc
+
+Start | run | cmd
+cd E:\GitHub\moon-watcher\AbbayeMD
+%GDK_WIN%\bin\make -f makefile.gen
+
+this produces out\rom.bin
+
+
+
+17/07/2020
+AbbayeMD
+Launch gens.exe
+rom.bin
+D:\Github\moon-watcher\AbbayeMD\out
+
+S key	jump
+QWER
+ASDF

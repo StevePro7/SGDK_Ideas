@@ -2,15 +2,19 @@
 
 int main()
 {
-	VDP_drawText( "Hello Genny World...!", 10, 13 );
+	u16 *data = NULL;
+
+	// get the palette data of moon
+#ifndef _CONSOLE
+	data = moon.palette->data;
+#endif
+
+	VDP_setPalette( PAL1, data );
+
+	// draw the moon at (12,12)
+	VDP_drawImageEx( BG_A, &moon, TILE_ATTR_FULL( PAL1, 0, 0, 0, 1 ), 10, 5, 0, CPU );
 	while( 1 )
 	{
-		//read input
-		//move sprite
-		//update score
-		//draw current screen (logo, start screen, settings, game, gameover, credits...)
-
-		//wait for screen refresh
 		VDP_waitVSync();
 	}
 

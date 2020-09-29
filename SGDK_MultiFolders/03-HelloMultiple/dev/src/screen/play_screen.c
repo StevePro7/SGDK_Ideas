@@ -2,5 +2,5 @@
 
 int screen_play_screen_init()
 {
-	return 27;
+	return 28;
 }

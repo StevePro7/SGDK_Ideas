@@ -157,7 +157,6 @@
   <ItemGroup>
     <ClInclude Include="inc\engine\data_manager.h" />
     <ClInclude Include="inc\main.h" />
-    <ClInclude Include="inc\test_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

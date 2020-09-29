@@ -40,9 +40,6 @@
     <ClInclude Include="inc\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\test_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\engine\data_manager.h">
       <Filter>Header Files\engine</Filter>
     </ClInclude>

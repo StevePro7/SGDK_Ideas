@@ -7,8 +7,6 @@
 #include <genesis.h>
 #endif
 
-#include "test_manager.h"
 #include "data_manager.h"
-//#include "..\inc\engine\data_manager.h"
 
 #endif//__MAIN__

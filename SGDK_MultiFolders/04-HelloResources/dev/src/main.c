@@ -3,7 +3,7 @@
 int main()
 {
 	u16 *data = NULL;
-	int score = 1;
+	int score = screen_play_screen_init();
 
 	// get the palette data of moon
 #ifndef _CONSOLE

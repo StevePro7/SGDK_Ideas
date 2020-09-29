@@ -13,6 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\engine">
+      <UniqueIdentifier>{7ace63c7-e481-4fef-87b8-6396d0352ad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\engine">
+      <UniqueIdentifier>{cf1d5f12-75cd-4e0f-9f3a-456dcd0e46ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\screen">
+      <UniqueIdentifier>{529edd03-2f4a-492e-ac1c-edc6d09fe39a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\screen">
+      <UniqueIdentifier>{fe2816d8-594e-4dd5-837f-284b6aff15ac}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -20,6 +32,12 @@
     </ClCompile>
     <ClCompile Include="..\gfx\res\resources.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\data_manager.c">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\screen\play_screen.c">
+      <Filter>Source Files\screen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -33,6 +51,12 @@
     </ClInclude>
     <ClInclude Include="res\resources.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\engine\data_manager.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\screen\play_screen.h">
+      <Filter>Header Files\screen</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

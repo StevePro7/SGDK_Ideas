@@ -2,5 +2,5 @@
 
 int engine_data_manager_test()
 {
-	return 1;
+	return 0;
 }

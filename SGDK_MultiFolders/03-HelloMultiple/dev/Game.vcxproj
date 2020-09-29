@@ -90,7 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)..\lib;$(ProjectDir)inc;$(ProjectDir)inc\engine;$(ProjectDir)res;$(GDK_WIN)\inc;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)..\lib;$(ProjectDir)inc;$(ProjectDir)inc\engine;$(ProjectDir)inc\screen;$(ProjectDir)res;$(GDK_WIN)\inc;$(IncludePath)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,7 +149,7 @@
   <ItemGroup>
     <ClCompile Include="src\engine\data_manager.c" />
     <ClCompile Include="src\main.c" />
-    <ClCompile Include="src\test_manager.c" />
+    <ClCompile Include="src\screen\play_screen.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat" />
@@ -157,6 +157,7 @@
   <ItemGroup>
     <ClInclude Include="inc\engine\data_manager.h" />
     <ClInclude Include="inc\main.h" />
+    <ClInclude Include="inc\screen\play_screen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

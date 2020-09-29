@@ -7,6 +7,7 @@
 #include <genesis.h>
 #endif
 
-#include "data_manager.h"
+//#include "data_manager.h"
+#include "play_screen.h"
 
 #endif//__MAIN__

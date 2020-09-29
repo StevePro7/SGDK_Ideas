@@ -1,1 +1,0 @@
-IMAGE splash "splash.bmp" 0

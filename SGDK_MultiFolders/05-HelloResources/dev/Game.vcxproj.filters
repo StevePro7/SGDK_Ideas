@@ -18,6 +18,9 @@
     <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\gfx\res\resources.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat">
@@ -27,6 +30,9 @@
   <ItemGroup>
     <ClInclude Include="inc\main.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\resources.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

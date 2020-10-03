@@ -1,0 +1,6 @@
+E:/SGDK/bin/gcc -m68000 -Wall -Wextra -Wno-shift-negative-value -fno-builtin -Iinc -Iinc/engine -Iinc/screen -Isrc -Ires -IE:/SGDK/inc -IE:/SGDK/res -BE:/SGDK/bin -O3 -fuse-linker-plugin -fno-web -fno-gcse -fno-unit-at-a-time -fomit-frame-pointer -flto -c src/engine/data_manager.c -o out/src/engine/data_manager.o
+echo "out/res/resources.o out/src/main.o out/src/engine/data_manager.o out/src/screen/play_screen.o" > out/cmd_
+E:/SGDK/bin/gcc -BE:/SGDK/bin -n -T E:/SGDK/md.ld -nostdlib out/sega.o @out/cmd_ E:/SGDK/lib/libmd.a E:/SGDK/lib/libgcc.a -o out/rom.out
+E:/SGDK/bin/rm out/cmd_
+E:/SGDK/bin/objcopy -O binary out/rom.out out/rom.bin
+E:/SGDK/bin/sizebnd out/rom.bin -sizealign 131072

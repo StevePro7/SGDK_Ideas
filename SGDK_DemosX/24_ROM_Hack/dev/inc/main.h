@@ -7,6 +7,6 @@
 #include <genesis.h>
 #endif
 
-#include "storage_manager.h"
+#include "hack_manager.h"
 
 #endif//__MAIN__

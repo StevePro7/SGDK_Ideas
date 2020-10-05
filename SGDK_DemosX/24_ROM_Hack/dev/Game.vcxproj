@@ -147,15 +147,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\hack_manager.c" />
+    <ClCompile Include="src\hack_object.c" />
     <ClCompile Include="src\main.c" />
-    <ClCompile Include="src\storage_manager.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\hack_manager.h" />
+    <ClInclude Include="inc\hack_object.h" />
     <ClInclude Include="inc\main.h" />
-    <ClInclude Include="inc\storage_manager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

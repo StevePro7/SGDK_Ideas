@@ -14,8 +14,11 @@ void updateScoreDisplay( u16 value, u16 x, u16 y )
 
 int main()
 {
-	u8 data = 0x40;
-	updateScoreDisplay( data, 10, 10 );
+	u8 data = 0;
+	//updateScoreDisplay( data, 10, 10 );
+
+	engine_hack_manager_init();
+
 	while( 1 )
 	{
 		VDP_waitVSync();

@@ -5,6 +5,8 @@
 
 *.db
 *VC.db
+*.suo
+*.vs
 
 # User-specific files
 *.rsuser

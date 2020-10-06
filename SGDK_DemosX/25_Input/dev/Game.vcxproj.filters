@@ -18,10 +18,10 @@
     <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\hack_object.c">
+    <ClCompile Include="src\input_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\hack_manager.c">
+    <ClCompile Include="src\font_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -34,10 +34,10 @@
     <ClInclude Include="inc\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\hack_object.h">
+    <ClInclude Include="inc\input_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\hack_manager.h">
+    <ClInclude Include="inc\font_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

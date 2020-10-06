@@ -7,6 +7,7 @@
 #include <genesis.h>
 #endif
 
-#include "hack_manager.h"
+#include "font_manager.h"
+#include "input_manager.h"
 
 #endif//__MAIN__

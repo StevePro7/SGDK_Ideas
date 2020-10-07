@@ -147,17 +147,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\engine\enum_manager.c" />
     <ClCompile Include="src\engine\font_manager.c" />
+    <ClCompile Include="src\engine\global_manager.c" />
     <ClCompile Include="src\engine\input_manager.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\screen\intro_screen.c" />
+    <ClCompile Include="src\screen\none_screen.c" />
+    <ClCompile Include="src\screen\splash_screen.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\engine\enum_manager.h" />
     <ClInclude Include="inc\engine\font_manager.h" />
+    <ClInclude Include="inc\engine\global_manager.h" />
     <ClInclude Include="inc\engine\input_manager.h" />
     <ClInclude Include="inc\main.h" />
+    <ClInclude Include="inc\screen\intro_screen.h" />
+    <ClInclude Include="inc\screen\none_screen.h" />
+    <ClInclude Include="inc\screen\splash_screen.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

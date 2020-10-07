@@ -10,5 +10,6 @@
 #include "enum_manager.h"
 #include "font_manager.h"
 #include "input_manager.h"
+#include "screen_manager.h"
 
 #endif//__MAIN__

@@ -7,6 +7,7 @@
 #include <genesis.h>
 #endif
 
+#include "enum_manager.h"
 #include "font_manager.h"
 #include "input_manager.h"
 

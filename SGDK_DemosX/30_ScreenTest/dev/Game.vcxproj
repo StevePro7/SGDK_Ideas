@@ -151,6 +151,7 @@
     <ClCompile Include="src\engine\font_manager.c" />
     <ClCompile Include="src\engine\global_manager.c" />
     <ClCompile Include="src\engine\input_manager.c" />
+    <ClCompile Include="src\engine\screen_manager.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\screen\intro_screen.c" />
     <ClCompile Include="src\screen\none_screen.c" />
@@ -164,6 +165,7 @@
     <ClInclude Include="inc\engine\font_manager.h" />
     <ClInclude Include="inc\engine\global_manager.h" />
     <ClInclude Include="inc\engine\input_manager.h" />
+    <ClInclude Include="inc\engine\screen_manager.h" />
     <ClInclude Include="inc\main.h" />
     <ClInclude Include="inc\screen\intro_screen.h" />
     <ClInclude Include="inc\screen\none_screen.h" />

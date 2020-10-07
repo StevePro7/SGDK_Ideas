@@ -9,6 +9,11 @@
 #define MAX_CHAR	5
 char str_score[ MAX_CHAR ] = "0";
 
+void engine_font_manager_clear( unsigned int x, unsigned int y, unsigned int w )
+{
+	VDP_clearText( x, y, w );
+}
+
 // http://gendev.spritesmind.net/forum/viewtopic.php?t=3093
 void engine_font_manager_data( unsigned int value, unsigned int x, unsigned int y )
 {

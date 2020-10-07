@@ -7,19 +7,21 @@ static unsigned char pos;
 
 void screen_intro_screen_load()
 {
+	engine_font_manager_clear( pos, 12, 40 );
 	engine_font_manager_text( "INTRO ", 10, 10 );
-	pos = 5;
-
-	engine_font_manager_clear( pos, 12, 20 );
+	pos = 0;
 }
 
 void screen_intro_screen_update( unsigned char *screen_type )
 {
-	unsigned char input = engine_input_manager_hold_up();
+	unsigned char input = engine_input_manager_move_up();
 	if( input )
 	{
-		engine_font_manager_text( "X", pos, 12 );
-		pos++;
+		if( pos < 40 )
+		{
+			engine_font_manager_text( "X", pos, 12 );
+			pos++;
+		}
 	}
 	else
 	{

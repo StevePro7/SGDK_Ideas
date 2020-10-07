@@ -5,6 +5,7 @@
 
 void screen_splash_screen_load()
 {
+	engine_font_manager_clear( 0, 12, 40 );
 	engine_font_manager_text( "SPLASH", 10, 10 );
 }
 

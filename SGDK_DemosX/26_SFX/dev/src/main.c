@@ -2,30 +2,42 @@
 
 int main()
 {
-	u16 data = 1;
+	unsigned char input;
+	VDP_drawText( "MUSIC", 5, 5 );
+
 	while( 1 )
 	{
-		data = JOY_readJoypad( 0 );
-		engine_font_manager_data( data, 8, 4 );
-
 		engine_input_manager_update();
-		if( engine_input_manager_move_buttonB() )
+		input = engine_input_manager_hold_up();
+		if( input )
 		{
-			VDP_drawText( "BUTTON B", 10, 10 );
-		}
-		else if( engine_input_manager_move_buttonC() )
-		{
-			VDP_drawText( "BUTTON C", 10, 10 );
+			VDP_drawText( "UP", 10, 10 );
+			SND_startPlay_XGM( sonic_music );
 		}
 		else
 		{
-			VDP_drawText( "         ", 10, 10 );
+			input = engine_input_manager_hold_down();
+			if( input )
+			{
+				SND_stopPlay_XGM();
+			}
+			else
+			{
+				input = engine_input_manager_hold_left();
+				if( input )
+				{
+					SND_pausePlay_XGM();
+				}
+				else
+				{
+					input = engine_input_manager_hold_right();
+					if( input )
+					{
+						SND_resumePlay_XGM();
+					}
+				}
+			}
 		}
-		//if( engine_input_manager_hold_down() )
-		//{
-		//	VDP_drawText( "         ", 10, 10 );
-		//}
-
 		VDP_waitVSync();
 	}
 

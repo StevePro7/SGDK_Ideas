@@ -7,7 +7,10 @@
 #include <genesis.h>
 #endif
 
-#define SFX_STOP            66
+#define SFX_DEAD            65
+#define SFX_KILL            67
+#define SFX_RING            68
+#define SFX_STOP            69
 
 #include "font_manager.h"
 #include "input_manager.h"

@@ -7,6 +7,8 @@
 #include <genesis.h>
 #endif
 
+#define SFX_STOP            66
+
 #include "font_manager.h"
 #include "input_manager.h"
 #include "sfx.h"

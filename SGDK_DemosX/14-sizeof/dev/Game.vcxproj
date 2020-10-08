@@ -90,7 +90,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\lib;$(GDK_WIN)\inc;$(ProjectDir)res;$(IncludePath)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\lib;$(GDK_WIN)\inc;$(ProjectDir)inc;$(ProjectDir)res;$(IncludePath)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -147,15 +147,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\gfx\res\resources.c" />
+    <ClCompile Include="src\font_manager.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="res\resources.h" />
-    <ClInclude Include="src\main.h" />
+    <ClInclude Include="inc\font_manager.h" />
+    <ClInclude Include="inc\main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

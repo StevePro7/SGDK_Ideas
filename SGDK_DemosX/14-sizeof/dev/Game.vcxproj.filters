@@ -18,7 +18,7 @@
     <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\gfx\res\resources.c">
+    <ClCompile Include="src\font_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -28,10 +28,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\main.h">
+    <ClInclude Include="inc\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\resources.h">
+    <ClInclude Include="inc\font_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

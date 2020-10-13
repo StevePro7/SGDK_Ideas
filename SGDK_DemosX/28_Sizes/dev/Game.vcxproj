@@ -147,7 +147,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\sfx\res\sfx.c" />
     <ClCompile Include="src\font_manager.c" />
     <ClCompile Include="src\input_manager.c" />
     <ClCompile Include="src\main.c" />
@@ -159,7 +158,6 @@
     <ClInclude Include="inc\font_manager.h" />
     <ClInclude Include="inc\input_manager.h" />
     <ClInclude Include="inc\main.h" />
-    <ClInclude Include="res\sfx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

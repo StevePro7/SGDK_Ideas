@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\best_screen.c" />
     <ClCompile Include="src\font_manager.c" />
     <ClCompile Include="src\input_manager.c" />
     <ClCompile Include="src\main.c" />
@@ -155,6 +156,7 @@
     <None Include="build.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\best_screen.h" />
     <ClInclude Include="inc\font_manager.h" />
     <ClInclude Include="inc\input_manager.h" />
     <ClInclude Include="inc\main.h" />

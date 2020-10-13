@@ -7,6 +7,6 @@
 #include <genesis.h>
 #endif
 
-#include "font_manager.h"
+#include "best_screen.h"
 
 #endif//__MAIN__

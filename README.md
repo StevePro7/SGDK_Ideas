@@ -1,6 +1,12 @@
 # SGDK_Ideas
 Repository to consolidate many Sega Genesis Development Kit ideas
 
+13/10/2020
+		NTSC	PAL		WIDE	HIGH
+USA		1		0		320		224
+JAP		1		0		320		224
+EUR		0		1		320		224
+
 08/10/2020
 sizeof()
 ~\GitHub\StevePro7\SGDK_Ideas\SGDK_DemosX\25_Input\dev

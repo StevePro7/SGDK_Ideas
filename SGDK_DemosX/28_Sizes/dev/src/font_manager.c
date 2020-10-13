@@ -9,13 +9,13 @@
 #define MAX_CHAR	5
 char str_score[ MAX_CHAR ] = "0";
 
-void engine_font_manager_clear( unsigned int x, unsigned int y, unsigned int w )
+void engine_font_manager_clear( unsigned short x, unsigned short y, unsigned short w )
 {
 	VDP_clearText( x, y, w );
 }
 
 // http://gendev.spritesmind.net/forum/viewtopic.php?t=3093
-void engine_font_manager_data( unsigned int value, unsigned int x, unsigned int y )
+void engine_font_manager_data( unsigned short value, unsigned short x, unsigned short y )
 {
 	// Set '5' = MAX_CHAR to get right aligned.
 	sprintf( str_score, "%5d", value );
@@ -23,7 +23,7 @@ void engine_font_manager_data( unsigned int value, unsigned int x, unsigned int 
 	VDP_drawText( str_score, x, y );
 }
 
-void engine_font_manager_text( const char *str, unsigned int x, unsigned int y )
+void engine_font_manager_text( const char *str, unsigned short x, unsigned short y )
 {
 	VDP_drawText( str, x, y );
 }

@@ -7,4 +7,6 @@
 #include <genesis.h>
 #endif
 
+#include "font_manager.h"
+
 #endif//__MAIN__

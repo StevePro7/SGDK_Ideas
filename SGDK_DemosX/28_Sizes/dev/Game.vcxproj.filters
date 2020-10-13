@@ -31,14 +31,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inc\main.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\input_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\font_manager.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\main.h">
+      <Filter>Resource Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

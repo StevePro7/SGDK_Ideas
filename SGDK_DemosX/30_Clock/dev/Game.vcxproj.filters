@@ -27,6 +27,12 @@
     <ClCompile Include="src\best_screen.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\timer_manager.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timer_object.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat">
@@ -44,6 +50,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\best_screen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\timer_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\timer_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

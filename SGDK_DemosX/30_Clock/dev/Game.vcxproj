@@ -151,6 +151,8 @@
     <ClCompile Include="src\font_manager.c" />
     <ClCompile Include="src\input_manager.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\timer_manager.c" />
+    <ClCompile Include="src\timer_object.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat" />
@@ -160,6 +162,8 @@
     <ClInclude Include="inc\font_manager.h" />
     <ClInclude Include="inc\input_manager.h" />
     <ClInclude Include="inc\main.h" />
+    <ClInclude Include="inc\timer_manager.h" />
+    <ClInclude Include="inc\timer_object.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

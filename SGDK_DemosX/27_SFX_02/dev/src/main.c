@@ -15,7 +15,8 @@ int main()
 	index = 0;
 	//audio = *myaudio[ index ];
 	//audio = sonic_kill_sfx;
-	audio = sonic_dead_sfx;
+	//audio = sonic_dead_sfx;
+	audio = myaudio[ index ];
 	//audio = sonic_jump_sfx;
 	SND_setPCM_XGM( SFX_DEAD, audio, sizeof( audio ) );
 	//SND_setPCM_XGM( SFX_DEAD, sonic_dead_sfx, sizeof( sonic_dead_sfx ) );

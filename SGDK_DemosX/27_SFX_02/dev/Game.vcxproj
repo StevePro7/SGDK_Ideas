@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\sfx\res\sfx.c" />
+    <ClCompile Include="src\audio_object.c" />
     <ClCompile Include="src\font_manager.c" />
     <ClCompile Include="src\input_manager.c" />
     <ClCompile Include="src\main.c" />
@@ -156,6 +157,7 @@
     <None Include="build.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\audio_object.h" />
     <ClInclude Include="inc\font_manager.h" />
     <ClInclude Include="inc\input_manager.h" />
     <ClInclude Include="inc\main.h" />

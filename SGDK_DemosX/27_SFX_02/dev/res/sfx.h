@@ -1,8 +1,6 @@
 #ifndef _RES_SFX_H_
 #define _RES_SFX_H_
 
-extern const u8 aquatic_music[54272];
-extern const u8 sonic_music[21760];
 extern const u8 sonic_dead_sfx[38656];
 extern const u8 sonic_kill_sfx[69376];
 extern const u8 sonic_jump_sfx[6144];

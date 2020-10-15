@@ -1,5 +1,3 @@
-XGM aquatic_music "music/aquaticambience.vgm"
-XGM sonic_music "music/sonic1.vgm"
 WAV sonic_dead_sfx "sfx/S1_dead.wav" XGM
 WAV sonic_kill_sfx "sfx/S1_kill.wav" XGM
 WAV sonic_jump_sfx "sfx/S1_jump.wav" XGM

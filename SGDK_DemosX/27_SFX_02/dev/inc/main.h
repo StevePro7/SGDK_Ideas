@@ -16,6 +16,7 @@
 
 #include "font_manager.h"
 #include "input_manager.h"
+#include "audio_object.h"
 #include "sfx.h"
 
 #endif//__MAIN__

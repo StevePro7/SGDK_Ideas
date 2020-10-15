@@ -12,13 +12,13 @@ int main()
 	VDP_drawText( "RESUME : RGHT", 5, 4 );
 
 	// init SFX
-	index = 0;
+	//index = 0;
 	//audio = *myaudio[ index ];
 	//audio = sonic_kill_sfx;
 	//audio = sonic_dead_sfx;
-	audio = myaudio[ index ];
+	//audio = myaudio[ index ];
 	//audio = sonic_jump_sfx;
-	SND_setPCM_XGM( SFX_DEAD, audio, sizeof( audio ) );
+	//SND_setPCM_XGM( SFX_DEAD, audio, sizeof( audio ) );
 	//SND_setPCM_XGM( SFX_DEAD, sonic_dead_sfx, sizeof( sonic_dead_sfx ) );
 	//SND_setPCM_XGM( SFX_KILL, sonic_kill_sfx, sizeof( sonic_kill_sfx ) );
 	//SND_setPCM_XGM( SFX_MIKE, sonic_mike_sfx, sizeof( sonic_mike_sfx ) );
@@ -26,15 +26,21 @@ int main()
 	//SND_setPCM_XGM( SFX_RING, sonic_ring_sfx, sizeof( sonic_ring_sfx ) );
 	//SND_setPCM_XGM( SFX_STOP, sonic_stop_sfx, sizeof( sonic_stop_sfx ) );
 
+	for( index = 0; index < 2; index++ )
+	{
+		audio = myaudio[ index ];
+		SND_setPCM_XGM( SFX_DEAD + index, audio, sizeof( audio ) );
+	}
+
 	//VDP_drawText( "PRESSED: TEST", 5, 10 );
 	while( 1 )
 	{
 		engine_input_manager_update();
 
-		input = engine_input_manager_hold_buttonB();
+		input = engine_input_manager_hold_buttonA();
 		if( input )
 		{
-			VDP_drawText( "PRESSED: OKKK", 5, 10 );
+			VDP_drawText( "PRESSED: NICE", 5, 10 );
 
 			SND_startPlayPCM_XGM( SFX_DEAD, 1, SOUND_PCM_CH2 );
 			//SND_startPlayPCM_XGM( SFX_KILL, 1, SOUND_PCM_CH2 );

@@ -3,6 +3,7 @@
 int main()
 {
 	unsigned char input;
+	int sizes[] = { 38656 ,69376, 6144 ,218368 };
 	const u8 *audio;
 	u8 index;
 
@@ -26,10 +27,10 @@ int main()
 	//SND_setPCM_XGM( SFX_RING, sonic_ring_sfx, sizeof( sonic_ring_sfx ) );
 	//SND_setPCM_XGM( SFX_STOP, sonic_stop_sfx, sizeof( sonic_stop_sfx ) );
 
-	for( index = 0; index < 2; index++ )
+	for( index = 0; index < 4; index++ )
 	{
 		audio = myaudio[ index ];
-		SND_setPCM_XGM( SFX_DEAD + index, audio, sizeof( audio ) );
+		SND_setPCM_XGM( SFX_DEAD + index, audio, sizes[index] );
 	}
 
 	//VDP_drawText( "PRESSED: TEST", 5, 10 );
@@ -42,7 +43,8 @@ int main()
 		{
 			VDP_drawText( "PRESSED: NICE", 5, 10 );
 
-			SND_startPlayPCM_XGM( SFX_DEAD, 1, SOUND_PCM_CH2 );
+			//SND_startPlayPCM_XGM( SFX_DEAD, 1, SOUND_PCM_CH2 );
+			XGM_startPlayPCM( SFX_DEAD, 1, SOUND_PCM_CH2 );
 			//SND_startPlayPCM_XGM( SFX_KILL, 1, SOUND_PCM_CH2 );
 		//	SND_startPlayPCM_XGM( SFX_MIKE, 1, SOUND_PCM_CH2 );
 		//	//SND_startPlayPCM_XGM( SFX_OVER, 1, SOUND_PCM_CH2 );

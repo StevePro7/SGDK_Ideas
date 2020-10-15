@@ -44,7 +44,7 @@ int main()
 			VDP_drawText( "PRESSED: NICE", 5, 10 );
 
 			//SND_startPlayPCM_XGM( SFX_DEAD, 1, SOUND_PCM_CH2 );
-			XGM_startPlayPCM( SFX_DEAD, 1, SOUND_PCM_CH2 );
+			XGM_startPlayPCM( SFX_KILL, 1, SOUND_PCM_CH2 );
 			//SND_startPlayPCM_XGM( SFX_KILL, 1, SOUND_PCM_CH2 );
 		//	SND_startPlayPCM_XGM( SFX_MIKE, 1, SOUND_PCM_CH2 );
 		//	//SND_startPlayPCM_XGM( SFX_OVER, 1, SOUND_PCM_CH2 );

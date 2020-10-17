@@ -3,7 +3,7 @@
 int main()
 {
 	unsigned char input;
-	//int sizes[] = { 38656 ,69376, 6144 ,218368 };
+	//int sizes[] = { 38656, 69376, 6144, 218368 };
 	const u8 *audio;
 	u8 index;
 	unsigned int sized;
@@ -14,12 +14,14 @@ int main()
 	VDP_drawText( "RESUME : RGHT", 5, 4 );
 
 
-	for( index = 0; index < 4; index++ )
+	for( index = 0; index < 5; index++ )
 	{
 		audio = myaudio[ index ];
-		//sized = sizes[ index ];
-		//sized = sizeof( *audio );
-		sized = strlen( audio );
+
+		// https://www.geeksforgeeks.org/how-to-find-size-of-array-in-cc-without-using-sizeof-operator
+		sized = *( &myaudio[ index ] + 1 ) - myaudio[ index ];
+		
+		//sized = strlen( audio );
 		engine_font_manager_data( sized, 10, 15 + index );
 		//SND_setPCM_XGM( SFX_DEAD + index, audio, sizes[index] );
 		SND_setPCM_XGM( SFX_DEAD + index, audio, sized );

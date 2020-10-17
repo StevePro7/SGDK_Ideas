@@ -18,6 +18,6 @@
 #include "input_manager.h"
 #include "audio_object.h"
 #include "sfx.h"
-#include <string.h>
+//#include <string.h>
 
 #endif//__MAIN__

@@ -7,4 +7,5 @@ const u8 *myaudio[] =
 	sonic_kill_sfx,
 	sonic_jump_sfx,
 	sonic_mike_sfx,
+	sonic_stop_sfx,
 };

@@ -1,6 +1,8 @@
 #include "audio_object.h"
 #include "sfx.h"
 
+// Too many initializers
+// https://www.iditect.com/how-to/53164385.html
 const u8 *myaudio[128] =
 {
 	sonic_dead_sfx,

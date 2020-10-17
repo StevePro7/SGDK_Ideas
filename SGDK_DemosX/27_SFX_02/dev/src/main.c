@@ -1,6 +1,6 @@
 #include "main.h"
 
-#define MAX_SONGS	32
+#define MAX_SONGS	128
 
 int main()
 {
@@ -65,7 +65,7 @@ int main()
 		{
 			if( index <= 0 )
 			{
-				index = 32;
+				index = MAX_SONGS;
 			}
 
 			index--;

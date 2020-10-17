@@ -1,5 +1,7 @@
 #include "main.h"
 
+#define MAX_SONGS	8
+
 int main()
 {
 	unsigned char input;
@@ -14,12 +16,18 @@ int main()
 	VDP_drawText( "RESUME : RGHT", 5, 4 );
 
 
-	for( index = 0; index < 5; index++ )
+	for( index = 0; index < MAX_SONGS; index++ )
 	{
 		audio = myaudio[ index ];
 
 		// https://www.geeksforgeeks.org/how-to-find-size-of-array-in-cc-without-using-sizeof-operator
-		sized = *( &myaudio[ index ] + 1 ) - myaudio[ index ];
+		//sized = *( &myaudio[ index ] + 1 ) - myaudio[ index ];
+		//sized = *( &myaudio[ index ] + (index+1) ) - myaudio[ index ];
+		//const u8 *p1 = *( &myaudio[ index + 1 ] );
+		//const u8 *p0 = *( &myaudio[ index  ] );
+		//sized = p1 - p0;
+
+		sized = myaudio_size[ index ];
 		
 		//sized = strlen( audio );
 		engine_font_manager_data( sized, 10, 15 + index );
@@ -28,6 +36,8 @@ int main()
 	}
 
 	//VDP_drawText( "PRESSED: TEST", 5, 10 );
+	index = 0;
+	engine_font_manager_data( ( index + 1 ), 20, 5 );
 	while( 1 )
 	{
 		engine_input_manager_update();
@@ -36,25 +46,20 @@ int main()
 		if( input )
 		{
 			VDP_drawText( "PRESSED: NICE", 5, 10 );
-
-			//SND_startPlayPCM_XGM( SFX_DEAD, 1, SOUND_PCM_CH2 );
-			XGM_startPlayPCM( SFX_KILL, 1, SOUND_PCM_CH2 );
-			//SND_startPlayPCM_XGM( SFX_KILL, 1, SOUND_PCM_CH2 );
-		//	SND_startPlayPCM_XGM( SFX_MIKE, 1, SOUND_PCM_CH2 );
-		//	//SND_startPlayPCM_XGM( SFX_OVER, 1, SOUND_PCM_CH2 );
-		//	//SND_startPlayPCM_XGM( SFX_RING, 1, SOUND_PCM_CH2 );
-		//	//SND_startPlayPCM_XGM( SFX_STOP, 1, SOUND_PCM_CH2 );
+			XGM_startPlayPCM( SFX_DEAD + index, 1, SOUND_PCM_CH2 );
 		}
-		//input = engine_input_manager_hold_buttonB();
-		//if( input )
-		//{
-		//	//SND_startPlayPCM_XGM( SFX_DEAD, 1, SOUND_PCM_CH2 );
-		//	//SND_startPlayPCM_XGM( SFX_KILL, 1, SOUND_PCM_CH2 );
-		//	//SND_startPlayPCM_XGM( SFX_MIKE, 1, SOUND_PCM_CH2 );
-		//	SND_startPlayPCM_XGM( SFX_OVER, 1, SOUND_PCM_CH3 );
-		//	//SND_startPlayPCM_XGM( SFX_RING, 1, SOUND_PCM_CH2 );
-		//	//SND_startPlayPCM_XGM( SFX_STOP, 1, SOUND_PCM_CH2 );
-		//}
+
+		input = engine_input_manager_hold_up();
+		if( input )
+		{
+			index++;
+			if( index >= MAX_SONGS )
+			{
+				index = 0;
+			}
+
+			engine_font_manager_data( (index+1), 20, 5 );
+		}
 
 		VDP_waitVSync();
 	}

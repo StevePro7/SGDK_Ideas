@@ -9,5 +9,6 @@
 
 //extern Image images;
 extern const u8 *myaudio[];
+extern const u32 myaudio_size[];
 
 #endif//_AUDIO_OBJECT_H_

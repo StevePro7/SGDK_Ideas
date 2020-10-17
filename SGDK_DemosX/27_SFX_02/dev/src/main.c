@@ -1,6 +1,6 @@
 #include "main.h"
 
-#define MAX_SONGS	8
+#define MAX_SONGS	32
 
 int main()
 {
@@ -30,7 +30,7 @@ int main()
 		sized = myaudio_size[ index ];
 		
 		//sized = strlen( audio );
-		engine_font_manager_data( sized, 10, 15 + index );
+		//engine_font_manager_data( sized, 10, 15 + index );
 		//SND_setPCM_XGM( SFX_DEAD + index, audio, sizes[index] );
 		SND_setPCM_XGM( SFX_DEAD + index, audio, sized );
 	}
@@ -59,6 +59,17 @@ int main()
 			}
 
 			engine_font_manager_data( (index+1), 20, 5 );
+		}
+		input = engine_input_manager_hold_down();
+		if( input )
+		{
+			if( index <= 0 )
+			{
+				index = 32;
+			}
+
+			index--;
+			engine_font_manager_data( ( index + 1 ), 20, 5 );
 		}
 
 		VDP_waitVSync();

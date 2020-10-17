@@ -1,7 +1,7 @@
 #include "audio_object.h"
 #include "sfx.h"
 
-const u8 *myaudio[] =
+const u8 *myaudio[128] =
 {
 	sonic_dead_sfx,
 	sonic_kill_sfx,
@@ -133,7 +133,7 @@ const u8 *myaudio[] =
 	sonic_stop_sfx,
 };
 
-const u32 myaudio_size[] =
+const u32 myaudio_size[128] =
 {
 	38656,
 	69376,

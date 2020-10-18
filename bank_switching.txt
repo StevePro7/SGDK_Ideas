@@ -1,0 +1,21 @@
+Bank switching
+18/10/2019
+
+Initially sounds like did not want to support bank switching as per this forum
+http://gendev.spritesmind.net/forum/viewtopic.php?t=14&start=765
+
+
+But if you check the latest master which I have used to build library
+there seems to be support in the mapper.h file
+
+e.g.
+
+SYS_getBank
+SYS_setBank
+https://github.com/Stephane-D/SGDK/blob/master/inc/mapper.h
+
+News and breaking the 4MB ROM limit with SGDK
+https://www.patreon.com/posts/news-and-4mb-rom-33768362
+
+https://plutiedev.com/beyond-4mb
+https://plutiedev.com/rom-header#system

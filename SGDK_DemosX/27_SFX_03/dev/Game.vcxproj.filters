@@ -24,10 +24,10 @@
     <ClCompile Include="src\font_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\sfx\res\sfx.c">
+    <ClCompile Include="src\audio_object.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\audio_object.c">
+    <ClCompile Include="..\sfx\res\sfx.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -46,10 +46,10 @@
     <ClInclude Include="inc\font_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\sfx.h">
+    <ClInclude Include="inc\audio_object.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\audio_object.h">
+    <ClInclude Include="res\sfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -6,9 +6,9 @@ int main()
 
 	//int data = screen_play_screen_init();
 	int data = engine_audio_manager_test();
-	if (12 == data )
+	if (14 == data )
 	{
-		VDP_drawText( "Hello Genny World 12", 10, 14 );
+		VDP_drawText( "Hello Genny World 14", 10, 14 );
 	}
 
 	VDP_drawText( "Hello Genny World AA", 10, 13 );

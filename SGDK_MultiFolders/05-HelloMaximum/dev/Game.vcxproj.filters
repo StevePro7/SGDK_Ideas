@@ -25,6 +25,12 @@
     <Filter Include="Source Files\screen">
       <UniqueIdentifier>{83d1f53c-b325-4a14-bd63-3f73f4dbd1f2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\object">
+      <UniqueIdentifier>{eff4ef18-c867-4bbd-8e56-fad38e506e1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\object">
+      <UniqueIdentifier>{d6822005-b8ef-453d-8ddd-207929135bd9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\main.c">
@@ -35,6 +41,12 @@
     </ClCompile>
     <ClCompile Include="src\screen\play_screen.c">
       <Filter>Source Files\screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\engine\audio_manager.c">
+      <Filter>Source Files\engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object\audio_object.c">
+      <Filter>Source Files\object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -51,6 +63,12 @@
     </ClInclude>
     <ClInclude Include="inc\screen\play_screen.h">
       <Filter>Header Files\screen</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\engine\audio_manager.h">
+      <Filter>Header Files\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\object\audio_object.h">
+      <Filter>Header Files\object</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

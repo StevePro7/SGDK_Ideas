@@ -28,6 +28,7 @@ MKDIR= $(BIN)/mkdir
 SRC_C= $(wildcard *.c)
 SRC_C+= $(wildcard $(SRC)/*.c)
 SRC_C+= $(wildcard $(SRC)/engine/*.c)
+SRC_C+= $(wildcard $(SRC)/object/*.c)
 SRC_C+= $(wildcard $(SRC)/screen/*.c)
 
 RES_C= $(wildcard $(RES)/*.c)
@@ -42,7 +43,7 @@ OBJS= $(addprefix out/, $(OBJ))
 LST= $(SRC_C:.c=.lst)
 LSTS= $(addprefix out/, $(LST))
 
-INCS= -I$(INCLUDE) -I$(INCLUDE)/engine -I$(INCLUDE)/screen -I$(SRC) -I$(RES) -I$(LIBINCLUDE) -I$(LIBRES)
+INCS= -I$(INCLUDE) -I$(INCLUDE)/engine -I$(INCLUDE)/object -I$(INCLUDE)/screen -I$(SRC) -I$(RES) -I$(LIBINCLUDE) -I$(LIBRES)
 DEFAULT_FLAGS= -m68000 -Wall -Wextra -Wno-shift-negative-value -fno-builtin $(INCS) -B$(BIN)
 FLAGSZ80= -i$(SRC) -i$(INCLUDE) -i$(RES) -i$(LIBSRC) -i$(LIBINCLUDE)
 

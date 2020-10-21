@@ -1,0 +1,14 @@
+colors text
+21/10/2019
+
+
+http://gendev.spritesmind.net/forum/viewtopic.php?t=1564
+
+VDP_loadTileData( (const u32 *)tile, 1, 1, 0); 
+VDP_setTileMap(APLAN, TILE_ATTR_FULL(PAL0, 0, 1, 0, 1), 6, 5);
+VDP_setPaletteColor(PAL2, 0x000E );
+VDP_setTextPalette(PAL2);
+VDP_drawText("Hello Genie!", 10, 12);
+
+
+E:\GitHub\StevePro7\SGDK_Ideas\SGDK_MultiFolders\05-HelloMaximum\dev\src\main.c

@@ -1,6 +1,15 @@
 # SGDK_Ideas
 Repository to consolidate many Sega Genesis Development Kit ideas
 
+23/10/2020
+Random()
+can't use #include <stdlib.h> but instead use random() from SGDK_Ideas
+
+Reference:
+http://gendev.spritesmind.net/forum/viewtopic.php?t=1504
+Actually you have this in SGDK (declared in maths.h) :
+
+
 13/10/2020
 		NTSC	PAL		WIDE	HIGH
 USA		1		0		320		224

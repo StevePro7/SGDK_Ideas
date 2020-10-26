@@ -10,5 +10,6 @@
 s8 engine_storage_manager_read();
 s8 engine_storage_manager_read2();
 void engine_storage_manager_write();
+void engine_storage_manager_erase();
 
 #endif//_STORAGE_MANAGER_H_

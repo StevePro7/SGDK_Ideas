@@ -42,3 +42,17 @@ void engine_storage_manager_write()
 	SRAM_disable();
 	SYS_enableInts();
 }
+
+void engine_storage_manager_erase()
+{
+	u32 sRamOffSet = 0x0000;
+	SYS_disableInts();
+	SRAM_enable();
+	VDP_drawText( "erase START", 10, 12 );
+	SRAM_writeByte( sRamOffSet, -1 );
+	sRamOffSet++;
+	SRAM_writeByte( sRamOffSet, -1 );
+	VDP_drawText( "erase -END-", 10, 13 );
+	SRAM_disable();
+	SYS_enableInts();
+}

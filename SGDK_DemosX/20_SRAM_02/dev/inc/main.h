@@ -7,6 +7,7 @@
 #include <genesis.h>
 #endif
 
+#include "input_manager.h"
 #include "storage_manager.h"
 
 #endif//__MAIN__

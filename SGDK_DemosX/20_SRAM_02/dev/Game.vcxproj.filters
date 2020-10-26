@@ -21,6 +21,9 @@
     <ClCompile Include="src\storage_manager.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\input_manager.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat">
@@ -32,6 +35,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="inc\storage_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="inc\input_manager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

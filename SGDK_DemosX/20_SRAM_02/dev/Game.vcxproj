@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\input_manager.c" />
     <ClCompile Include="src\main.c" />
     <ClCompile Include="src\storage_manager.c" />
   </ItemGroup>
@@ -154,6 +155,7 @@
     <None Include="build.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\input_manager.h" />
     <ClInclude Include="inc\main.h" />
     <ClInclude Include="inc\storage_manager.h" />
   </ItemGroup>

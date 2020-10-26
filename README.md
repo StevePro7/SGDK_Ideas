@@ -1,6 +1,12 @@
 # SGDK_Ideas
 Repository to consolidate many Sega Genesis Development Kit ideas
 
+26/10/2020
+SRAM
+Stores data in file:
+rom.srm
+C:\SEGA\Fusion
+
 23/10/2020
 Random()
 can't use #include <stdlib.h> but instead use random() from SGDK_Ideas

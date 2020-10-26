@@ -26,6 +26,15 @@ int main()
 	updateScoreDisplay( data, 2, 1 );
 	updateScoreDisplay( data2, 2, 2 );
 
+	if( -1 == data )
+	{
+		VDP_drawText( "Data #1 EMPTY", 15, 1 );
+	}
+	if( -1 == data2 )
+	{
+		VDP_drawText( "Data #2 EMPTY", 15, 2 );
+	}
+
 	while( 1 )
 	{
 		VDP_waitVSync();

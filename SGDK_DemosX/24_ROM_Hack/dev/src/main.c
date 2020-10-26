@@ -21,6 +21,7 @@ int main()
 	data = engine_hack_manager_data();
 	updateScoreDisplay( data, 10, 10 );
 
+	VDP_drawText( "Should display '65'", 10, 12 );
 	while( 1 )
 	{
 		VDP_waitVSync();

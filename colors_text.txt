@@ -1,7 +1,14 @@
 colors text
+28/10/2019
+
+01.
+mixing text font and sprite fonts
+https://www.ohsat.com/tutorial/mdmisc/colorswaps
+E:\GitHub\StevePro7\VanHalenTest\Code\04-TestSprites\dev\src\main.c
+
+
+02.
 21/10/2019
-
-
 http://gendev.spritesmind.net/forum/viewtopic.php?t=1564
 
 VDP_loadTileData( (const u32 *)tile, 1, 1, 0); 
@@ -12,3 +19,5 @@ VDP_drawText("Hello Genie!", 10, 12);
 
 
 E:\GitHub\StevePro7\SGDK_Ideas\SGDK_MultiFolders\05-HelloMaximum\dev\src\main.c
+
+

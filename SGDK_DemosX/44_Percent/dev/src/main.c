@@ -12,29 +12,24 @@ void updateScoreDisplay(u16 value, u16 x, u16 y)
 
 int main()
 {
-	//int score = 420;
-	u16 wide = 0;
-	u16 high = 0;
+	unsigned char score;
+	unsigned char maxim;
+	unsigned short percent;
 
-	wide = VDP_getScreenWidth();
-	high = VDP_getScreenHeight();
+	score = 7;
+	maxim = 8;
+	//if( 0 == maxim )
+	//{
+	//	percent = 0;
+	//}
+	//else
+	//{
+	//	percent = ( float ) score / ( float ) maxim * 100;
+	//}
 
-	updateScoreDisplay( wide, 2, 1 );
-	updateScoreDisplay( high, 2, 2 );
+	percent = 0 == maxim ? 0 : ( float ) score / ( float ) maxim * 100;
 
-	VDP_setScreenHeight240();
-
-	wide = VDP_getScreenWidth();
-	high = VDP_getScreenHeight();
-
-	updateScoreDisplay( wide, 2, 5 );
-	updateScoreDisplay( high, 2, 6 );
-
-	VDP_drawText( "hello", 10, 10 );
-
-
-	updateScoreDisplay( wide, 2, 1 );
-	updateScoreDisplay( high, 2, 2 );
+	updateScoreDisplay( percent, 10, 10 );
 	while( 1 )
 	{
 		VDP_waitVSync();

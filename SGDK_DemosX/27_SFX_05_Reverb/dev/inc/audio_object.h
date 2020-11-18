@@ -7,7 +7,6 @@
 #include <genesis.h>
 #endif
 
-//extern Image images;
 extern const u8 *myaudio[];
 extern const u32 myaudio_size[];
 

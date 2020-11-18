@@ -1,6 +1,6 @@
 #include "main.h"
 
-#define MAX_SONGS	1
+#define MAX_SONGS	6
 
 int main()
 {
@@ -46,7 +46,7 @@ int main()
 		if( input )
 		{
 			index++;
-			if( index >= MAX_SONGS )
+			if( index >= MAX_SONGS - 1 )
 			{
 				index = 0;
 			}
@@ -56,9 +56,9 @@ int main()
 		input = engine_input_manager_hold_down();
 		if( input )
 		{
-			if( index <= 0 )
+			if( 0 == index )
 			{
-				index = MAX_SONGS;
+				index = MAX_SONGS - 1;
 			}
 
 			index--;

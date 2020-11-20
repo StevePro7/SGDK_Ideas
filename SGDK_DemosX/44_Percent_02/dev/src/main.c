@@ -14,6 +14,8 @@ int main()
 {
 	unsigned char score_correct;
 	unsigned char score_answerd;
+	unsigned short saved_correct;
+	unsigned short saved_answerd;
 	unsigned short percent;
 
 	//score_correct = 1;
@@ -32,6 +34,11 @@ int main()
 		//engine_font_manager_zero( percent, 10, score_correct - 20 );
 		engine_font_manager_data( percent, 30, score_correct - 20 );
 	}
+	
+	saved_correct = 698;
+	saved_answerd = 10000;
+	percent = saved_correct * 100 / saved_answerd;
+	engine_font_manager_data( percent, 15, 24 );
 
 	while( 1 )
 	{

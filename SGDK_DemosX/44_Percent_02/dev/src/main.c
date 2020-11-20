@@ -35,8 +35,8 @@ int main()
 		engine_font_manager_data( percent, 30, score_correct - 20 );
 	}
 	
-	saved_correct = 698;
-	saved_answerd = 10000;
+	saved_correct = 65534;
+	saved_answerd = 65535;
 	percent = saved_correct * 100 / saved_answerd;
 	engine_font_manager_data( percent, 15, 24 );
 

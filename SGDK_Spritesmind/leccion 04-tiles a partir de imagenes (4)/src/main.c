@@ -90,7 +90,7 @@ static void handleInput()
 	//si pulsamos MODE...
 	if( value & BUTTON_MODE )    VDP_drawText( "MODE", 20, 16 );
 
-	//si NO pulsamos nada, borra todo del título hacia abajo (VDP_clearTextArea() trabaja en tiles)
+	//si NO pulsamos nada, borra todo del tÃ­tulo hacia abajo (VDP_clearTextArea() trabaja en tiles)
 	if( ( !( value & BUTTON_UP ) ) && ( !( value & BUTTON_DOWN ) ) && ( !( value & BUTTON_LEFT ) ) &&
 		( !( value & BUTTON_RIGHT ) ) && ( !( value & BUTTON_A ) ) && ( !( value & BUTTON_B ) ) &&
 		( !( value & BUTTON_C ) ) && ( !( value & BUTTON_X ) ) && ( !( value & BUTTON_Y ) ) &&

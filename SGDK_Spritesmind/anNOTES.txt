@@ -4,3 +4,8 @@ https://github.com/danibusvlc/aventuras-en-megadrive
 https://danibus.wordpress.com
 https://danibus.wordpress.com/2020/06/06/leccion-13-el-plano-window
 https://github.com/And-0/awesome-megadrive
+
+
+Conversions
+PLAN_A	
+BG_A

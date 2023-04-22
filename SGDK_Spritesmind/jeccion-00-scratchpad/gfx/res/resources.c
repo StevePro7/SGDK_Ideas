@@ -2,6 +2,7 @@
 
 #include "_genesis.h"
 
-const Image my64tiles = { NULL, NULL, NULL };
+const Image block = { NULL, NULL, NULL };
+const Image block2 = { NULL, NULL, NULL };
 
 #endif

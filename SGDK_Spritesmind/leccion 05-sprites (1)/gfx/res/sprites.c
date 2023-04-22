@@ -2,7 +2,7 @@
 
 #include "_genesis.h"
 
-const Image block = { NULL, NULL, NULL };
-const Image block2 = { NULL, NULL, NULL };
+const SpriteDefinition sprite_8x8 = { NULL, 0, NULL, 0, 0 };
+const SpriteDefinition sprite_sonic = { NULL, 0, NULL, 0, 0 };
 
 #endif

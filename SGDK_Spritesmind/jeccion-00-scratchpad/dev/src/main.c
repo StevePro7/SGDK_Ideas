@@ -8,17 +8,20 @@ int main()
 
 	data = NULL;
 	numTile = 0;
+
 #ifdef _CONSOLE
 #else
-	data = moon.palette->data;
-	numTile = moon.tileset->numTile;
+	data = my64tiles.palette->data;
+	numTile = my64tiles.tileset->numTile;
 #endif
-	VDP_setPalette( PAL0, data );
-	ind = TILE_USERINDEX;
 
-	VDP_drawImageEx( BG_A, &moon, TILE_ATTR_FULL( PAL0, 0, 0, 0, ind ), 3, 3, 0, CPU );
+	VDP_setPalette( PAL0, data );
+	ind = 1;
+
+	VDP_drawImageEx( BG_B, &my64tiles, TILE_ATTR_FULL( PAL0, 0, 0, 0, ind ), 3, 3, 0, CPU );
 	ind += numTile;
-	while(1 )
+
+	while( 1 )
 	{
 		VDP_waitVSync();
 	}

@@ -1,1 +1,1 @@
-IMAGE moon "moon.png" 0
+IMAGE my64tiles "my64tiles.png" 0

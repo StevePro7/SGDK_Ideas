@@ -9,7 +9,7 @@ void bench_add8reg( u16 len );
 void executeMathsBasicTest()
 {
 #ifdef ENABLE_ASM
-	bench_add8reg( i );
+	bench_add8reg(1);
 #endif
 }
 

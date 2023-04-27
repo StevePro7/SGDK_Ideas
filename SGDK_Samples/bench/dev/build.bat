@@ -11,8 +11,8 @@ set /a _started=_hours*60*60*100+_min*60*100+_sec*100+_cs
 
 
 :: Build
-::%GDK_WIN%\bin\make -f %GDK_WIN%\makefile.gen
-%GDK_WIN%\bin\make -f %GDK_WIN%\makefile.gen > NUL
+%GDK_WIN%\bin\make -f %GDK_WIN%\makefile.gen
+::%GDK_WIN%\bin\make -f %GDK_WIN%\makefile.gen > NUL
 
 
 :: Time build -END-

@@ -147,14 +147,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\gfx\res\sprites.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat" />
-    <None Include="src\stevepro.s" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\main.h" />
+    <ClInclude Include="res\sprites.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

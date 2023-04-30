@@ -5,11 +5,8 @@
 #include "_genesis.h"
 #else
 #include <genesis.h>
-#define ENABLE_ASM
 #endif
 
-#include "kdebug.h"
-#include "tools.h"
-#include "timer.h"
+#include "sprites.h"
 
 #endif//__MAIN__

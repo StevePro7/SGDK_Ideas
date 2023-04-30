@@ -18,17 +18,20 @@
     <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\gfx\res\sprites.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="src\stevepro.s">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\main.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="res\sprites.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

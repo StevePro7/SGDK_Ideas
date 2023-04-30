@@ -1,7 +1,6 @@
 #ifndef _RES_SPRITES_H_
 #define _RES_SPRITES_H_
 
-extern const SpriteDefinition sprite_8x8;
-extern const SpriteDefinition sprite_sonic;
+extern const SpriteDefinition sonic_sprite;
 
 #endif // _RES_SPRITES_H_

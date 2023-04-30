@@ -1,41 +1,56 @@
 #include "main.h"
 
+#define ANIM_STAND      0
+#define ANIM_WAIT       1
+#define ANIM_WALK       2
+#define ANIM_RUN        3
+#define ANIM_BRAKE      4
+#define ANIM_UP         5
+#define ANIM_CROUNCH    6
+#define ANIM_ROLL       7
+
 static void handleInput();
-static void pinta_posicion();
 
-Sprite *mi_sprite_cuadrado;
-Sprite *mi_sprite_sonic;
-Sprite *mi_sprite;
+Sprite *mi_sonic;
 
-int posx;
-int posy;
+s16 posx = 64;
+s16 posy = 155;
 
 int main()
 {
-	posx = 0;
-	posy = 0;
-
-	u16* data = NULL;
-
-#ifndef _CONSOLE
-	data = sprite_8x8.palette->data;
-#endif
-
 	VDP_setScreenWidth320();
 
+	u16 ind;
+
+	u16* data1 = NULL;
+	u16* data2 = NULL;
+
+	u16 numTile = 0;
+#ifndef _CONSOLE
+	data1 = fondo2.palette->data;
+	data2 = sonic_sprite.palette->data;
+#endif
+
+	VDP_setPalette( PAL1, data1 );
+	VDP_setPalette( PAL0, data2 );
+	ind = 1;
+	VDP_drawImageEx( BG_B, &fondo2, TILE_ATTR_FULL( PAL1, 1, 0, -0, ind ), 0, 0, 1, CPU );
+
+#ifndef _CONSOLE
+	numTile = fondo2.tileset->numTile;
+#endif
+	ind += numTile;
+
 	SPR_init( 0, 0, 0 );
+	mi_sonic = SPR_addSprite( &sonic_sprite, posx, posy, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
 
-	VDP_setPalette( PAL1, data );
+	VDP_setTextPalette( PAL1 );
 
-	mi_sprite_cuadrado = SPR_addSprite( &sprite_8x8, posx, posy, TILE_ATTR( PAL1, TRUE, FALSE, FALSE ) );
-	mi_sprite_sonic = SPR_addSprite( &sprite_sonic, posx, posy, TILE_ATTR( PAL1, TRUE, FALSE, FALSE ) );
-
-	mi_sprite = mi_sprite_cuadrado;
+	VDP_drawText( "Pulsa A  -  Sonic SIN PRIORIDAD       ", 1, 0 );
+	VDP_drawText( "Pulsa B  -  Sonic CON PRIORIDAD       ", 1, 1 );
 	while( 1 )
 	{
 		handleInput();
-
-		pinta_posicion();
 
 		SPR_update();
 
@@ -48,40 +63,32 @@ int main()
 
 static void handleInput()
 {
-	//variable donde se guarda la entrada del mando
 	u16 value = JOY_readJoypad( JOY_1 );
-	//si pulsamos izquierda...
+
 	if( value & BUTTON_LEFT )
-		SPR_setPosition( mi_sprite, posx--, posy );
-	//si pulsamos derecha...
-	if( value & BUTTON_RIGHT )
-		SPR_setPosition( mi_sprite, posx++, posy );
-	//si pulsamos arriba...
-	if( value & BUTTON_UP )
-		SPR_setPosition( mi_sprite, posx, posy-- );
-	//si pulsamos abajo...
-	if( value & BUTTON_DOWN )
-		SPR_setPosition( mi_sprite, posx, posy++ );
-
-	//si pulsamos A...
-	if( ( value & BUTTON_A ) && ( mi_sprite == mi_sprite_sonic ) ) {
-		mi_sprite = mi_sprite_cuadrado;
-		SPR_setPosition( mi_sprite, posx, posy ); //necesario para q actualice al momento la TV
+	{
+		SPR_setPosition( mi_sonic, posx--, posy );
+		SPR_setHFlip( mi_sonic, TRUE );
+		SPR_setAnim( mi_sonic, ANIM_RUN );
 	}
-	//si pulsamos B...
-	if( ( value & BUTTON_B ) && ( mi_sprite == mi_sprite_cuadrado ) ) {
-		mi_sprite = mi_sprite_sonic;
-		SPR_setPosition( mi_sprite, posx, posy );
+		if( value & BUTTON_RIGHT )
+	{
+		SPR_setPosition( mi_sonic, posx++, posy );
+		SPR_setHFlip( mi_sonic, FALSE );
+		SPR_setAnim( mi_sonic, ANIM_RUN );
 	}
-}
 
-static void pinta_posicion()
-{
-	char cadena1[ 32 ];
-	sprintf( cadena1, "x:  %4d", posx );
-	VDP_drawText( cadena1, 2, 23 );
+	if( value & BUTTON_A )
+	{
+		SPR_setPriorityAttribut( mi_sonic, FALSE );
+	}
+		if( value & BUTTON_B )
+	{
+		SPR_setPriorityAttribut( mi_sonic, TRUE );
+	}
 
-	char cadena2[ 32 ];
-	sprintf( cadena2, "y:  %4d", posy );
-	VDP_drawText( cadena2, 2, 24 );
+	if( ( !( value & BUTTON_RIGHT ) ) && ( !( value & BUTTON_LEFT ) ) )
+	{
+		SPR_setAnim( mi_sonic, ANIM_STAND );
+	}
 }

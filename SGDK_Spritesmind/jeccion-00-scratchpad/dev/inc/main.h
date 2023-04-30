@@ -5,9 +5,15 @@
 #include "_genesis.h"
 #else
 #include <genesis.h>
+
 #endif
 
-#include "fondos.h"
-#include "sprites.h"
+#include "KDebug.h"  // <<--- PARA DEBUGGEAR general
+#include "tools.h"   // <<--- PARA DEBUGGEAR funciones klog
+#include "timer.h"   // <<--- PARA DEBUGGEAR timers
+
+
+//#include "fondos.h"
+//#include "sprites.h"
 
 #endif//__MAIN__

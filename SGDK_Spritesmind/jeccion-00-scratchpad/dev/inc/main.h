@@ -5,11 +5,10 @@
 #include "_genesis.h"
 #else
 #include <genesis.h>
-
 #endif
 
-#include "gfx.h"
-//#include "fondos.h"
-//#include "sprites.h"
+#include "sys.h"
+#include "fondos.h"
+#include "sprite.h"
 
 #endif//__MAIN__

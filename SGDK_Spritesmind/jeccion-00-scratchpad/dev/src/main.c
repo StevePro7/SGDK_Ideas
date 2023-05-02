@@ -1,47 +1,179 @@
 #include "main.h"
 
+static void handleInput();
+void myJoyHandler( u16 joy, u16 changed, u16 state );
+void reset();
+
+Sprite *mi_sonic;
+s16 mi_sonic_posx = 64;
+s16 mi_sonic_posy = 155;
+
+Sprite *mi_barra;
+s16 mi_barra_posx = 120;
+s16 mi_barra_posy = 96;
+
+int estado = 0;
+u16 ind;
+u16 numTile2 = 0;
+
 int main()
 {
-	u16 ind, contador;
-	u16 *data = NULL;
-	u16 numTile = 0;
+	u16 * data1 = NULL;
+	u16 * data2 = NULL;
+	u16 * data3 = NULL;
+	u16 numTile1 = 0;
 	
+
 #ifndef _CONSOLE
-	data = bga_image.palette->data;
-	numTile = bga_image.tileset->numTile;
-#endif //
-
-	SYS_disableInts();
-
+	data1 = fondo1.palette->data;
+	numTile1 = fondo1.tileset->numTile;
+	data2 = sonic_sprite.palette->data;
+	data3 = barra_sprite.palette->data;
+	numTile2 = fondo2.tileset->numTile;
+#endif
 	VDP_setScreenWidth320();
-	VDP_setPalette( PAL0, data );
+
+	SPR_init( 0, 0, 0 );
+
+	VDP_setPalette( PAL0, data1 );
 
 	ind = TILE_USERINDEX;
-	VDP_drawImageEx( BG_A, &bga_image, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-	ind += numTile;
-	
-	SYS_enableInts();
-	contador = 0;
+	VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+	ind += numTile1;
+
+	VDP_setPalette( PAL1, data2 );
+	VDP_setPalette( PAL2, data3 );
+	VDP_setPalette( PAL3, data3 );
+
+	mi_barra = SPR_addSprite( &barra_sprite, mi_barra_posx, mi_barra_posy, TILE_ATTR( PAL2, FALSE, FALSE, FALSE ) );
+
+	mi_sonic = SPR_addSprite( &sonic_sprite, mi_sonic_posx, mi_sonic_posy, TILE_ATTR( PAL3, FALSE, FALSE, FALSE ) );
+
+	JOY_init();
+	JOY_setEventHandler( &myJoyHandler );
+
+	//Texto inicial
+	VDP_drawText( "PRUEBA  0", 1, 0 );
+	VDP_drawText( "-Pulsa A para seguir-", 1, 27 );
 	while( 1 )
 	{
-		contador++;
+		handleInput();
 
-		if( contador > 60 * 1 )     VDP_setPaletteColor( 4, RGB24_TO_VDPCOLOR( 0xFF6600 ) );
-		if( contador > 60 * 2 )     VDP_setPaletteColor( 4, RGB24_TO_VDPCOLOR( 0xCC5200 ) );
-		if( contador > 60 * 3 )     VDP_setPaletteColor( 4, RGB24_TO_VDPCOLOR( 0x993D00 ) );
-		if( contador > 60 * 4 )     VDP_setPaletteColor( 4, RGB24_TO_VDPCOLOR( 0x662900 ) );
-		if( contador > 60 * 5 )     VDP_setPaletteColor( 4, RGB24_TO_VDPCOLOR( 0x000000 ) );
-
-		//cambio de castillo (rojo->rojo oscuro)
-		if( contador > 60 * 3 )     VDP_setPaletteColor( 2, RGB24_TO_VDPCOLOR( 0x802000 ) );
-		if( contador > 60 * 4 )     VDP_setPaletteColor( 12, RGB24_TO_VDPCOLOR( 0x661A00 ) );
-
-		//cambio del cesped (verde->marrón)
-		if( contador > 60 * 1 )     VDP_setPaletteColor( 8, RGB24_TO_VDPCOLOR( 0x999900 ) );
-		if( contador > 60 * 2 )     VDP_setPaletteColor( 1, RGB24_TO_VDPCOLOR( 0x997300 ) );
+		SPR_update();
 
 		VDP_waitVSync();
 	}
 
 	return 0;
+}
+
+static void handleInput()
+{
+	//variable donde se guarda la entrada del mando
+	u16 value = JOY_readJoypad( JOY_1 );
+	//si pulsamos izquierda...
+	if( value & BUTTON_LEFT )
+		SPR_setPosition( mi_barra, mi_barra_posx--, mi_barra_posy );
+	//si pulsamos derecha...
+	if( value & BUTTON_RIGHT )
+		SPR_setPosition( mi_barra, mi_barra_posx++, mi_barra_posy );
+	//si pulsamos arriba...
+	if( value & BUTTON_UP )
+		SPR_setPosition( mi_barra, mi_barra_posx, mi_barra_posy-- );
+	//si pulsamos abajo...
+	if( value & BUTTON_DOWN )
+		SPR_setPosition( mi_barra, mi_barra_posx, mi_barra_posy++ );
+}
+
+void myJoyHandler( u16 joy, u16 changed, u16 state )
+{
+	if( joy == JOY_1 )
+	{
+		if( estado == 0 && changed & BUTTON_A )
+		{
+			estado = 1;
+			VDP_drawText( "PRUEBA 01", 1, 0 );
+			VDP_drawText( "-Pulsa B para seguir-", 1, 27 );
+			VDP_setHilightShadow( 1 );
+		}
+
+		if( estado == 1 && ( changed & BUTTON_B ) )
+		{
+			estado = 2;
+			VDP_drawText( "PRUEBA 02", 1, 0 );
+			VDP_drawText( "-Pulsa C para seguir-", 1, 27 );
+			SPR_setPriorityAttribut( mi_sonic, TRUE );
+			SPR_setPriorityAttribut( mi_barra, FALSE );
+		}
+
+		if( estado == 2 && ( changed & BUTTON_C ) )
+		{
+			estado = 3;
+			VDP_drawText( "PRUEBA 03", 1, 0 );
+			VDP_drawText( "-Pulsa A para seguir-", 1, 27 );
+			SPR_setPriorityAttribut( mi_sonic, FALSE );
+			SPR_setPriorityAttribut( mi_barra, TRUE );
+		}
+
+		if( estado == 3 && ( changed & BUTTON_A ) )
+		{
+			estado = 4;
+			VDP_drawText( "PRUEBA 04", 1, 0 );
+			VDP_drawText( "-Pulsa B para seguir-", 1, 27 );
+			SPR_setPriorityAttribut( mi_sonic, FALSE );
+			SPR_setPriorityAttribut( mi_barra, FALSE );
+			SPR_setPalette( mi_barra, PAL3 );
+		}
+
+		//ESTADO 05:
+
+		if( estado == 4 && ( changed & BUTTON_B ) )
+		{
+			estado = 5;
+			VDP_drawText( "PRUEBA 05", 1, 0 );
+			VDP_drawText( "-Pulsa C para seguir-", 1, 27 );
+			SPR_setPriorityAttribut( mi_barra, TRUE );
+		}
+
+		if( estado == 5 && ( changed & BUTTON_C ) )
+		{
+			estado = 6;
+			//volvemos a dibujar el fondo, ahora con prioridad
+			ind = TILE_USERINDEX;
+			VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+			ind += numTile2;
+			VDP_drawText( "PRUEBA 06", 1, 0 );
+			VDP_drawText( "-Pulsa A para seguir-", 1, 27 );
+			SPR_setPriorityAttribut( mi_sonic, FALSE );
+			SPR_setPriorityAttribut( mi_barra, FALSE );
+		}
+
+		if( estado == 6 && ( changed & BUTTON_A ) )
+		{
+			estado = 7;
+			VDP_drawText( "PRUEBA 07", 1, 0 );
+			VDP_drawText( "-Pulsa B para seguir-", 1, 27 );
+			//movemos a Sonic a una posición más visible
+			SPR_setPosition( mi_sonic, mi_sonic_posx - 30, mi_sonic_posy );
+		}
+
+		//ESTADO 08:
+
+		if( estado == 7 && ( changed & BUTTON_B ) )
+		{
+			estado = 8;
+			VDP_drawText( "PRUEBA 08", 1, 0 );
+			VDP_drawText( "-Pulsa C para reiniciar-", 1, 27 );
+			SPR_setPriorityAttribut( mi_sonic, TRUE );
+			SPR_setPriorityAttribut( mi_barra, TRUE );
+		}
+
+		if( estado == 8 && ( changed & BUTTON_C ) )
+			reset();
+	}
+}
+
+void reset()
+{
+	SYS_hardReset();
 }

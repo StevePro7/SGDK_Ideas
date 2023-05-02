@@ -1,36 +1,44 @@
 #include "main.h"
 
+#define CIRCULO14   0
+#define CIRCULO15   1
+
 static void handleInput();
 void myJoyHandler( u16 joy, u16 changed, u16 state );
-void reset();
+void pinta_ayuda_en_pantalla();
 
-Sprite *mi_sonic;
+Sprite* mi_sonic;
+Sprite* mi_objetivo;
+
 s16 mi_sonic_posx = 64;
 s16 mi_sonic_posy = 155;
 
-Sprite *mi_barra;
-s16 mi_barra_posx = 120;
-s16 mi_barra_posy = 96;
+s16 mi_objetivo_posx = 120;
+s16 mi_objetivo_posy = 96;
 
-int estado = 0;
+int sh_activo = 0;              //S&H activo (1) o no (0)
+int sh_paleta = 2;              //cambia entre paleta2 (2) o paleta3 (3)
+int sh_priori = 0;              //prioridad para el sprite del circulo (1) o no tenerla (0)
+int sh_color = 14;             //cambia entre el sprite del circulo pintado con el color 14 (14) o el color 15 (15)
+int sh_fondo_priori = 0;        //prioridad para el fondo (1) o no tenerla (0)
+
 u16 ind;
-u16 numTile2 = 0;
+u16 numTile;
 
 int main()
 {
-	u16 * data1 = NULL;
-	u16 * data2 = NULL;
-	u16 * data3 = NULL;
-	u16 numTile1 = 0;
-	
+	u16 *data1 = NULL;
+	u16 *data2 = NULL;
+	u16 *data3 = NULL;
+	numTile = 0;
 
 #ifndef _CONSOLE
 	data1 = fondo1.palette->data;
-	numTile1 = fondo1.tileset->numTile;
+	numTile = fondo1.tileset->numTile;
 	data2 = sonic_sprite.palette->data;
-	data3 = barra_sprite.palette->data;
-	numTile2 = fondo2.tileset->numTile;
+	data3 = circulo_sprite.palette->data;
 #endif
+
 	VDP_setScreenWidth320();
 
 	SPR_init( 0, 0, 0 );
@@ -39,141 +47,151 @@ int main()
 
 	ind = TILE_USERINDEX;
 	VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-	ind += numTile1;
+	ind += numTile;
 
 	VDP_setPalette( PAL1, data2 );
 	VDP_setPalette( PAL2, data3 );
 	VDP_setPalette( PAL3, data3 );
 
-	mi_barra = SPR_addSprite( &barra_sprite, mi_barra_posx, mi_barra_posy, TILE_ATTR( PAL2, FALSE, FALSE, FALSE ) );
+	mi_objetivo = SPR_addSprite( &circulo_sprite, mi_sonic_posx, mi_objetivo_posy, TILE_ATTR( PAL2, FALSE, FALSE, FALSE ) );
+	SPR_setAnim( mi_objetivo, CIRCULO14 );
 
-	mi_sonic = SPR_addSprite( &sonic_sprite, mi_sonic_posx, mi_sonic_posy, TILE_ATTR( PAL3, FALSE, FALSE, FALSE ) );
+	mi_sonic = SPR_addSprite( &sonic_sprite, mi_sonic_posx, mi_sonic_posy, TILE_ATTR( PAL1, TRUE, FALSE, FALSE ) );
 
 	JOY_init();
 	JOY_setEventHandler( &myJoyHandler );
 
-	//Texto inicial
-	VDP_drawText( "PRUEBA  0", 1, 0 );
-	VDP_drawText( "-Pulsa A para seguir-", 1, 27 );
+	VDP_drawText( "S&H: OFF                                ", 0, 0 );
+	VDP_drawText( "PALETA CIRCULO: PAL2                    ", 0, 1 );
+	VDP_drawText( "Prioridad: NO                           ", 0, 2 );
+	VDP_drawText( "Color circulo: 14                       ", 0, 3 );
+	VDP_drawText( "Fondo PRIORIDAD: OFF                    ", 0, 4 );
+	VDP_drawText( "A:SH on/off, B:Paleta, C:Prioridad Circ.", 0, 26 );
+	VDP_drawText( "X: color14/15, Y: Prioridad Fondo       ", 0, 27 );
+
 	while( 1 )
 	{
 		handleInput();
-
 		SPR_update();
-
 		VDP_waitVSync();
 	}
 
 	return 0;
 }
 
+// MANDO DETECCION SINCRONA
 static void handleInput()
 {
 	//variable donde se guarda la entrada del mando
 	u16 value = JOY_readJoypad( JOY_1 );
 	//si pulsamos izquierda...
 	if( value & BUTTON_LEFT )
-		SPR_setPosition( mi_barra, mi_barra_posx--, mi_barra_posy );
+		SPR_setPosition( mi_objetivo, mi_objetivo_posx--, mi_objetivo_posy );
 	//si pulsamos derecha...
 	if( value & BUTTON_RIGHT )
-		SPR_setPosition( mi_barra, mi_barra_posx++, mi_barra_posy );
+		SPR_setPosition( mi_objetivo, mi_objetivo_posx++, mi_objetivo_posy );
 	//si pulsamos arriba...
 	if( value & BUTTON_UP )
-		SPR_setPosition( mi_barra, mi_barra_posx, mi_barra_posy-- );
+		SPR_setPosition( mi_objetivo, mi_objetivo_posx, mi_objetivo_posy-- );
 	//si pulsamos abajo...
 	if( value & BUTTON_DOWN )
-		SPR_setPosition( mi_barra, mi_barra_posx, mi_barra_posy++ );
+		SPR_setPosition( mi_objetivo, mi_objetivo_posx, mi_objetivo_posy++ );
 }
 
 void myJoyHandler( u16 joy, u16 changed, u16 state )
 {
 	if( joy == JOY_1 )
 	{
-		if( estado == 0 && changed & BUTTON_A )
+		if( state & BUTTON_A )
 		{
-			estado = 1;
-			VDP_drawText( "PRUEBA 01", 1, 0 );
-			VDP_drawText( "-Pulsa B para seguir-", 1, 27 );
-			VDP_setHilightShadow( 1 );
+			if( sh_activo )   sh_activo = 0;
+			else            sh_activo = 1;
+
+			VDP_setHilightShadow( sh_activo );
 		}
 
-		if( estado == 1 && ( changed & BUTTON_B ) )
+		if( state & BUTTON_B )
 		{
-			estado = 2;
-			VDP_drawText( "PRUEBA 02", 1, 0 );
-			VDP_drawText( "-Pulsa C para seguir-", 1, 27 );
-			SPR_setPriorityAttribut( mi_sonic, TRUE );
-			SPR_setPriorityAttribut( mi_barra, FALSE );
+			if( sh_paleta == 3 )
+			{
+				sh_paleta = 2;
+				SPR_setPalette( mi_objetivo, PAL2 );
+			}
+			else
+			{
+				sh_paleta = 3;
+				SPR_setPalette( mi_objetivo, PAL3 );
+			}
 		}
 
-		if( estado == 2 && ( changed & BUTTON_C ) )
+		if( state & BUTTON_C )
 		{
-			estado = 3;
-			VDP_drawText( "PRUEBA 03", 1, 0 );
-			VDP_drawText( "-Pulsa A para seguir-", 1, 27 );
-			SPR_setPriorityAttribut( mi_sonic, FALSE );
-			SPR_setPriorityAttribut( mi_barra, TRUE );
+			if( sh_priori )
+			{
+				sh_priori = 0;
+				SPR_setPriorityAttribut( mi_objetivo, FALSE );
+			}
+			else
+			{
+				sh_priori = 1;
+				SPR_setPriorityAttribut( mi_objetivo, TRUE );
+			}
 		}
 
-		if( estado == 3 && ( changed & BUTTON_A ) )
+		if( state & BUTTON_X )
 		{
-			estado = 4;
-			VDP_drawText( "PRUEBA 04", 1, 0 );
-			VDP_drawText( "-Pulsa B para seguir-", 1, 27 );
-			SPR_setPriorityAttribut( mi_sonic, FALSE );
-			SPR_setPriorityAttribut( mi_barra, FALSE );
-			SPR_setPalette( mi_barra, PAL3 );
+			if( sh_color == 14 )
+			{
+				sh_color = 15;
+				SPR_setAnim( mi_objetivo, CIRCULO15 );
+			}
+			else
+			{
+				sh_color = 14;
+				SPR_setAnim( mi_objetivo, CIRCULO14 );
+			}
 		}
 
-		//ESTADO 05:
-
-		if( estado == 4 && ( changed & BUTTON_B ) )
+		if( state & BUTTON_Y )
 		{
-			estado = 5;
-			VDP_drawText( "PRUEBA 05", 1, 0 );
-			VDP_drawText( "-Pulsa C para seguir-", 1, 27 );
-			SPR_setPriorityAttribut( mi_barra, TRUE );
+			if( sh_fondo_priori )
+			{
+				sh_fondo_priori = 0;
+				ind = TILE_USERINDEX;
+				VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+				ind += numTile;
+			}
+			else
+			{
+				sh_fondo_priori = 1;
+				ind = TILE_USERINDEX;
+				VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+				ind += numTile;
+			}
 		}
-
-		if( estado == 5 && ( changed & BUTTON_C ) )
-		{
-			estado = 6;
-			//volvemos a dibujar el fondo, ahora con prioridad
-			ind = TILE_USERINDEX;
-			VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-			ind += numTile2;
-			VDP_drawText( "PRUEBA 06", 1, 0 );
-			VDP_drawText( "-Pulsa A para seguir-", 1, 27 );
-			SPR_setPriorityAttribut( mi_sonic, FALSE );
-			SPR_setPriorityAttribut( mi_barra, FALSE );
-		}
-
-		if( estado == 6 && ( changed & BUTTON_A ) )
-		{
-			estado = 7;
-			VDP_drawText( "PRUEBA 07", 1, 0 );
-			VDP_drawText( "-Pulsa B para seguir-", 1, 27 );
-			//movemos a Sonic a una posición más visible
-			SPR_setPosition( mi_sonic, mi_sonic_posx - 30, mi_sonic_posy );
-		}
-
-		//ESTADO 08:
-
-		if( estado == 7 && ( changed & BUTTON_B ) )
-		{
-			estado = 8;
-			VDP_drawText( "PRUEBA 08", 1, 0 );
-			VDP_drawText( "-Pulsa C para reiniciar-", 1, 27 );
-			SPR_setPriorityAttribut( mi_sonic, TRUE );
-			SPR_setPriorityAttribut( mi_barra, TRUE );
-		}
-
-		if( estado == 8 && ( changed & BUTTON_C ) )
-			reset();
 	}
+
+	pinta_ayuda_en_pantalla();
 }
 
-void reset()
+void pinta_ayuda_en_pantalla()
 {
-	SYS_hardReset();
+
+	if( sh_activo )       VDP_drawText( "S&H: OFF                                ", 0, 0 );
+	else                VDP_drawText( "S&H: ON                                 ", 0, 0 );
+
+	if( sh_paleta == 3 )    VDP_drawText( "PALETA CIRCULO: PAL2                    ", 0, 1 );
+	else                VDP_drawText( "PALETA CIRCULO: PAL3                    ", 0, 1 );
+
+	if( sh_priori )       VDP_drawText( "Prioridad: NO                           ", 0, 2 );
+	else                VDP_drawText( "Prioridad: SI                           ", 0, 2 );
+
+	if( sh_color == 14 )    VDP_drawText( "Color circulo: 15                       ", 0, 3 );
+	else                VDP_drawText( "Color circulo: 14                       ", 0, 3 );
+
+	if( sh_fondo_priori ) VDP_drawText( "Fondo PRIORIDAD: OFF                    ", 0, 4 );
+	else                VDP_drawText( "Fondo PRIORIDAD:  ON                    ", 0, 4 );
+
+	VDP_drawText( "A:SH on/off, B:Paleta, C:Prioridad Circ.", 0, 26 );
+	VDP_drawText( "X: color14/15, Y: Prioridad Fondo       ", 0, 27 );
 }

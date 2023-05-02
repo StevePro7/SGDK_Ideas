@@ -147,8 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\gfx\res\fondos.c" />
-    <ClCompile Include="..\gfx\res\sprites.c" />
+    <ClCompile Include="..\gfx\res\gfx.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>
@@ -156,8 +155,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="inc\main.h" />
-    <ClInclude Include="res\fondos.h" />
-    <ClInclude Include="res\sprites.h" />
+    <ClInclude Include="res\gfx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -8,11 +8,7 @@
 
 #endif
 
-#include "KDebug.h"  // <<--- PARA DEBUGGEAR general
-#include "tools.h"   // <<--- PARA DEBUGGEAR funciones klog
-#include "timer.h"   // <<--- PARA DEBUGGEAR timers
-
-
+#include "gfx.h"
 //#include "fondos.h"
 //#include "sprites.h"
 

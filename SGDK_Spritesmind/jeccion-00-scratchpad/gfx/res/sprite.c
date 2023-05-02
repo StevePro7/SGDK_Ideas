@@ -2,7 +2,8 @@
 
 #include "_genesis.h"
 
-const SpriteDefinition sonic_sprite = { NULL, 0, NULL, 0, 0 };
-const SpriteDefinition circulo_sprite = { NULL, 0, NULL, 0, 0 };
+const SpriteDefinition mi_sprite_ryu = { NULL, 0, NULL, 0, 0 };
+const SpriteDefinition mi_sprite_sombra = { NULL, 0, NULL, 0, 0 };
+const SpriteDefinition mi_sprite_hadoken = { NULL, 0, NULL, 0, 0 };
 
 #endif

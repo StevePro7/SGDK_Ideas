@@ -1,4 +1,4 @@
-IMAGE fondo1 "fondos/fondo1.png" BEST
-IMAGE fondo2 "fondos/fondo2.png" BEST
+IMAGE fondo1 "fondos/escenario RYU fondo A.png" BEST
+IMAGE fondo2 "fondos/escenario RYU fondo B.png" BEST
 
 

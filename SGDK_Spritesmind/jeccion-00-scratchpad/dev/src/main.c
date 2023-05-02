@@ -1,42 +1,38 @@
 #include "main.h"
 
-#define CIRCULO14   0
-#define CIRCULO15   1
+#define ANIM_STAND      0
+#define ANIM_WALK       1
 
 static void handleInput();
-void myJoyHandler( u16 joy, u16 changed, u16 state );
-void pinta_ayuda_en_pantalla();
 
-Sprite* mi_sonic;
-Sprite* mi_objetivo;
+Sprite* spr_ryu;
+Sprite* spr_sombra;
+Sprite* spr_hadoken;
 
-s16 mi_sonic_posx = 64;
-s16 mi_sonic_posy = 155;
+s16 posx = 120;
+s16 posy = 120;
+s16 hadoken_posx = 150;
+s16 hadoken_posy = 130;
 
-s16 mi_objetivo_posx = 120;
-s16 mi_objetivo_posy = 96;
-
-int sh_activo = 0;              //S&H activo (1) o no (0)
-int sh_paleta = 2;              //cambia entre paleta2 (2) o paleta3 (3)
-int sh_priori = 0;              //prioridad para el sprite del circulo (1) o no tenerla (0)
-int sh_color = 14;             //cambia entre el sprite del circulo pintado con el color 14 (14) o el color 15 (15)
-int sh_fondo_priori = 0;        //prioridad para el fondo (1) o no tenerla (0)
-
-u16 ind;
-u16 numTile;
+bool prioridad_hadoken = TRUE;
 
 int main()
 {
+	u16 ind;
+
 	u16 *data1 = NULL;
 	u16 *data2 = NULL;
 	u16 *data3 = NULL;
-	numTile = 0;
-
+	u16 *data4 = NULL;
+	u16 numTile1 = 0;
+	u16 numTile2 = 0;
 #ifndef _CONSOLE
 	data1 = fondo1.palette->data;
-	numTile = fondo1.tileset->numTile;
-	data2 = sonic_sprite.palette->data;
-	data3 = circulo_sprite.palette->data;
+	data2 = fondo1.palette->data;
+	numTile1 = fondo1.tileset->numTile;
+	numTile2 = fondo2.tileset->numTile;
+	data3 = mi_sprite_ryu.palette->data;
+	data4 = mi_sprite_sombra.palette->data;
 #endif
 
 	VDP_setScreenWidth320();
@@ -44,31 +40,31 @@ int main()
 	SPR_init( 0, 0, 0 );
 
 	VDP_setPalette( PAL0, data1 );
+	VDP_setPalette( PAL1, data2 );
 
 	ind = TILE_USERINDEX;
-	VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-	ind += numTile;
+	VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+	ind += numTile1;
+	VDP_drawImageEx( BG_B, &fondo2, TILE_ATTR_FULL( PAL1, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+	ind += numTile2;
 
-	VDP_setPalette( PAL1, data2 );
 	VDP_setPalette( PAL2, data3 );
-	VDP_setPalette( PAL3, data3 );
+	VDP_setPalette( PAL3, data4 );
 
-	mi_objetivo = SPR_addSprite( &circulo_sprite, mi_sonic_posx, mi_objetivo_posy, TILE_ATTR( PAL2, FALSE, FALSE, FALSE ) );
-	SPR_setAnim( mi_objetivo, CIRCULO14 );
+	spr_ryu = SPR_addSprite( &mi_sprite_ryu, posx, posy, TILE_ATTR( PAL2, TRUE, FALSE, FALSE ) );
+	spr_sombra = SPR_addSprite( &mi_sprite_sombra, posx, posy + 70, TILE_ATTR( PAL3, TRUE, FALSE, FALSE ) );
+	spr_hadoken = SPR_addSprite( &mi_sprite_hadoken, hadoken_posx, hadoken_posy, TILE_ATTR( PAL3, prioridad_hadoken, FALSE, FALSE ) );
 
-	mi_sonic = SPR_addSprite( &sonic_sprite, mi_sonic_posx, mi_sonic_posy, TILE_ATTR( PAL1, TRUE, FALSE, FALSE ) );
+	VDP_setHilightShadow( 1 );
 
-	JOY_init();
-	JOY_setEventHandler( &myJoyHandler );
+	SPR_setHFlip( spr_ryu, TRUE );
+	SPR_setHFlip( spr_hadoken, TRUE );
 
-	VDP_drawText( "S&H: OFF                                ", 0, 0 );
-	VDP_drawText( "PALETA CIRCULO: PAL2                    ", 0, 1 );
-	VDP_drawText( "Prioridad: NO                           ", 0, 2 );
-	VDP_drawText( "Color circulo: 14                       ", 0, 3 );
-	VDP_drawText( "Fondo PRIORIDAD: OFF                    ", 0, 4 );
-	VDP_drawText( "A:SH on/off, B:Paleta, C:Prioridad Circ.", 0, 26 );
-	VDP_drawText( "X: color14/15, Y: Prioridad Fondo       ", 0, 27 );
+	VDP_setTextPalette( PAL3 );
+	VDP_drawText( "SHADOW & HIGHLIGHT : SF2                ", 2, 1 );
+	VDP_drawText( "D-PAD: MOV RYU, A/B: MOV HA-DO-KEN      ", 2, 2 );
 
+	SPR_update();
 	while( 1 )
 	{
 		handleInput();
@@ -79,119 +75,40 @@ int main()
 	return 0;
 }
 
-// MANDO DETECCION SINCRONA
 static void handleInput()
 {
-	//variable donde se guarda la entrada del mando
 	u16 value = JOY_readJoypad( JOY_1 );
-	//si pulsamos izquierda...
+
 	if( value & BUTTON_LEFT )
-		SPR_setPosition( mi_objetivo, mi_objetivo_posx--, mi_objetivo_posy );
-	//si pulsamos derecha...
-	if( value & BUTTON_RIGHT )
-		SPR_setPosition( mi_objetivo, mi_objetivo_posx++, mi_objetivo_posy );
-	//si pulsamos arriba...
-	if( value & BUTTON_UP )
-		SPR_setPosition( mi_objetivo, mi_objetivo_posx, mi_objetivo_posy-- );
-	//si pulsamos abajo...
-	if( value & BUTTON_DOWN )
-		SPR_setPosition( mi_objetivo, mi_objetivo_posx, mi_objetivo_posy++ );
-}
-
-void myJoyHandler( u16 joy, u16 changed, u16 state )
-{
-	if( joy == JOY_1 )
 	{
-		if( state & BUTTON_A )
-		{
-			if( sh_activo )   sh_activo = 0;
-			else            sh_activo = 1;
-
-			VDP_setHilightShadow( sh_activo );
-		}
-
-		if( state & BUTTON_B )
-		{
-			if( sh_paleta == 3 )
-			{
-				sh_paleta = 2;
-				SPR_setPalette( mi_objetivo, PAL2 );
-			}
-			else
-			{
-				sh_paleta = 3;
-				SPR_setPalette( mi_objetivo, PAL3 );
-			}
-		}
-
-		if( state & BUTTON_C )
-		{
-			if( sh_priori )
-			{
-				sh_priori = 0;
-				SPR_setPriorityAttribut( mi_objetivo, FALSE );
-			}
-			else
-			{
-				sh_priori = 1;
-				SPR_setPriorityAttribut( mi_objetivo, TRUE );
-			}
-		}
-
-		if( state & BUTTON_X )
-		{
-			if( sh_color == 14 )
-			{
-				sh_color = 15;
-				SPR_setAnim( mi_objetivo, CIRCULO15 );
-			}
-			else
-			{
-				sh_color = 14;
-				SPR_setAnim( mi_objetivo, CIRCULO14 );
-			}
-		}
-
-		if( state & BUTTON_Y )
-		{
-			if( sh_fondo_priori )
-			{
-				sh_fondo_priori = 0;
-				ind = TILE_USERINDEX;
-				VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-				ind += numTile;
-			}
-			else
-			{
-				sh_fondo_priori = 1;
-				ind = TILE_USERINDEX;
-				VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-				ind += numTile;
-			}
-		}
+		SPR_setPosition( spr_ryu, posx--, posy );
+		SPR_setPosition(spr_sombra, posx, posy + 70 );
+		SPR_setAnim( spr_ryu, ANIM_WALK );
+		SPR_setHFlip( spr_ryu, FALSE );
 	}
 
-	pinta_ayuda_en_pantalla();
-}
+	if( value & BUTTON_RIGHT )
+	{
+		SPR_setPosition( spr_ryu, posx++, posy );
+		SPR_setPosition( spr_sombra, posx++, posy + 70 );
+		SPR_setAnim( spr_ryu, ANIM_WALK );
+		SPR_setHFlip( spr_ryu, TRUE );
+	}
 
-void pinta_ayuda_en_pantalla()
-{
+	if( value & BUTTON_UP )
+		SPR_setPosition( spr_ryu, posx, posy-- );
+	//si pulsamos abajo...
+	if( value & BUTTON_DOWN )
+		SPR_setPosition( spr_ryu, posx, posy++ );
 
-	if( sh_activo )       VDP_drawText( "S&H: OFF                                ", 0, 0 );
-	else                VDP_drawText( "S&H: ON                                 ", 0, 0 );
+	if( value & BUTTON_A )
+		SPR_setPosition( spr_hadoken, hadoken_posx++, hadoken_posy );
+	//si pulsamos B
+	if( value & BUTTON_B )
+		SPR_setPosition( spr_hadoken, hadoken_posx--, hadoken_posy );
 
-	if( sh_paleta == 3 )    VDP_drawText( "PALETA CIRCULO: PAL2                    ", 0, 1 );
-	else                VDP_drawText( "PALETA CIRCULO: PAL3                    ", 0, 1 );
-
-	if( sh_priori )       VDP_drawText( "Prioridad: NO                           ", 0, 2 );
-	else                VDP_drawText( "Prioridad: SI                           ", 0, 2 );
-
-	if( sh_color == 14 )    VDP_drawText( "Color circulo: 15                       ", 0, 3 );
-	else                VDP_drawText( "Color circulo: 14                       ", 0, 3 );
-
-	if( sh_fondo_priori ) VDP_drawText( "Fondo PRIORIDAD: OFF                    ", 0, 4 );
-	else                VDP_drawText( "Fondo PRIORIDAD:  ON                    ", 0, 4 );
-
-	VDP_drawText( "A:SH on/off, B:Paleta, C:Prioridad Circ.", 0, 26 );
-	VDP_drawText( "X: color14/15, Y: Prioridad Fondo       ", 0, 27 );
+	if( ( !( value & BUTTON_RIGHT ) ) && ( !( value & BUTTON_LEFT ) ) )
+	{
+		SPR_setAnim( spr_ryu, ANIM_STAND );
+	}
 }

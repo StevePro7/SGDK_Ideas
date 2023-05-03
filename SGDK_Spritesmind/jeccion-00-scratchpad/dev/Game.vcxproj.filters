@@ -18,10 +18,10 @@
     <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\gfx\res\fondos.c">
+    <ClCompile Include="..\gfx\res\gfx.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\gfx\res\sprites.c">
+    <ClCompile Include="..\gfx\res\sprite.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -34,10 +34,10 @@
     <ClInclude Include="inc\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\fondos.h">
+    <ClInclude Include="res\gfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\sprites.h">
+    <ClInclude Include="res\sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

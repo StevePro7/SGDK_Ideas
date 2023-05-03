@@ -2,7 +2,10 @@
 
 #include "_genesis.h"
 
-const Image bg_B_real = { NULL, NULL, NULL };
-const Image bg_prioridad = { NULL, NULL, NULL };
+const Image fondo1 = { NULL, NULL, NULL };
+const Image fondo2 = { NULL, NULL, NULL };
+const Image fondo3 = { NULL, NULL, NULL };
+const Image fondo_doble = { NULL, NULL, NULL };
+const Image fondo_doble_prioridad = { NULL, NULL, NULL };
 
 #endif

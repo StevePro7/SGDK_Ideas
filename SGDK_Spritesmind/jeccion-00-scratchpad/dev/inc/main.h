@@ -7,7 +7,6 @@
 #include <genesis.h>
 #endif
 
-#include "sys.h"
 #include "gfx.h"
 #include "sprite.h"
 

@@ -148,7 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\gfx\res\gfx.c" />
-    <ClCompile Include="..\gfx\res\sprites.c" />
+    <ClCompile Include="..\gfx\res\sprite.c" />
     <ClCompile Include="src\main.c" />
   </ItemGroup>
   <ItemGroup>

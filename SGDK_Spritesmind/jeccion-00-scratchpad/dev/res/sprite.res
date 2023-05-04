@@ -1,1 +1,1 @@
-SPRITE ryu_sprite "sprite/ryu SF2.png" 5 10 FAST 12
+SPRITE sonic_sprite "sprite/sonic.png" 6 6 FAST 5

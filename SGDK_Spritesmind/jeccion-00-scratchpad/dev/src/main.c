@@ -1,124 +1,107 @@
 #include "main.h"
 
-#define ANIM_STAND   0   //animaciones de Sonic
-#define ANIM_RUN     3
-
-#define ANIM_NAVE_IDLE 0 //animaciones Nave
-#define ANIM_NAVE_MOV  1
+#define ANIM_STAND   0   //animaciones de Ryu (EJEMPLO 02)
+#define ANIM_WALK    1
 
 
-#define LIMITE_IZQ  10   //limites pantalla para el sprite
-#define LIMITE_DCH  280
-#define LIMITE_UP   10
-#define LIMITE_DOWN 180
 
+//Declaracion de funciones
 static void handleInput();
 static void cargaESTADO();
 static void muestraMENSAJES();
 static void actualizaCamara();
 
-Sprite *Sonic, *Nave, *Enemigos[ 6 ];
 
-//Para ir pasando por los distintos ejemplos
-int estado = 1; //estado inicial
-int cerrojo = 0;
-
-//Cuenta de tiles en VRAM
 u16 ind;
 
-//Desplazamiento respecto al punto (0,0) de los planos (ejemplo 6)
-s16 offsetA = 0;
-//Para (ir incrementando) el movimiento de los planos (ejemplo 6)
-s16 aceleracionA = 4;
+//Para ir pasando por los distintos ejemplos
+int estado = 1;
+int cerrojo = 0;
 
-//movimiento de Sonic (ejemplo 6)
-int posx = 48;
-int posy = 158;
+//ejemplo 01
+s16 offsetA = 0;         //desplazamiento plano A
+s16 vectorA[ 224 ];        //todo el plano A
+s16 vectorB1[ 50 ];        //de 0 a 50
+s16 vectorB2[ 80 ];        //144 a 224px
+fix16 vectorB2_aux[ 80 ];            //vector auxiliar
+fix16 vectorB2_ace = FIX16( 0.6 );   //constante para la aceleracion
 
-//movimiento de las Naves (ejemplo 7)
-//re-usaremos 'posx' y 'posy' para la posicion de la nave del player
-int enemigo_posx[ 6 ] = { 0,0,0,0,0,0 };
-int enemigo_posy[ 6 ] = { 0,0,0,0,0,0 };
+									 //ejemplo 02
+Sprite *spr_ryu;                //sprite RYU
+u16 spr_posx = 160;             //posicion del sprite
+u16 spr_posy = 120;
+#define LIMITE_IZQ           70 //limites de movimiento del sprite
+#define LIMITE_DCHO         260
 
-//vectores para los ejemplos de scroll (ejemplos 1 al 7)
-s16 vector01[ 6 ] = { 1,2,3,4,5,6 };
-s16 vector02[ 6 ] = { 0,10,20,30,40,50 };
-s16 vector03[ 10 ] = { 0,0,0,0,0,0,0,0,0,0 };
-s16 vector04[ 28 ] = { 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0 };
-s16 vector05[ 28 ] = { 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0 };
-s16 vector06[ 28 ] = { 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0 };
+fix16 offsetB;                              //desplazamiento plano B (muy lento)
+s16 vectorB[ 224 ];                           //todo el plano B
+fix16 vectorB_aux[ 224 ];                     //vector auxiliar
+#define VELOCIDAD_FONDO_B    FIX16(  0.65)  //velocidad desplazamiento plano B
+#define VELOCIDAD_FONDO_BN   FIX16( -0.65)
 
-s16 vector07[ 20 ] = { 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0, 0,0,0,0,0 };
+											  //nota: para el plano A re-uso  algunas vbles del ejemplo 01
 
-s16 v_aceleracion01[ 6 ] = { 1,2,3,3,2,1 };
-s16 v_aceleracion02[ 10 ] = { 1,2,3,4,5,6,7,8,9,10 };
-s16 v_aceleracion03[ 28 ] = { 9,9,8,8,7, 6,6,6,5,5, 4,3,2,1,2, 3,4,5,5,6 };
-s16 v_aceleracion04[ 20 ] = { 10,9,8,5,6, 5,4,3,2,1, 1,2,3,4,5, 6,7,8,9,10 };
 
-fix16 vector_aux[ 28 ] = { 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0, };
-fix16 aceleracion04 = FIX16( 0.06 );
+											  //vectores para el manejo del SUELO tipo SF2
+											  // vectorS: vector de enteros, se utiliza para pasar los datos de scroll a VDP_setHorizontalScrollLine (que solo admite enteros)
+											  // vectorS_ace: vector de aceleracion, define para cada línea del suelo cuando debe moverse en cada ciclo, la parte superior del suelo
+											  //              se movera más lentamente que la inferior. Se ha sacado A OJO comparando con el juego original.
+											  // vectorS_aux: vector auxiliar sobre el que se realizan los calculos.
 
-u16 *data0;
-u16 *data1;
-u16 *data2;
-u16 *data3;
-u16 *data4;
-u16 *data5;
-u16 *data6;
-u16 numTile1;
-u16 numTile2;
-u16 numTile3;
-u16 numTile4;
-u16 numTile5;
+s16 vectorS[ 40 ];
+fix16 vectorS_ace[ 40 ] = { 0.8,1.0,1.2,1.6, 2.0,  2.4, 2.8, 3.2, 3.6, 4.0,   4.4, 4.8, 5.2, 5.6, 6.0,  6.4, 6.8, 7.2, 7.6, 8.0,
+8.4,8.8,9.2,9.6,10.0, 10.4,10.8,11.2,11.6,12.0,  12.0,12.0,12.0,12.0,12.0, 12.0,12.0,12.0,12.0,12.0 };
+fix16 vectorS_aux[ 40 ];
+
+
+//ejemplo 03: mismo codigo que en el ejemplo "leccion 08-shadow & highlight (5) Castlevania"
+
+//// CONSTANTES Y METODOS PARA DIAGONALES ////////////
+
+// Some data to deal with graphical data
+#define NUM_COLUMNS     40
+#define NUM_ROWS        28
+#define NUM_LINES       NUM_ROWS * 8
+//Pone a 0 todos los elementos de line_scroll_data[]
+#define InitializeScrollTable(); \
+            for(u16 i = 0; i < NUM_LINES; i++) line_scroll_data[i] = FIX16(0);
+//Pone la sig secuencia (0,1,2,3...223) en line_speed_data[]
+#define InitializeSpeedTable(); \
+            line_speed_data[0] = FIX16(0); \
+            for(u16 i = 1; i < NUM_LINES; i++) \
+               line_speed_data[i] = fix16Add(line_speed_data[i-1], FIX16(1));
+//idem pero con diagonal dinamica
+#define InitializeSpeedTable_dinamica(); \
+            line_speed_data[0] = FIX16(0); \
+            for(u16 i = 1; i < NUM_LINES; i++){ \
+               line_speed_data[i] = fix16Add(line_speed_data[i-1], FIX16(1)); \
+               line_speed_data[i] = fix16Add(line_speed_data[i-1], diagonal_dinamica); }
+//para la diagonal dinamica
+fix16 diagonal_dinamica = FIX16( 0 );
+
+
+//ejemplo 04: separacion por lineas
+s16 vSeparacion[ 224 ];
+fix16 vSeparacion_ace[ 224 ];
+fix16 vSeparacion_aux[ 224 ];
+
+u16 *data0, *data1, *data2;
+u16 numTile1, numTile2;
 
 int main()
 {
-	data0 = NULL;
-	data1 = NULL;
-	data2 = NULL;
-	data3 = NULL;
-	data4 = NULL;
-	data5 = NULL;
-	data6 = NULL;
-	numTile1 = 0;
-	numTile2 = 0;
-	numTile3 = 0;
-	numTile4 = 0;
-	numTile5 = 0;
 #ifndef _CONSOLE
 	data0 = bgb_image.palette->data;
 	data1 = bga_image.palette->data;
-	data2 = sonic_sprite.palette->data;
-	data3 = bgd_image.palette->data;
-	data4 = bgc_image.palette->data;
-	data5 = nave_sprite.palette->data;
-	data6 = bgv_image.palette->data;
+	data2 = ryu_sprite.palette->data;
 	numTile1 = bgb_image.tileset->numTile;
 	numTile2 = bga_image.tileset->numTile;
-	numTile3 = bgd_image.tileset->numTile;
-	numTile4 = bgc_image.tileset->numTile;
-	numTile5 = bgv_image.tileset->numTile;
 #endif
 
-	VDP_setScreenWidth320();
-
-	VDP_setPalette( PAL0, data0 );
-	VDP_setPalette( PAL1, data1 );
-	VDP_setPalette( PAL2, data2 );
-
-	SPR_init( 0, 0, 0 );
-
-	ind = TILE_USERINDEX;
-	VDP_drawImageEx( BG_B, &bgb_image, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-	ind += numTile1;
-	VDP_drawImageEx( BG_B, &bgb_image, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-	ind += numTile2;
-
-	VDP_setScrollingMode( HSCROLL_TILE, VSCROLL_PLANE );
-	
-
+	//bucle ppal
 	while( TRUE )
 	{
+
 		//En cada ejemplo llamamos a cargaESTADO() para inicializar cada ejemplo correctamente
 		cargaESTADO();
 
@@ -126,6 +109,8 @@ int main()
 		//al iniciarse un ejemplo, se cierra (cerrojo=1)
 		while( cerrojo )
 		{
+
+
 			//Controles (sincronos)
 			handleInput();
 
@@ -145,84 +130,129 @@ int main()
 		estado++;
 	}
 
+
 	return 0;
 }
 
 
 static void cargaESTADO()
 {
-	offsetA = 0;
-
-	for( int i = 0; i < 6; i++ ) vector01[ i ] = i + 1;      //del 1 a 6
-	for( int i = 0; i < 6; i++ ) vector02[ i ] = i * 10;     //del 0 al 50
-	for( int i = 0; i < 6; i++ ) vector03[ i ] = 0;        //0
-	for( int i = 0; i < 28; i++ ) vector04[ i ] = 0;        //0
-	for( int i = 0; i < 28; i++ ) vector05[ i ] = FIX16( 0 ); //0
-
-	if( estado == 6 ) //añade un sprite de Sonic
+	//pone algunos vectores a sus valores iniciales (cambian durante los ejemplos)
+	if( estado == 1 )
 	{
-		Sonic = SPR_addSprite( &sonic_sprite, posx, posy, TILE_ATTR( PAL2, TRUE, FALSE, FALSE ) );
-	}
-
-	if( estado == 7 )
-	{
-		VDP_resetScreen();
-		VDP_init();
+		offsetA = 0;
+		for( int i = 0; i < 224; i++ ) vectorA[ i ] = 0;
+		for( int i = 0; i < 50; i++ ) vectorB1[ i ] = 0;
+		for( int i = 0; i < 80; i++ ) vectorB2[ i ] = 0;
+		for( int i = 0; i < 80; i++ ) vectorB2_aux[ i ] = FIX16( 0 );
 
 		//320x224px
 		VDP_setScreenWidth320();
+		VDP_setScreenHeight224();
+
+		//paletas
+		VDP_setPalette( PAL0, bgb_image.palette->data );
+		VDP_setPalette( PAL1, bga_image.palette->data );
+		VDP_setPalette( PAL2, ryu_sprite.palette->data );
 
 		//inicializa motor de sprites
 		SPR_init( 0, 0, 0 );
 
-		VDP_setPalette( PAL0, data3 );
-		VDP_setPalette( PAL0, data4 );
-		VDP_setPalette( PAL0, data5 );
-
-		SPR_init( 0, 0, 0 );
-
+		//backgrounds
 		ind = TILE_USERINDEX;
-		VDP_drawImageEx( BG_B, &bgd_image, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-		ind += numTile2;
-		VDP_drawImageEx( BG_A, &bgc_image, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-		ind += numTile3;
+		VDP_drawImageEx( BG_B, &bgb_image, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+		ind += bgb_image.tileset->numTile;
+		VDP_drawImageEx( BG_A, &bga_image, TILE_ATTR_FULL( PAL1, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+		ind += bga_image.tileset->numTile;
 
-		VDP_setScrollingMode( HSCROLL_TILE, VSCROLL_PLANE );
-	
-		posx = 50; posy = 120;
-		for( int i = 0; i < 6; i++ ) {
-			enemigo_posx[ i ] = 100 + i * 50; enemigo_posy[ i ] = 30 + i * 20;
-		}
-
-		//crea los sprites
-		Nave = SPR_addSprite( &nave_sprite, posx, posy, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
-
-		for( int i = 0; i < 6; i++ )
-			Enemigos[ i ] = SPR_addSprite( &enemigo_sprite, enemigo_posx[ i ], enemigo_posy[ i ], TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
+		//Configura el scroll (por LINEA)
+		VDP_setScrollingMode( HSCROLL_LINE, VSCROLL_PLANE );
 	}
 
-	if( estado == 8 )
+	if( estado == 2 )
 	{
-		//resetea el VDP: fondos, vram, etc
-		VDP_resetScreen();
-		VDP_init();
+		offsetA = 0; offsetB = FIX16( 0 );
+		for( int i = 0; i < 224; i++ ) vectorA[ i ] = -96;
+		for( int i = 0; i < 224; i++ ) vectorB[ i ] = FIX16( 0 );
+		for( int i = 0; i < 224; i++ ) vectorB_aux[ i ] = FIX16( -56 );
+
+		for( int i = 0; i < 40; i++ ) vectorS[ i ] = -96;
+		for( int i = 0; i < 40; i++ ) vectorS_aux[ i ] = FIX16( -96.0 );
 
 		//320x224px
 		VDP_setScreenWidth320();
+		VDP_setScreenHeight224();
+
+		//paletas
+		VDP_setPalette( PAL0, bgc_image.palette->data );  //ambos fondos usan esta paleta
+		VDP_setPalette( PAL1, ryu_sprite.palette->data ); //ryu
+
+														  //inicializa motor de sprites
+		SPR_init( 0, 0, 0 );
+
+		//backgrounds
+		ind = TILE_USERINDEX;
+		VDP_drawImageEx( BG_B, &bgd_image, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+		ind += bgd_image.tileset->numTile;
+		VDP_drawImageEx( BG_A, &bgc_image, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+		ind += bgc_image.tileset->numTile;
+
+		//Configura el scroll (por LINEA)
+		VDP_setScrollingMode( HSCROLL_LINE, VSCROLL_PLANE );
+
+		//sprite
+		spr_ryu = SPR_addSprite( &ryu_sprite, spr_posx, spr_posy, TILE_ATTR( PAL1, TRUE, FALSE, FALSE ) );
+		SPR_setHFlip( spr_ryu, TRUE );
+	}
+
+
+	if( estado == 3 )
+	{
+		//320x224px
+		VDP_setScreenWidth320();
+		VDP_setScreenHeight224();
+
+		//paletas
+		VDP_setPalette( PAL0, bge_image.palette->data );
+
+		//inicializa motor de sprites
+		SPR_init( 0, 0, 0 );
+
+		//backgrounds
+		ind = TILE_USERINDEX;
+		VDP_drawImageEx( BG_A, &bge_image, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+		ind += bge_image.tileset->numTile;
+
+		//Configura el scroll (por LINEA)
+		VDP_setScrollingMode( HSCROLL_LINE, VSCROLL_PLANE );
+	}
+
+
+	if( estado == 4 )
+	{
+
+		for( int i = 0; i < 224; i++ )         vSeparacion[ i ] = 0;
+		//lineas pares una velocidad, lineas impares la contraria
+		for( int i = 0; i < 224; i++ ) if( i % 2 ) vSeparacion_ace[ i ] = FIX16( 0.05 ); else  vSeparacion_ace[ i ] = FIX16( -0.05 );
+		for( int i = 0; i < 224; i++ )         vSeparacion_aux[ i ] = FIX16( 0 );
+
+		//320x224px
+		VDP_setScreenWidth320();
+		VDP_setScreenHeight224();
 
 		//inicializa motor de sprites
 		SPR_init( 0, 0, 0 );
 
 		//paletas
-		VDP_setPalette( PAL0, data6 );
-
+		VDP_setPalette( PAL0, bge_image.palette->data );
 		//backgrounds
 		ind = TILE_USERINDEX;
-		VDP_drawImageEx( BG_A, &bgv_image, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-		ind += numTile5;
+		VDP_drawImageEx( BG_A, &bge_image, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
+		ind += bge_image.tileset->numTile;
 
-		//Configura el scroll (por TILES vertical, el horizontal no lo uso, lo dejo por defecto)
-		VDP_setScrollingMode( HSCROLL_PLANE, VSCROLL_2TILE );
+		//Configura el scroll (por LINEA)
+		VDP_setScrollingMode( HSCROLL_LINE, VSCROLL_PLANE );
+
 	}
 
 
@@ -231,86 +261,49 @@ static void cargaESTADO()
 	cerrojo = 1;
 }
 
-
 static void actualizaCamara()
 {
-
-	if( estado == 1 ) //planoA:Estático, planoB:Scroll 6 primeras filas
+	if( estado == 1 )
 	{
-		VDP_setHorizontalScrollTile( BG_B, 0, vector01, 6, CPU );
-		for( int i = 0; i < 6; i++ ) vector01[ i ] = vector01[ i ] + 1;
-	}
-
-	if( estado == 2 ) //Idem pero con distinto vector inicial
-	{
-		VDP_setHorizontalScrollTile( BG_B, 0, vector02, 6, CPU );
-		for( int i = 0; i < 6; i++ ) vector02[ i ] = vector02[ i ] + 1;
-	}
-
-	if( estado == 3 ) //Idem pero con distinta velocidad por fila
-	{
-		VDP_setHorizontalScrollTile( BG_B, 0, vector02, 6, CPU );
-		for( int i = 0; i < 6; i++ ) vector02[ i ] = vector02[ i ] + i;
-	}
-
-	if( estado == 4 ) //Idem usando vector aceleracion ( v_aceleracion01 )
-	{
-		VDP_setHorizontalScrollTile( BG_B, 0, vector02, 6, CPU );
-		for( int i = 0; i < 6; i++ ) vector02[ i ] += v_aceleracion01[ i ];
-	}
-
-	if( estado == 5 ) //Scroll por tiles en 2 zonas diferentes de la TV
-	{
-		//nubes
-		VDP_setHorizontalScrollTile( BG_B, 0, vector01, 6, CPU );
-		for( int i = 0; i < 6; i++ )  vector01[ i ] += 2;
-		//mar
-		VDP_setHorizontalScrollTile( BG_B, 18, vector03, 10, CPU );
-		for( int i = 0; i < 10; i++ ) vector03[ i ] -= v_aceleracion02[ i ];
-	}
-
-	if( estado == 6 ) //scroll por tiles en 2 zonas en plano B y 1 zona en plano A
-	{
-		//nubes
-		VDP_setHorizontalScrollTile( BG_B, 0, vector01, 6, CPU );
-		for( int i = 0; i < 6; i++ )  vector01[ i ] -= 2;
-		//mar
-		VDP_setHorizontalScrollTile( BG_B, 18, vector03, 10, CPU );
-		for( int i = 0; i < 10; i++ ) vector03[ i ] -= v_aceleracion02[ i ];
 		//plano A
-		VDP_setHorizontalScrollTile( BG_A, 0, vector04, 28, CPU );
-		for( int i = 0; i < 28; i++ ) vector04[ i ] = offsetA;
-	}
-
-	if( estado == 7 ) //scroll por tiles todo plano B y muchas zonas en plano A
-	{
-		//plano B: scroll hasta que el planeta llega a mitad de pantalla aprox
-		if( vector05[ 0 ] >= ( -200 ) )
-		{
-			VDP_setHorizontalScrollTile( BG_B, 0, vector05, 28, CPU );
-			for( int i = 0; i < 28; i++ ) {
-				vector_aux[ i ] = fix16Sub( vector_aux[ i ], aceleracion04 );
-				vector05[ i ] = fix16ToInt( vector_aux[ i ] );
-			}
+		for( int i = 0; i < 224; i++ ) vectorA[ i ] = offsetA;
+		VDP_setHorizontalScrollLine( BG_A, 0, vectorA, 224, CPU );
+		offsetA--;
+		//plano B: nubes
+		for( int i = 0; i < 50; i++ )  vectorB1[ i ] -= 2;
+		VDP_setHorizontalScrollLine( BG_B, 0, vectorB1, 50, CPU );
+		//plano B: mar
+		for( int i = 0; i < 80; i++ ) {
+			vectorB2_aux[ i ] = fix16Sub( vectorB2_aux[ i ], vectorB2_ace + i );
+			vectorB2[ i ] = fix16ToInt( vectorB2_aux[ i ] );
 		}
-
-		//plano A
-		VDP_setHorizontalScrollTile( BG_A, 0, vector06, 28, CPU );
-		for( int i = 0; i < 28; i++ ) vector06[ i ] -= v_aceleracion03[ i ];
-
-		//metemos aqui el mov de los enemigos (deberia ir en otro lado, pero por simplificar)
-		for( int i = 0; i < 6; i++ ) {
-			SPR_setPosition( Enemigos[ i ], enemigo_posx[ i ] -= 3, enemigo_posy[ i ] );
-			//si se sale por la izq, lo ponemos a la derecha en otra posicion
-			if( enemigo_posx[ i ] < -50 ) { enemigo_posx[ i ] = 350; enemigo_posy[ i ] = ( ( ( random() % 200 ) - 1 ) + 1 ); } //200 es el max de la coordenada y
-		}
+		VDP_setHorizontalScrollLine( BG_B, 144, vectorB2, 80, CPU );
 	}
 
-	if( estado == 8 ) //scroll por tiles vertical
+	if( estado == 2 )
+	{
+		//plano A (todo lo que no es el suelo)
+		for( int i = 0; i < 180; i++ ) vectorA[ i ] += offsetA;
+		VDP_setHorizontalScrollLine( BG_A, 0, vectorA, 180, CPU );
+		//plano A (suelo)
+		VDP_setHorizontalScrollLine( BG_A, 180, vectorS, 40, CPU );
+		//plano B (completo)
+		for( int i = 0; i < 224; i++ ) {
+			vectorB_aux[ i ] = fix16Add( vectorB_aux[ i ], offsetB );
+			vectorB[ i ] = fix16ToInt( vectorB_aux[ i ] );
+		}
+		VDP_setHorizontalScrollLine( BG_B, 0, vectorB, 224, CPU );
+	}
+
+	if( estado == 3 )
+	{
+		//en este ejemplo no hacemos nada desde aqui
+	}
+
+	if( estado == 4 )
 	{
 		//plano A
-		VDP_setVerticalScrollTile( BG_A, 0, vector07, 20, CPU );
-		for( int i = 0; i < 20; i++ ) vector07[ i ] -= v_aceleracion04[ i ];
+		VDP_setHorizontalScrollLine( BG_A, 0, vectorS, 224, CPU );
 	}
 
 }
@@ -327,136 +320,160 @@ static void handleInput()
 	if( estado == 2 )
 	{
 		if( value & BUTTON_B ) cerrojo = 0;
-	}
 
-	if( estado == 3 )
-	{
-		if( value & BUTTON_C ) cerrojo = 0;
-	}
-
-	if( estado == 4 )
-	{
-
-		if( value & BUTTON_A ) cerrojo = 0;
-	}
-
-	if( estado == 5 )
-	{
-		if( value & BUTTON_B ) cerrojo = 0;
-	}
-
-	if( estado == 6 ) //PAD: Mueve scroll Y sprite
-	{
-		if( value & BUTTON_LEFT )
-		{   //plano
-			offsetA += aceleracionA;
-			//sprite
-			SPR_setAnim( Sonic, ANIM_RUN ); SPR_setHFlip( Sonic, TRUE );
-		}
-		if( value & BUTTON_RIGHT )
-		{
-			offsetA -= aceleracionA;
-			SPR_setAnim( Sonic, ANIM_RUN ); SPR_setHFlip( Sonic, FALSE );
-		}
-
-		//si no pulsamos, Sonic animacion idle
-		if( ( !( value & BUTTON_RIGHT ) ) && ( !( value & BUTTON_LEFT ) ) ) SPR_setAnim( Sonic, ANIM_STAND );
-
-		//abre el cerrojo para salir del bucle secundario
-		if( value & BUTTON_C ) cerrojo = 0;
-	}
-
-	if( estado == 7 ) //pad: mueve nave, con limites | tecla START: reiniciar
-	{
+		//si pulsamos izquierda...
 		if( value & BUTTON_LEFT )
 		{
-			//sprite (limites para que no se salga de la pantalla)
-			posx -= 2; if( posx <= LIMITE_IZQ ) posx = LIMITE_IZQ;
-			SPR_setAnim( Nave, ANIM_NAVE_MOV );
+			if( spr_posx >= LIMITE_IZQ )
+			{
+				SPR_setPosition( spr_ryu, spr_posx -= 2, spr_posy );
+				SPR_setAnim( spr_ryu, ANIM_WALK );
+				SPR_setHFlip( spr_ryu, FALSE );
+				offsetA = +1;                 //plano A (todo lo que no es el suelo)
+				offsetB = VELOCIDAD_FONDO_B;  //plano B
+
+											  //plano A (suelo)
+				for( int i = 0; i < 40; i++ ) {
+					vectorS_aux[ i ] = fix16Sub( vectorS_aux[ i ], vectorS_ace[ i ] ); //aceleracion para el suelo
+					vectorS_aux[ i ] = fix16Add( vectorS_aux[ i ], FIX16( +1 ) );      //mas el desplazamiento del fondo
+					vectorS[ i ] = fix16ToInt( vectorS_aux[ i ] );
+				}
+
+			}
+			else { offsetA = 0; offsetB = FIX16( 0 ); }
 		}
+
+		//si pulsamos derecha...
 		if( value & BUTTON_RIGHT )
 		{
-			posx += 2; if( posx >= LIMITE_DCH ) posx = LIMITE_DCH;
-			SPR_setAnim( Nave, ANIM_NAVE_MOV );
+			if( spr_posx <= LIMITE_DCHO )
+			{
+				SPR_setPosition( spr_ryu, spr_posx += 2, spr_posy );
+				SPR_setAnim( spr_ryu, ANIM_WALK );
+				SPR_setHFlip( spr_ryu, TRUE );
+				offsetA = -1;                    //plano A (todo lo que no es el suelo)
+				offsetB = VELOCIDAD_FONDO_BN;    //plano B
+
+												 //plano A (suelo)
+				for( int i = 0; i < 40; i++ ) {
+					vectorS_aux[ i ] = fix16Add( vectorS_aux[ i ], vectorS_ace[ i ] ); //aceleracion para el suelo
+					vectorS_aux[ i ] = fix16Add( vectorS_aux[ i ], FIX16( -1 ) );       //mas el desplazamiento del fondo
+					vectorS[ i ] = fix16ToInt( vectorS_aux[ i ] );
+				}
+
+			}
+			else { offsetA = 0; offsetB = FIX16( 0 ); }
 		}
 
-		if( value & BUTTON_UP )
+		//si no pulsamos
+		if( ( !( value & BUTTON_RIGHT ) ) && ( !( value & BUTTON_LEFT ) ) )
 		{
-			posy -= 2; if( posy <= LIMITE_UP ) posy = LIMITE_UP;
-			SPR_setAnim( Nave, ANIM_NAVE_MOV );
+			SPR_setAnim( spr_ryu, ANIM_STAND );
+			offsetA = 0; offsetB = FIX16( 0 );
 		}
-		if( value & BUTTON_DOWN )
-		{
-			posy += 2; if( posy >= LIMITE_DOWN ) posy = LIMITE_DOWN;
-			SPR_setAnim( Nave, ANIM_NAVE_MOV );
-		}
-
-		//si no pulsamos, animacion idle
-		if( ( !( value & BUTTON_RIGHT ) ) && ( !( value & BUTTON_LEFT ) ) &&
-			( !( value & BUTTON_UP ) ) && ( !( value & BUTTON_DOWN ) ) )
-			SPR_setAnim( Nave, ANIM_NAVE_IDLE );
-
-		//abre el cerrojo para salir del bucle secundario
-		if( value & BUTTON_A ) cerrojo = 0;
-
-		//actualiza posicion del sprite
-		SPR_setPosition( Nave, posx, posy );
 	}
 
-	if( estado == 8 ) //scroll tiles vertical | tecla START: reiniciar
+	if( estado == 3 ) //deformacion logo = ejemplo diagonales de Entrada Castlevania
 	{
-		//reinicia la ROM
-		if( value & BUTTON_START ) SYS_hardReset();  //hay que añadir #include "sys.h" en la cabecera
+		if( value & BUTTON_C ) cerrojo = 0;
+
+		if( value & BUTTON_RIGHT )
+		{
+			//incrementamos la diagonal
+			diagonal_dinamica = fix16Add( diagonal_dinamica, FIX16( 0.025 ) );
+			//como antes
+			fix16 line_scroll_data[ NUM_LINES ];
+			fix16 line_speed_data[ NUM_LINES ];
+			s16 aux[ NUM_LINES ];
+			//en este caso la tabla cambia
+			InitializeScrollTable();
+			InitializeSpeedTable_dinamica();
+
+			for( u16 i = 0; i < NUM_LINES; i++ )
+			{
+				line_scroll_data[ i ] = fix16Add( line_scroll_data[ i ], line_speed_data[ i ] );
+				aux[ i ] = fix16ToInt( line_scroll_data[ i ] );
+			}
+
+			VDP_setHorizontalScrollLine( BG_A, 0, aux, NUM_LINES, 1 );
+		}
+
+		if( value & BUTTON_LEFT )
+		{
+			//incrementamos la diagonal
+			diagonal_dinamica = fix16Sub( diagonal_dinamica, FIX16( 0.025 ) );
+			//como antes
+			fix16 line_scroll_data[ NUM_LINES ];
+			fix16 line_speed_data[ NUM_LINES ];
+			s16 aux[ NUM_LINES ];
+			//en este caso la tabla cambia
+			InitializeScrollTable();
+			InitializeSpeedTable_dinamica();
+
+			for( u16 i = 0; i < NUM_LINES; i++ )
+			{
+				line_scroll_data[ i ] = fix16Add( line_scroll_data[ i ], line_speed_data[ i ] );
+				aux[ i ] = fix16ToInt( line_scroll_data[ i ] );
+			}
+
+			VDP_setHorizontalScrollLine( BG_A, 0, aux, NUM_LINES, 1 );
+		}
 	}
+
+
+	if( estado == 4 ) //separacion por lineas
+	{
+
+		if( value & BUTTON_START ) SYS_hardReset();  //reinicia la ROM, hay que añadir #include "sys.h" en la cabecera
+
+		if( value & BUTTON_RIGHT )
+		{
+			//
+			for( int i = 0; i < 224; i++ ) {
+				vSeparacion_aux[ i ] = fix16Add( vSeparacion_aux[ i ], vSeparacion_ace[ i ] );
+				vSeparacion[ i ] = fix16ToInt( vSeparacion_aux[ i ] );
+			}
+		}
+		if( value & BUTTON_LEFT )
+		{
+			//
+			for( int i = 0; i < 224; i++ ) {
+				vSeparacion_aux[ i ] = fix16Sub( vSeparacion_aux[ i ], vSeparacion_ace[ i ] );
+				vSeparacion[ i ] = fix16ToInt( vSeparacion_aux[ i ] );
+			}
+		}
+	}
+
 }
+
+
 static void muestraMENSAJES()
 {
+
 	if( estado == 1 ) //estado inicial al empezar el programa
 	{
-		VDP_drawText( "Ejemplo 01", 4, 12 );
-		VDP_drawText( "Pulsa -A- para continuar", 4, 13 );
+		VDP_drawText( "Ejemplo 01", 18, 10 );
+		VDP_drawText( "Pulsa -A- para continuar", 18, 11 );
 	}
 
 	if( estado == 2 )
 	{
-		VDP_drawText( "Ejemplo 02", 4, 12 );
-		VDP_drawText( "Pulsa -B- para continuar", 4, 13 );
+		VDP_drawText( "Ejemplo 02", 18, 10 );
+		VDP_drawText( "LEFT/RIGHT: Movimiento", 18, 12 );
+		VDP_drawText( "Pulsa -B- para continuar", 18, 13 );
 	}
 
 	if( estado == 3 )
 	{
-		VDP_drawText( "Ejemplo 03", 4, 12 );
-		VDP_drawText( "Pulsa -C- para continuar", 4, 13 );
+		VDP_drawText( "Ejemplo 03", 10, 22 );
+		VDP_drawText( "LEFT/RIGHT: Diagonal", 10, 23 );
+		VDP_drawText( "Pulsa -C- para continuar", 10, 24 );
 	}
 
 	if( estado == 4 )
 	{
-		VDP_drawText( "Ejemplo 04", 4, 12 );
-		VDP_drawText( "Pulsa -A- para continuar", 4, 13 );
+		VDP_drawText( "Ejemplo 04", 10, 22 );
+		VDP_drawText( "LEFT/RIGHT: Separacion", 10, 23 );
+		VDP_drawText( "Pulsa -START- para REINICIAR", 10, 24 );
 	}
-
-	if( estado == 5 )
-	{
-		VDP_drawText( "Ejemplo 05", 4, 12 );
-		VDP_drawText( "Pulsa -B- para continuar", 4, 13 );
-	}
-
-	if( estado == 6 )
-	{
-		VDP_drawText( "Ejemplo 06", 4, 12 );
-		VDP_drawText( "Pulsa -C- para continuar", 4, 13 );
-	}
-
-	if( estado == 7 )
-	{
-		VDP_drawTextBG( BG_B, "Ejemplo 07", 14, 24 );
-		VDP_drawTextBG( BG_B, "Pulsa -A- para continuar", 14, 25 );
-	}
-
-	if( estado == 8 )
-	{
-		VDP_drawTextBG( BG_B, "Ejemplo 08", 7, 24 );
-		VDP_drawTextBG( BG_B, "Pulsa -START- para REINICIAR", 7, 25 );
-	}
-
 }

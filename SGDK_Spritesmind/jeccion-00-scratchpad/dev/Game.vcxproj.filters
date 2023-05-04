@@ -21,7 +21,7 @@
     <ClCompile Include="..\gfx\res\gfx.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\gfx\res\sprite.c">
+    <ClCompile Include="..\gfx\res\sprites.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

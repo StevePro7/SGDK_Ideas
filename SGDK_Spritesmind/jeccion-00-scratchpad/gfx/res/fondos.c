@@ -2,6 +2,6 @@
 
 #include "_genesis.h"
 
-const Image bg_image = { NULL, NULL, NULL };
+const Image fondo1 = { NULL, NULL, NULL };
 
 #endif

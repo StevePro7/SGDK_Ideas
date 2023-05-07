@@ -7,7 +7,7 @@
 #include <genesis.h>
 #endif
 
-#include "fondos.h"
+#include "gfx.h"
 #include "sprite.h"
 
 #endif//__MAIN__

@@ -8,6 +8,6 @@
 #endif
 
 #include "fondos.h"
-#include "sprites.h"
+#include "sprite.h"
 
 #endif//__MAIN__

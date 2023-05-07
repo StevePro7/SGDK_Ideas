@@ -1,505 +1,595 @@
+
+/*
+EJEMPLO 0: Tintado usando paleta de rojos (PAL3)
+EJEMPLO 1: Tintado LENTO usando paleta de rojos (PAL3)
+EJEMPLO 2: Tintado usando solo 1 color (color 9 de la paleta 0)
+EJEMPLO 3: Tintado usando una paleta usando (PAL1)
+EJEMPLO 4: Borrado completo de un plano
+EJEMPLO 5: Borrado parcial de un plano
+EJEMPLO 6: Torres destructibles: Cambio de tiles
+*/
+
 #include "main.h"
 
-//Constantes
+#define FUERA_PANTALLA      -100    //para colocar cosas fuera de la zona visible de la TV
+#define MAX_TORRES          2       //num de torres
+#define T_TINTE             2       //tiempo durante el cual sprite/escenario se pone rojo al recibir colision
+#define T_TINTE_LENTO       9       //tiempo durante el cual sprite/escenario se pone rojo al recibir colision
+#define POS_MIRA            8       //Posición disparo respecto a la mira
 
-#define NAVE_IDLE                0  //sprites de la nave
-#define NAVE_UP                  1
-#define NAVE_DOWN                2
-#define VELOCIDAD_PLAYER         2  //velocidad desplazamiento nave
+//declaracion de funciones
 
-#define BLOQUEO_DISPARO          10 //Regula disparos x seg: num ciclos xa desbloquear sig disparo,
-#define BLOQUEO_DISPARO_BOSS     5  //valor mas bajo = balas salen con mas frecuencia.
+void joyEvent( u16 joy, u16 changed, u16 state );
 
-#define MAX_BALAS_PLAYER        15  //max num de balas en pantalla
-#define MAX_BALAS_BOSS          40  //max num de balas en pantalla
-#define MAX_EXPLOSIONES         10  //max num de explosiones en pantalla
+void crea_nivel();
+void crea_decorado();
+void maneja_decorado();
+void crea_mira();
+void maneja_mira();
 
-#define VELOCIDAD_BALA_PLAYER    6  //valor mas alto = mas rapido
-#define VELOCIDAD_BALA_BOSS      1
+void trata_bala_player();
+void crea_bala_player();
+//void activa_bala_player();
+void maneja_bala_player();
 
-#define CAJA_COL_PLAYER_X1       8 //son coordenadas relativas a la posicion
-#define CAJA_COL_PLAYER_Y1       8 //del sprite. La caja es de 8x8px
-#define CAJA_COL_PLAYER_X2      16 //es decir, 1 tile, está situada justo en
-#define CAJA_COL_PLAYER_Y2      16 //el cuerpo de la nave
+void detecta_colision();
 
-#define CAJA_COL_BOSS_X1       230 //son coordenadas absolutas de la pantalla
-#define CAJA_COL_BOSS_Y1        35 //ya que el boss es en realidad un fondo
-#define CAJA_COL_BOSS_X2       290
-#define CAJA_COL_BOSS_Y2       145
-
-#define EXPLOSION_T_VIDA        30 //num de ciclos que se repite una explosion antes de eliminarse
+void muestraMENSAJES();
+void pinta_vida();
 
 
-//Declaracion de funciones
+//declaracion de variables
+int cerrojo = 1;  //para ir viendo los distintos ejemplos
+int ejemplo = 0;  //ejemplo mostrado
 
-static void inicializa_balas_player();
-static void inicializa_explosiones();
-static void inicializa_lista_balas_boss();
-
-static void crea_bala_player( int tipo );
-static void mantenimiento_balas_player();
-
-static void crea_explosion( int x, int y );
-static void mantenimiento_explosiones();
-
-static void crea_bala_boss();
-static void mantenimiento_balas_boss();
-
-static void actualiza_caja_colisiones_player();
-
-static void handleInput();
-static void MIDEBUG();
-
-
-//Declaracion de variables
-
-//Nave del Player
 struct {
-	Sprite *spr_player; //puntero al sprite
-	int x, y;           //posición
-	int x1, y1, x2, y2;    //caja de colision
-	int tempo_disparo;  //tempo de repetición de disparo
-}NAVE;
+	s16 x, y;           //posicion
+	s16 movx;           //Velocidad mov eje x
+	s16 movy;           //Velocidad mov eje y
+	Sprite *spr_mira;   //grafico de la mira
+}Mira;
 
-//BOSS
 struct {
+	Sprite* spr_bala;
+	s16 x, y;            //posicion
+	int esta_activo;    //0=bala "muerta"="sin uso" / del 1 al 4 activo y corresponde a los 4 frames del disparo
+}DisparoPlayer;
 
-	//el boss es un fondo, no necesita Sprite*
-	//el boss es un fondo, no necesita x,y
-	int x1, y1, x2, y2;        //caja de colision
-	int tempo_disparo;
+struct {
+	int vida;           //puntos vida
+	int estado;         //estado (0=inicial, 1=semidestruida, 2= cimientos)
+	s16 colX1, colY1;    //caja colision torre (punto sup izq)
+	s16 colX2, colY2;    //caja colision torre (punto inf dch)
+	s16 activa_impacto; //para mostrar impactos
+	s16 t_impacto;      //para mostrar impactos
+}Torre[ 2 ];
 
-}BOSS;
+TileMap *Estructuras;        // para el MAP de las Torres
 
-//BALAS NAVE
-struct estructura_bala {
-	int a, x, y;        // a=activa, x,y=coordenadas.
-	int tipo;           // 0=disparo normal, 1=disparo triple
-	Sprite *spr;        // sprite
-};
-//declaracion de arrays de structs
-struct estructura_bala lista_balas_player[ MAX_BALAS_PLAYER ];
-//numero de balas del player
-int num_balas_player;
-
-
-
-//BALAS BOSS
-//creo un struct diferente para no liar el codigo
-//es exactamente igual al normal
-typedef struct estructura_bala2 {
-	int a, x, y;        // a=activa, x,y=coordenadas.
-	int tipo;           // 0=disparo normal, 1=disparo triple
-	Sprite *spr;        // sprite
-}bala_boss;
-//declaracion de puntero a arrays de structs
-struct estructura_bala2 *lista_balas_boss;
-//numero balas del boss (para optimizar el bucle)
-int num_balas_boss;
-
-
-//EXPLOSIONES (tanto player como boss)
-struct estructura_explosion {
-	int a, x, y;        // a=activo, x,y=coordenadas
-	int t_vida;         //lo que dura la explosion (en ciclos)
-	Sprite *spr;
-}lista_explosiones[ MAX_EXPLOSIONES ];
-int num_explosiones;
-
-//total sprites activos
-int total_sprites;
+u16 id_tile_inicial;    // siempre será 1 (el tile 0 se lo reserva el SGDK)
+u16 id_tile_final_planB;// apunta al primer tile libre DESPUES de cargar en mem VDP los tiles del plan B
+u16 id_tile_final_planA;// apunta al primer tile libre DESPUES de cargar en mem VDP los tiles del plan A
 
 
 
 
+int main() {
 
-//INICIALIZACIONES
-static void inicializa_balas_player() {
-	for( int cont = 0; cont <MAX_BALAS_PLAYER; cont++ ) {
-		lista_balas_player[ cont ].a = 0;
-		lista_balas_player[ cont ].x = -50; // se crean fuera de pantalla visible de forma que
-		lista_balas_player[ cont ].y = -50; // al asignar el sprite (abajo), éste no se vea
-		lista_balas_player[ cont ].tipo = 0;
-		lista_balas_player[ cont ].spr = SPR_addSprite( &bala_sprite, lista_balas_player[ cont ].x,
-			lista_balas_player[ cont ].y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
-	}
-}
-static void inicializa_explosiones() {
-	for( int cont = 0; cont <MAX_EXPLOSIONES; cont++ ) {
-		lista_explosiones[ cont ].x = -50;
-		lista_explosiones[ cont ].y = -50;
-		lista_explosiones[ cont ].spr = SPR_addSprite( &explosion_sprite, lista_explosiones[ cont ].x,
-			lista_explosiones[ cont ].y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
-	}
-}
-static void inicializa_lista_balas_boss() {
+	//320x224
+	VDP_setScreenWidth320();
+	VDP_setScreenHeight224();
+	//Recoge la paleta del fondo y de las torres
+	VDP_setPalette( PAL0, fondo01_01.palette->data );
+	//Recoge la paleta de la mira, de los disparos y del texto
+	VDP_setPalette( PAL1, sprite_mira.palette->data );
+	//Paleta 3 a ROJOS, para el ejemplo correspondiente.
+	//    ( la PAL2 no la inicializo ni uso, el SGDK la pondrá de forma automática a verdes )
+	VDP_setPalette( PAL3, palette_red );
+	//Inicia el motor de sprites
+	SPR_init();
+	//creacion de elementos
+	crea_nivel();         //crea el nivel
+	crea_bala_player();   //crea el disparo (antes que la mira para salir por delante)
+	crea_mira();          //crea la  mira
+						  //deteccion asincrona de pulsaciones (para cambiar de ejemplo)
+	JOY_setEventHandler( joyEvent );
 
-	lista_balas_boss = MEM_alloc( MAX_BALAS_BOSS * sizeof( bala_boss ) );
-
-	for( int cont = 0; cont <MAX_BALAS_BOSS; cont++ ) {
-		lista_balas_boss[ cont ].a = 0;
-		lista_balas_boss[ cont ].x = -50;
-		lista_balas_boss[ cont ].y = -50;
-		lista_balas_boss[ cont ].tipo = 0;
-		lista_balas_boss[ cont ].spr = SPR_addSprite( &bala_sprite, lista_balas_boss[ cont ].x,
-			lista_balas_boss[ cont ].y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
-	}
-
-	num_balas_player = 0;
-	num_balas_boss = 0;
-	num_explosiones = 0;
-	total_sprites = 0;
-}
-
-
-
-//CREA BALA PLAYER
-//crea una bala en la primera pos libre del array
-//tipo: 0=disparo normal, 1=disparo triple
-static void crea_bala_player( int tipo )
-{
-	for( int cont = 0; cont <MAX_BALAS_PLAYER; cont++ )
+	//BUCLE PRINCIPAL
+	while( TRUE )
 	{
-		if( lista_balas_player[ cont ].a == 0 )
+		crea_decorado();      //re-crea el decorado, las torres (se hace al final para salir por detras)
+		muestraMENSAJES();    //ayuda en pantalla
+
+							  //BUCLE SECUNDARIO (una vez por ejemplo)
+		while( cerrojo )
 		{
-			lista_balas_player[ cont ].a = 1;
-			lista_balas_player[ cont ].x = NAVE.x + 30;
-			lista_balas_player[ cont ].y = NAVE.y + 15;
-			lista_balas_player[ cont ].tipo = tipo;
-			num_balas_player++;
-			total_sprites++;
-			break;
+			maneja_decorado();
+			maneja_mira();
+			trata_bala_player();
+			pinta_vida();
+			//actualiza VDP
+			SPR_update();
+			//Espera al barrido vertical TV
+			VDP_waitVSync();
 		}
+
+		ejemplo++;
 	}
-}
 
-
-//VIDA DE UNA BALA DEL PLAYER
-//- Mueve bala según su tipo (recto o en diagonal)
-//- Elimina la bala si se sale de la pantalla
-//- Elimina la bala si toca la caja de colision del enemigo
-static void mantenimiento_balas_player()
-{
-	for( int cont = 0; cont <MAX_BALAS_PLAYER; cont++ )
-	{
-		if( lista_balas_player[ cont ].a != 0 ) //solo las activas
-		{
-			if( lista_balas_player[ cont ].tipo == 0 )       lista_balas_player[ cont ].x += VELOCIDAD_BALA_PLAYER;
-			else if( lista_balas_player[ cont ].tipo == 1 ) { lista_balas_player[ cont ].x += VELOCIDAD_BALA_PLAYER; lista_balas_player[ cont ].y--; }
-			else if( lista_balas_player[ cont ].tipo == 2 ) { lista_balas_player[ cont ].x += VELOCIDAD_BALA_PLAYER; lista_balas_player[ cont ].y++; }
-
-			//sale de la pantalla
-			if( lista_balas_player[ cont ].x >= 330 || lista_balas_player[ cont ].y <= -20 || lista_balas_player[ cont ].y >= 240 )
-			{
-				lista_balas_player[ cont ].a = 0;  //marca como inactivo en el vector
-				num_balas_player--;               //una bala menos
-				total_sprites--;
-				continue;                         //esta ya fuera de la zona visible, sigue el FOR en la sig iteracion
-			}
-			//choca con la caja de colision del boss
-			if( lista_balas_player[ cont ].x>BOSS.x1 && lista_balas_player[ cont ].x<BOSS.x2 &&
-				lista_balas_player[ cont ].y>BOSS.y1 && lista_balas_player[ cont ].y<BOSS.y2 )
-			{
-				crea_explosion( lista_balas_player[ cont ].x, lista_balas_player[ cont ].y );
-
-				lista_balas_player[ cont ].a = 0;
-				lista_balas_player[ cont ].x = -50;
-				lista_balas_player[ cont ].y = -50;
-				num_balas_player--;
-				total_sprites--;
-			}
-			//situa la bala donde toque
-			SPR_setPosition( lista_balas_player[ cont ].spr, lista_balas_player[ cont ].x, lista_balas_player[ cont ].y );
-		}
-	}
-}
-
-//CREA EXPLOSION en la pos x,y
-static void crea_explosion( int x, int y )
-{
-	for( int cont = 0; cont <MAX_EXPLOSIONES; cont++ )
-	{
-		if( lista_explosiones[ cont ].a == 0 )
-		{
-			lista_explosiones[ cont ].a = 1;
-			lista_explosiones[ cont ].x = x;
-			lista_explosiones[ cont ].y = y;
-			lista_explosiones[ cont ].t_vida = EXPLOSION_T_VIDA;
-			SPR_setPosition( lista_explosiones[ cont ].spr, lista_explosiones[ cont ].x, lista_explosiones[ cont ].y );
-			num_explosiones++;
-			total_sprites++;
-			break;
-		}
-	}
-}
-
-
-//VIDA DE UNA EXPLOSION
-// Cada ciclo disminuye su t_vida, al llegar a cero se elimina
-static void mantenimiento_explosiones()
-{
-	for( int cont = 0; cont <MAX_EXPLOSIONES; cont++ )
-	{
-		if( lista_explosiones[ cont ].a != 0 ) //solo las activas
-		{
-			lista_explosiones[ cont ].t_vida--;
-			if( lista_explosiones[ cont ].t_vida <= 0 )
-			{
-				lista_explosiones[ cont ].a = 0;                   //marca como inactivo en el vector
-				lista_explosiones[ cont ].x = -100;                 //posición (fuera de la pantalla), falta decirle
-				lista_explosiones[ cont ].y = -100;                 //al VDP que actualice la posicion en la tabla de sprites
-				SPR_setPosition( lista_explosiones[ cont ].spr, lista_explosiones[ cont ].x, lista_explosiones[ cont ].y );
-				num_explosiones--;
-				total_sprites--;
-			}
-		}
-	}
+	return 1;
 }
 
 
 
 
-//CREA BALA DEL BOSS
-//NO CREA, activa (a=1) la bala de la primera pos libre del array
-//La bala se situa en una posición vertical aleatoria y con x=220
-//El sprite ya lo tenía asignado previamente
-static void crea_bala_boss()
-{
-	for( int cont = 0; cont <MAX_BALAS_BOSS; cont++ )
-	{
-		if( lista_balas_boss[ cont ].a == 0 )
-		{
-			lista_balas_boss[ cont ].a = 1;
-			lista_balas_boss[ cont ].tipo = ( ( ( random() % 3 ) - 1 ) + 1 ); // da 0,1 y 2
-			lista_balas_boss[ cont ].x = 220;
-			lista_balas_boss[ cont ].y = ( ( ( random() % 200 ) - 1 ) + 1 );  //200 es el max de la coordenada y
-			num_balas_boss++;
-			total_sprites++;
-			break;
-		}
-	}
+
+
+
+//CREA LOS FONDOS INICIALES
+void crea_nivel() {
+
+	//Desactiva las interrupciones
+	SYS_disableInts();
+
+	//Borra los ambos planos
+	VDP_clearPlane( BG_A, TRUE );
+	VDP_clearPlane( BG_B, TRUE );
+
+	//FONDOS
+	id_tile_inicial = 1;
+	//PLANO B: fondo castillo
+	VDP_drawImageEx( BG_B, &fondo01_01, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_inicial ), 0, 0, FALSE, TRUE );
+	id_tile_final_planB += fondo01_01.tileset->numTile;
+
+	//PLANO A: Las 2 torres
+	Estructuras = unpackTileMap( fondo01_01_torres.tilemap, NULL );
+	VDP_loadTileSet( fondo01_01_torres.tileset, id_tile_final_planB, CPU ); //id_tile_final_planB->porque los tiles de las torres se guardan a continuacion
+	VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 0, 0, 10, 11 );
+	VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), 31, 4, 0, 0, 10, 11 );
+	id_tile_final_planA += fondo01_01.tileset->numTile;                  //id_tile_final_planA->indicara primera posicion libre mem VDP despues de cargar los tiles de las torres
+
+																		 //Activa las interrupciones
+	SYS_enableInts();
+
+}
+
+//CREA LA MIRA Y LA SITUA DENTRO DE LA PANTALLA VISIBLE
+void crea_mira() {
+
+	//valores iniciales
+	Mira.x = 100;
+	Mira.y = 100;
+	Mira.movx = 2;
+	Mira.movy = 2;
+
+	//crea el sprite en el VDP
+	Mira.spr_mira = SPR_addSprite( &sprite_mira, Mira.x, Mira.y, TILE_ATTR( PAL1, TRUE, FALSE, FALSE ) );
 }
 
 
-//VIDA DE UNA BALA DEL BOSS
-//- Mueve bala según su tipo: 0,1,2: recto, diagonal-izq-arriba, diagonal-izq-abajo
-//- Elimina la bala si se sale de la pantalla o si toca la caja de colision del player
-//- Cuando dentro del bucle tratamos tantas balas como balas activas, salimos del bucle
-static void mantenimiento_balas_boss()
-{
-	for( int cont = 0, i = 0; cont < MAX_BALAS_BOSS; cont++ )
-	{
-		if( lista_balas_boss[ cont ].a == 1 )    //solo las activas
-		{
-			i++; if( i>num_balas_boss ) break; //no vamos a hacer más ciclos del bucle que los necesarios
+void maneja_mira() {
 
-			if( lista_balas_boss[ cont ].tipo == 0 )  lista_balas_boss[ cont ].x -= VELOCIDAD_BALA_BOSS;
-			if( lista_balas_boss[ cont ].tipo == 1 ) { lista_balas_boss[ cont ].x -= VELOCIDAD_BALA_BOSS; lista_balas_boss[ cont ].y--; }
-			if( lista_balas_boss[ cont ].tipo == 2 ) { lista_balas_boss[ cont ].x -= VELOCIDAD_BALA_BOSS; lista_balas_boss[ cont ].y++; }
-
-			//sale de la pantalla
-			if( lista_balas_boss[ cont ].x <= 0 || lista_balas_boss[ cont ].y <= 0 || lista_balas_boss[ cont ].y >= 220 )
-			{
-				lista_balas_boss[ cont ].a = 0;       //marca como inactivo en el vector
-				lista_balas_boss[ cont ].x = -50;     //fuera de la pantalla
-				lista_balas_boss[ cont ].y = -50;
-				num_balas_boss--;
-				total_sprites--;
-
-			}
-			//choca con la caja de colision del player
-			else if( lista_balas_boss[ cont ].x>NAVE.x1 && lista_balas_boss[ cont ].x<NAVE.x2 &&
-				lista_balas_boss[ cont ].y>NAVE.y1 && lista_balas_boss[ cont ].y<NAVE.y2 )
-			{
-				crea_explosion( lista_balas_boss[ cont ].x, lista_balas_boss[ cont ].y );
-				lista_balas_boss[ cont ].a = 0;
-				lista_balas_boss[ cont ].x = 0;
-				lista_balas_boss[ cont ].y = -50;
-				num_balas_boss--;
-				total_sprites--;
-			}
-
-			SPR_setPosition( lista_balas_boss[ cont ].spr, lista_balas_boss[ cont ].x, lista_balas_boss[ cont ].y );
-		}
-	}
-}
-
-
-//CAJA COLISION PLAYER
-static void actualiza_caja_colisiones_player()
-{
-	NAVE.x1 = NAVE.x + CAJA_COL_PLAYER_X1;
-	NAVE.y1 = NAVE.y + CAJA_COL_PLAYER_Y1;
-	NAVE.x2 = NAVE.x + CAJA_COL_PLAYER_X2;
-	NAVE.y2 = NAVE.y + CAJA_COL_PLAYER_Y2;
-}
-
-
-
-//Recoge la entrada del mando y actualiza la posicion de la nave
-static void handleInput()
-{
-	//variable donde se guarda la entrada del mando
 	u16 value = JOY_readJoypad( JOY_1 );
+
 	//si pulsamos izquierda...
 	if( value & BUTTON_LEFT )
-		SPR_setPosition( NAVE.spr_player, NAVE.x -= VELOCIDAD_PLAYER, NAVE.y );
+	{
+		SPR_setPosition( Mira.spr_mira, Mira.x -= Mira.movx, Mira.y );
+		Mira.x -= Mira.movx;
+	}
 	//si pulsamos derecha...
 	if( value & BUTTON_RIGHT )
-		SPR_setPosition( NAVE.spr_player, NAVE.x += VELOCIDAD_PLAYER, NAVE.y );
+	{
+		SPR_setPosition( Mira.spr_mira, Mira.x += Mira.movx, Mira.y );
+		Mira.x += Mira.movx;
+	}
 	//si pulsamos arriba...
 	if( value & BUTTON_UP )
 	{
-		SPR_setPosition( NAVE.spr_player, NAVE.x, NAVE.y -= VELOCIDAD_PLAYER ); SPR_setAnim( NAVE.spr_player, NAVE_UP );
+		SPR_setPosition( Mira.spr_mira, Mira.x, Mira.y -= Mira.movy );
+		Mira.y -= Mira.movy;
 	}
 	//si pulsamos abajo...
 	if( value & BUTTON_DOWN )
 	{
-		SPR_setPosition( NAVE.spr_player, NAVE.x, NAVE.y += VELOCIDAD_PLAYER ); SPR_setAnim( NAVE.spr_player, NAVE_DOWN );
+		SPR_setPosition( Mira.spr_mira, Mira.x, Mira.y += Mira.movy );
+		Mira.y += Mira.movy;
 	}
-	//si no pulsamos
-	if( ( !( value & BUTTON_UP ) ) && ( !( value & BUTTON_DOWN ) ) )             SPR_setAnim( NAVE.spr_player, NAVE_IDLE );
-
-	//limites
-	if( NAVE.x <= 0 )      NAVE.x = 2;
-	if( NAVE.x >= 320 - 32 ) NAVE.x = 320 - 32 - 2;
-	if( NAVE.y <= 0 )      NAVE.y = 2;
-	if( NAVE.y >= 224 - 24 ) NAVE.y = 224 - 24 - 2;
-
-	//si pulsamos A: PLAYER disparo normal
-	if( value & BUTTON_A && NAVE.tempo_disparo == 0 ) {
-		crea_bala_player( 0 );
-		NAVE.tempo_disparo = 1; //para bloquear el disparo durante un tiempo limitado (y que no salgan 60disparos/seg)
-	}
-	//para liberar el disparo despues de pulsar A
-	if( NAVE.tempo_disparo>0 ) NAVE.tempo_disparo++;
-	if( NAVE.tempo_disparo>BLOQUEO_DISPARO ) NAVE.tempo_disparo = 0;
-
-
-	//si pulsamos B: PLAYER disparo triple
-	if( value & BUTTON_B && NAVE.tempo_disparo == 0 ) {
-		crea_bala_player( 0 );
-		crea_bala_player( 1 );
-		crea_bala_player( 2 );
-		NAVE.tempo_disparo = 1; //para bloquear el disparo durante un tiempo limitado (y que no salgan 60disparos/seg)
-	}
-
-	//si pulsamos C
-	if( value & BUTTON_C && ( BOSS.tempo_disparo == 0 || BOSS.tempo_disparo == 1 ) ) {
-		crea_bala_boss();
-
-		BOSS.tempo_disparo++;
-	}
-	//para liberar el disparo despues de pulsar C
-	if( BOSS.tempo_disparo>0 ) BOSS.tempo_disparo++;
-	if( BOSS.tempo_disparo>BLOQUEO_DISPARO_BOSS ) BOSS.tempo_disparo = 0;
-
-
-	//DEBUG
-	if( value & BUTTON_START )
-		MEM_free( lista_balas_boss );
-
-
+	//'A' disparar
+	if( value & BUTTON_A ) maneja_bala_player();
 }
 
-
-
-//MIDEBUG: Muestra num de sprites en pantalla
-static void MIDEBUG()
+//Deteccion para cambiar de ejemplo
+void joyEvent( u16 joy, u16 changed, u16 state )
 {
-	//show total sprite number
-	char mi_string[ 32 ];
-	sprintf( mi_string, "Total sprites: %4d", total_sprites );
-	VDP_drawText( mi_string, 1, 24 );
-	//fps
-	VDP_showFPS( FALSE );
-}
-
-
-
-
-
-int main()
-{
-	//pone la pantalla a 320x224
-	VDP_setScreenWidth320();
-
-	//inicializa motor de sprites
-	SPR_init( 0, 0, 0 );
-
-	//Inicializa estructuras a CERO
-	inicializa_balas_player();
-	inicializa_explosiones();
-	inicializa_lista_balas_boss();
-
-	//Inicializa variables
-	NAVE.x = 64;
-	NAVE.y = 145;
-	NAVE.tempo_disparo = 0;
-
-	BOSS.tempo_disparo = 0;
-	BOSS.x1 = CAJA_COL_BOSS_X1; //al ser fijas, no es necesario
-	BOSS.y1 = CAJA_COL_BOSS_Y1; //recalcular cada frame como con
-	BOSS.x2 = CAJA_COL_BOSS_X2; //la nave
-	BOSS.y2 = CAJA_COL_BOSS_Y2;
-
-	//variable para llevar el control de tiles
-	u16 ind;
-
-	//recoge la paleta de bala, player y fondo (compartida)
-	VDP_setPalette( PAL0, nave_sprite.palette->data );
-
-	//fondos
-	ind = TILE_USERINDEX;
-	VDP_drawImageEx( BG_B, &fondo2, TILE_ATTR_FULL( PAL0, FALSE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-	ind += fondo2.tileset->numTile;
-	VDP_drawImageEx( BG_A, &fondo1, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, ind ), 0, 0, FALSE, TRUE );
-	ind += fondo1.tileset->numTile;
-
-	//configura el scroll
-	VDP_setScrollingMode( HSCROLL_PLANE, VSCROLL_PLANE );
-	int scrollValueVariable = 0;
-
-	//crea la nave del player
-	NAVE.spr_player = SPR_addSprite( &nave_sprite, NAVE.x, NAVE.y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
-
-	//AYUDA en pantalla
-	VDP_drawText( "  fps  BULLET HELL HELP  ", 2, 1 );
-	VDP_drawText( "PAD - Controles, A/B: Fire", 2, 2 );
-	VDP_drawText( "C: Boss Bullet Hell       ", 2, 3 );
-
-
-	//Bucle principal
-	while( TRUE )
+	if( state & ( BUTTON_B ) )
 	{
-		//muestra cuantos sprites hay en pantalla
-		MIDEBUG();
-
-		//recoge la entrada de los mandos
-		handleInput();
-
-		//para las colisiones
-		actualiza_caja_colisiones_player();
-
-		//turno balas player: mueve, colisiona...
-		mantenimiento_balas_player();
-
-		//turno balas boss
-		mantenimiento_balas_boss();
-
-		//turno explosiones
-		mantenimiento_explosiones();
-
-		//mueve el plano B (fondo de estrellas)
-		scrollValueVariable -= 3;
-		VDP_setHorizontalScroll( BG_B, scrollValueVariable );
-
-		//actualiza el VDP
-		SPR_update();
-
-		//sincroniza la Megadrive con la TV
-		VDP_waitVSync();
+		//hemos pulsado el botón B (y no lo hemos soltado)
+	}
+	else if( changed & BUTTON_B ) //hemos soltado el botón B
+	{
+		cerrojo = 0;
 	}
 
-	return 0;
+}
+
+
+
+
+void crea_decorado()
+{
+	//Torre: inicializa vida
+	Torre[ 0 ].vida = 80;
+	Torre[ 0 ].estado = 0;
+	Torre[ 0 ].colX1 = 5;
+	Torre[ 0 ].colY1 = 40;
+	Torre[ 0 ].colX2 = 60;
+	Torre[ 0 ].colY2 = 110;
+	Torre[ 0 ].activa_impacto = 0;
+	Torre[ 0 ].t_impacto = 0;
+
+	Torre[ 1 ].vida = 80;
+	Torre[ 1 ].estado = 0;
+	Torre[ 1 ].colX1 = 255;
+	Torre[ 1 ].colY1 = 40;
+	Torre[ 1 ].colX2 = 320;
+	Torre[ 1 ].colY2 = 110;
+	Torre[ 1 ].t_impacto = 0;
+
+	cerrojo = 1; //para no salirnos del bucle
+}
+
+
+void maneja_decorado()
+{
+	//EJEMPLO 0: TINTADO CON PALETA DE ROJOS
+	if( ejemplo == 0 )
+	{
+		if( Torre[ 0 ].activa_impacto != 0 )
+		{
+			Torre[ 0 ].t_impacto++;
+
+			if( Torre[ 0 ].t_impacto == 1 ) //tinte rojo
+			{
+				VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL3, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 0, 0, 10, 11 );
+
+			}
+			else
+				if( Torre[ 0 ].t_impacto >= T_TINTE ) //tinte normal
+				{
+					Torre[ 0 ].activa_impacto = 0;
+					Torre[ 0 ].t_impacto = 0;
+					VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 0, 0, 10, 11 );
+				}
+		}
+	}
+
+
+	//EJEMPLO 1: TINTADO LENTO CON PALETA DE ROJOS (QUE SE NOTE LA INFLUENCIA DE T_TINTE_LENTO)
+	if( ejemplo == 1 )
+	{
+		if( Torre[ 0 ].activa_impacto != 0 )
+		{
+			Torre[ 0 ].t_impacto++;
+
+			if( Torre[ 0 ].t_impacto == 1 ) //tinte rojo
+			{
+				VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL3, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 0, 0, 10, 11 );
+
+			}
+			else
+				if( Torre[ 0 ].t_impacto >= T_TINTE_LENTO ) //tinte LENTO, mas tiempo hasta volver al estado normal
+				{
+					Torre[ 0 ].activa_impacto = 0;
+					Torre[ 0 ].t_impacto = 0;
+					VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 0, 0, 10, 11 );
+				}
+		}
+	}
+
+
+	//EJEMPLO 2: CAMBIANDO 1 SOLO COLOR
+	if( ejemplo == 2 )
+	{
+		if( Torre[ 0 ].activa_impacto != 0 )
+		{
+			Torre[ 0 ].t_impacto++;
+
+			if( Torre[ 0 ].t_impacto == 1 ) //tinte rojo
+			{
+				VDP_setPaletteColor( 9, RGB24_TO_VDPCOLOR( 0xff0000 ) );  //(0x0098e5));
+
+			}
+			else
+				if( Torre[ 0 ].t_impacto >= T_TINTE ) //tinte normal
+				{
+					VDP_setPaletteColor( 9, RGB24_TO_VDPCOLOR( 0x4c260c ) );
+					Torre[ 0 ].activa_impacto = 0;
+					Torre[ 0 ].t_impacto = 0;
+				}
+		}
+	}
+
+
+	//EJEMPLO 3: TINTADO USANDO UNA PALETA YA EXISTENTE
+	if( ejemplo == 3 )
+	{
+		if( Torre[ 0 ].activa_impacto != 0 )
+		{
+			Torre[ 0 ].t_impacto++;
+
+			if( Torre[ 0 ].t_impacto == 1 )
+			{
+				VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL1, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 0, 0, 10, 11 );
+
+			}
+			else
+				if( Torre[ 0 ].t_impacto >= T_TINTE )
+				{
+					Torre[ 0 ].activa_impacto = 0;
+					Torre[ 0 ].t_impacto = 0;
+					VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 0, 0, 10, 11 );
+				}
+		}
+	}
+
+
+	//EJEMPLO 4:  BORRADO DEL PLANO COMPLETO
+	if( ejemplo == 4 )
+	{
+		if( Torre[ 0 ].activa_impacto != 0 )
+		{
+			//aqui se hace rapido
+
+			Torre[ 0 ].t_impacto++;
+
+			if( Torre[ 0 ].t_impacto == 1 )
+			{
+				//Borra plano A entero
+				VDP_clearPlane( BG_A, TRUE );
+				//Pinta la torre de la derecha
+				VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), 31, 4, 0, 0, 10, 11 );
+				//vuelvo a escribir los mensajes en pantalla, se borran con VDP_clearPlane()
+				muestraMENSAJES();
+			}
+			else
+				if( Torre[ 0 ].t_impacto >= T_TINTE )
+				{
+					Torre[ 0 ].activa_impacto = 0;
+					Torre[ 0 ].t_impacto = 0;
+					//repinta la torre de la izquierda
+					VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 0, 0, 10, 11 );
+				}
+		}
+	}
+
+
+	//EJEMPLO 5:  BORRADO PARCIAL
+	//Se borra la parte del plano A de la torre de la izquierda que queda por ENCIMA
+	//de la muralla. Es más rápida que la forma anterior y solo borra lo que nos interesa.
+	if( ejemplo == 5 )
+	{
+		if( Torre[ 0 ].activa_impacto != 0 )
+		{
+			//aqui se hace rapido
+
+			Torre[ 0 ].t_impacto++;
+
+			if( Torre[ 0 ].t_impacto == 1 )
+			{
+				//aqui lento
+				VDP_clearTileMapRect( BG_A, 0, 3, 10, 5 );  //borra parte del plano
+			}
+			else
+				if( Torre[ 0 ].t_impacto >= T_TINTE )
+				{
+					Torre[ 0 ].activa_impacto = 0;
+					Torre[ 0 ].t_impacto = 0;
+					//repinta SOLO la parte del plano que borre antes
+					VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 0, 0, 10, 5 );
+				}
+		}
+	}
+
+
+	//EJEMPLO 6: TORRES DESTRUCTIBLES
+	if( ejemplo == 6 )
+	{
+		if( Torre[ 0 ].vida<40 && Torre[ 0 ].estado == 0 ) {
+			Torre[ 0 ].estado = 1;
+			Estructuras = unpackTileMap( fondo01_01_torres.tilemap, NULL );
+			VDP_loadTileSet( fondo01_01_torres.tileset, id_tile_final_planB, CPU );
+			VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 10, 0, 10, 11 );
+			id_tile_final_planA += fondo01_01.tileset->numTile;
+		}
+		if( Torre[ 0 ].vida<20 && Torre[ 0 ].estado == 1 ) {
+			Torre[ 0 ].estado = 2;
+			VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), -1, 3, 20, 0, 10, 11 );
+			id_tile_final_planA += fondo01_01.tileset->numTile;
+		}
+
+		//Torre dcha
+		if( Torre[ 1 ].vida<40 && Torre[ 1 ].estado == 0 ) {
+			Torre[ 1 ].estado = 1;
+			Estructuras = unpackTileMap( fondo01_01_torres.tilemap, NULL );
+			VDP_loadTileSet( fondo01_01_torres.tileset, id_tile_final_planB, CPU );
+			VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), 31, 4, 10, 0, 10, 11 );
+			id_tile_final_planA += fondo01_01.tileset->numTile;
+		}
+		if( Torre[ 1 ].vida<20 && Torre[ 1 ].estado == 1 ) {
+			Torre[ 1 ].estado = 2;
+			VDP_setMapEx( BG_A, Estructuras, TILE_ATTR_FULL( PAL0, TRUE, FALSE, FALSE, id_tile_final_planB ), 31, 4, 20, 0, 10, 11 );
+		}
+	}
+
+	//REINICIO
+	if( ejemplo == 7 ) {
+		SYS_hardReset();
+	}
+
+}
+
+//SE CREA FUERA DE LA PANTALLA PARA QUE NO SEA VISIBLE
+void crea_bala_player() {
+
+	//Valores iniciales
+	DisparoPlayer.esta_activo = 0;
+	DisparoPlayer.x = FUERA_PANTALLA;
+	DisparoPlayer.y = FUERA_PANTALLA;
+	DisparoPlayer.spr_bala = SPR_addSprite( &sprite_bala_player, DisparoPlayer.x, DisparoPlayer.y, TILE_ATTR( PAL1, TRUE, FALSE, FALSE ) );
+
+	//lo ponemos por encima de otros sprites ( SI LOS HUBIESE, que no es el caso pero viene bien saberlo)
+	SPR_setDepth( DisparoPlayer.spr_bala, SPR_MIN_DEPTH );
+
+}
+
+//SI NO ESTABA ACTIVO el disparo, lo activo (bloqueando el acceso al IF)
+// (es necesario porque por muy rápido que pulsemos, la MD registrará un montón de pulsaciones)
+//Entonces SITUA el disparo en el centro de la mira
+void maneja_bala_player() {
+
+	if( DisparoPlayer.esta_activo == 0 ) {
+
+		DisparoPlayer.esta_activo = 1;
+
+		DisparoPlayer.x = Mira.x + POS_MIRA;
+		DisparoPlayer.y = Mira.y + POS_MIRA;
+		SPR_setPosition( DisparoPlayer.spr_bala, DisparoPlayer.x, DisparoPlayer.y );
+	}
+}
+
+
+//cambia la animacion manualmente, al terminar hace que el disparo desaparezca (lo ponemos fuera de la pantalla)
+//(en vez de crear y destruir el sprite, no usamos mem dinamica), además desbloquea el disparo para poder volver a disparar
+void trata_bala_player() {
+
+	//cambia entre los frames de la animacion
+	//ademas detecta_colisiones
+	if( DisparoPlayer.esta_activo == 1 || DisparoPlayer.esta_activo == 2 ||
+		DisparoPlayer.esta_activo == 3 || DisparoPlayer.esta_activo == 4 )
+	{
+		SPR_nextFrame( DisparoPlayer.spr_bala );
+		DisparoPlayer.esta_activo++;
+		detecta_colision();
+	}
+
+	//al terminar la animacion DESAPARECE
+	if( DisparoPlayer.esta_activo > 4 )
+	{
+		DisparoPlayer.x = FUERA_PANTALLA;
+		DisparoPlayer.y = FUERA_PANTALLA;
+		SPR_setPosition( DisparoPlayer.spr_bala, DisparoPlayer.x, DisparoPlayer.y );
+		DisparoPlayer.esta_activo = 0;
+	}
+}
+
+
+//PARA OPTIMIZAR solo se ejecuta este codigo durantes los 4 frames de animacion del disparo
+//se compara posicion del disparo con la parte colisionable de cada torre
+//en caso afirmativo, pierde vida y activamos el flag de colision de la torre
+void detecta_colision() {
+
+	for( s16 cont = 0; cont<MAX_TORRES; cont++ )
+	{
+		if( Torre[ cont ].vida>0 )
+		{
+			if( DisparoPlayer.x > Torre[ cont ].colX1 && DisparoPlayer.x < Torre[ cont ].colX2 &&
+				DisparoPlayer.y > Torre[ cont ].colY1 && DisparoPlayer.y < Torre[ cont ].colY2 )
+			{
+				Torre[ cont ].vida--;
+				Torre[ cont ].activa_impacto++;
+			}
+		}
+	}
+}
+
+
+
+//AYUDA EN PANTALLA
+void muestraMENSAJES()
+{
+	VDP_setTextPalette( PAL1 );   //con la PAL0 no se ve bien
+
+	if( ejemplo == 0 )
+	{
+		VDP_drawText( "EJEMPLO 0: TINTADO CON PALERA DE ROJOS  ", 0, 20 );
+		VDP_drawText( "     Cambio entre PAL0 y PAL3           ", 0, 21 );
+		VDP_drawText( "  (dispara sobre la torre de la izq)    ", 0, 22 );
+		VDP_drawText( "     Pulsa -A- para disparar            ", 0, 23 );
+		VDP_drawText( "     Pulsa -B- para continuar           ", 0, 24 );
+	}
+
+	if( ejemplo == 1 )
+	{
+		VDP_drawText( "EJEMPLO 1:tintado LENTO con PAL de ROJOS", 0, 20 );
+		VDP_drawText( " Cambio entre PAL0 y PAL3 pero tarda mas", 0, 21 );
+		VDP_drawText( " tiempo en volver a la paleta normal    ", 0, 22 );
+		VDP_drawText( "                                        ", 0, 23 );
+		VDP_drawText( "     Pulsa -B- para continuar           ", 0, 24 );
+	}
+
+	if( ejemplo == 2 )
+	{
+		VDP_drawText( "EJEMPLO 2: TINTADO CON UN SOLO COLOR    ", 0, 20 );
+		VDP_drawText( "                                        ", 0, 21 );
+		VDP_drawText( " Cambio del color 9 de la paleta.       ", 0, 22 );
+		VDP_drawText( "                                        ", 0, 23 );
+		VDP_drawText( "     Pulsa -B- para continuar           ", 0, 24 );
+	}
+
+	if( ejemplo == 3 )
+	{
+		VDP_drawText( "EJEMPLO 3: TINTADO CON PAL EN USO       ", 0, 20 );
+		VDP_drawText( "                                        ", 0, 21 );
+		VDP_drawText( " PAL0 y PAL1                            ", 0, 22 );
+		VDP_drawText( "                                        ", 0, 23 );
+		VDP_drawText( "     Pulsa -B- para continuar           ", 0, 24 );
+	}
+
+	if( ejemplo == 4 )
+	{
+		VDP_drawText( "EJEMPLO 4: BORRADO COMPLETO DEL PLANO A  ", 0, 20 );
+		VDP_drawText( "Se borra el plano A y se pinta la torre  ", 0, 21 );
+		VDP_drawText( "de la derecha.                           ", 0, 22 );
+		VDP_drawText( "                                         ", 0, 23 );
+		VDP_drawText( "     Pulsa -B- para continuar            ", 0, 24 );
+	}
+
+	if( ejemplo == 5 )
+	{
+		VDP_drawText( "EJEMPLO 5: BORRADO PARCIAL DEL PLANO A   ", 0, 20 );
+		VDP_drawText( "Se borra solo la parte del plano A que   ", 0, 21 );
+		VDP_drawText( "corresponde a la torre de la izq. por    ", 0, 22 );
+		VDP_drawText( "encima de la muralla                     ", 0, 23 );
+		VDP_drawText( "     Pulsa -B- para continuar            ", 0, 24 );
+	}
+
+	if( ejemplo == 6 )
+	{
+		VDP_drawText( "EJEMPLO 6: TORRES DESTRUCTIBLES          ", 0, 20 );
+		VDP_drawText( "                                         ", 0, 21 );
+		VDP_drawText( " Dispara sobre ambas torres para         ", 0, 22 );
+		VDP_drawText( " destruirlas. Repintado de Tiles         ", 0, 23 );
+		VDP_drawText( "   Pulsa -B- para REINICIAR la ROM       ", 0, 24 );
+	}
+}
+
+//PINTA_ VIDA: Escribe en pantalla la vida de cada torre (solo la izq excepto al final)
+void pinta_vida()
+{
+	//"%4d" justific a derechas, si no se pone al poner el contador a 0
+	//los numeros nuevos (1 caracter:0,1,2...) se machacan/mezclan con
+	//los viejos (que tienen hasta 3 caracteres:   999)
+
+	char string01[ 32 ], string02[ 32 ];
+	sprintf( string01, "%4d", Torre[ 0 ].vida );
+
+	VDP_drawText( "Torre[0].vida:", 1, 15 );
+	VDP_drawText( string01, 1, 16 );
+	if( ejemplo == 6 )
+	{
+		sprintf( string02, "%4d", Torre[ 1 ].vida );
+		VDP_drawText( "Torre[1].vida:", 25, 15 );
+		VDP_drawText( string02, 32, 16 );
+	}
 }

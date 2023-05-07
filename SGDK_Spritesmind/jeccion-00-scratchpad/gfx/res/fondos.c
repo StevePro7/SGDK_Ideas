@@ -2,7 +2,7 @@
 
 #include "_genesis.h"
 
-const Image fondo1; = { NULL, NULL, NULL };
-const Image fondo2; = { NULL, NULL, NULL };
+const Image fondo01_01 = { NULL, NULL, NULL };
+const Image fondo01_01_torres = { NULL, NULL, NULL };
 
 #endif

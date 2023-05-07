@@ -29,7 +29,6 @@
 
 #define EXPLOSION_T_VIDA        10 //ciclos de vida de la explosion antes de eliminarse
 
-
 //Declaracion de funciones
 
 static void inicializa_balas_player();
@@ -71,7 +70,7 @@ struct {
 
 }BOSS;
 
-//BALAS NAVE Y BOSS
+//BALAS NAVE
 struct estructura_bala {
 	int a, x, y;        // a=activa, x,y=coordenadas.
 	int tipo;           // 0=disparo normal, 1=disparo triple
@@ -80,10 +79,22 @@ struct estructura_bala {
 
 //declaracion de arrays de structs
 struct estructura_bala lista_balas_player[ MAX_BALAS_PLAYER ];
-struct estructura_bala lista_balas_boss[ MAX_BALAS_BOSS ];
 
+
+
+//BALAS BOSS
+//creo un struct diferente para no liar el codigo
+//es exactamente igual al normal
+typedef struct estructura_bala2 {
+	int a, x, y;        // a=activa, x,y=coordenadas.
+	int tipo;           // 0=disparo normal, 1=disparo triple
+	Sprite *spr;        // sprite
+}bala_boss;
+//declaracion de puntero a arrays de structs
+struct estructura_bala2 *lista_balas_boss;
 //numero balas del boss (para optimizar el bucle)
 int num_balas_boss;
+
 
 
 //EXPLOSIONES (tanto player como boss)
@@ -103,7 +114,7 @@ struct estructura_explosion lista_explosiones[ MAX_EXPLOSIONES ];
 
 //INICIALIZACIONES
 static void inicializa_balas_player() {
-	for( int cont = 0; cont < MAX_BALAS_PLAYER; cont++ ) {
+	for( int cont = 0; cont <MAX_BALAS_PLAYER; cont++ ) {
 		lista_balas_player[ cont ].a = 0;
 		lista_balas_player[ cont ].x = 0;
 		lista_balas_player[ cont ].y = 0;
@@ -112,14 +123,17 @@ static void inicializa_balas_player() {
 	}
 }
 static void inicializa_explosiones() {
-	for( int cont = 0; cont < MAX_EXPLOSIONES; cont++ ) {
+	for( int cont = 0; cont <MAX_EXPLOSIONES; cont++ ) {
 		lista_explosiones[ cont ].x = 0;
 		lista_explosiones[ cont ].y = 0;
 		lista_explosiones[ cont ].spr = NULL;
 	}
 }
 static void inicializa_lista_balas_boss() {
-	for( int cont = 0; cont < MAX_BALAS_BOSS; cont++ ) {
+
+	lista_balas_boss = MEM_alloc( MAX_BALAS_BOSS * sizeof( bala_boss ) );
+
+	for( int cont = 0; cont <MAX_BALAS_BOSS; cont++ ) {
 		lista_balas_boss[ cont ].a = 0;
 		lista_balas_boss[ cont ].x = 0;
 		lista_balas_boss[ cont ].y = 0;
@@ -136,7 +150,7 @@ static void inicializa_lista_balas_boss() {
 //tipo: 0=disparo normal, 1=disparo triple
 static void crea_bala_player( int tipo )
 {
-	for( int cont = 0; cont < MAX_BALAS_PLAYER; cont++ )
+	for( int cont = 0; cont <MAX_BALAS_PLAYER; cont++ )
 	{
 		if( lista_balas_player[ cont ].a == 0 )
 		{
@@ -158,7 +172,7 @@ static void crea_bala_player( int tipo )
 //- Elimina la bala si toca la caja de colision del enemigo
 static void mantenimiento_balas_player()
 {
-	for( int cont = 0; cont < MAX_BALAS_PLAYER; cont++ )
+	for( int cont = 0; cont <MAX_BALAS_PLAYER; cont++ )
 	{
 		if( lista_balas_player[ cont ].a != 0 ) //solo las activas
 		{
@@ -176,8 +190,8 @@ static void mantenimiento_balas_player()
 			}
 
 			//choca con la caja de colision del boss
-			if( lista_balas_player[ cont ].x > BOSS.x1 && lista_balas_player[ cont ].x<BOSS.x2 &&
-				lista_balas_player[ cont ].y>BOSS.y1 && lista_balas_player[ cont ].y < BOSS.y2 )
+			if( lista_balas_player[ cont ].x>BOSS.x1 && lista_balas_player[ cont ].x<BOSS.x2 &&
+				lista_balas_player[ cont ].y>BOSS.y1 && lista_balas_player[ cont ].y<BOSS.y2 )
 			{
 				lista_balas_player[ cont ].a = 0;
 				SPR_releaseSprite( lista_balas_player[ cont ].spr );
@@ -190,7 +204,7 @@ static void mantenimiento_balas_player()
 //CREA EXPLOSION en la pos x,y
 static void crea_explosion( int x, int y )
 {
-	for( int cont = 0; cont < MAX_EXPLOSIONES; cont++ )
+	for( int cont = 0; cont <MAX_EXPLOSIONES; cont++ )
 	{
 		if( lista_explosiones[ cont ].a == 0 )
 		{
@@ -210,7 +224,7 @@ static void crea_explosion( int x, int y )
 // Cada ciclo disminuye su t_vida, al llegar a cero se elimina
 static void mantenimiento_explosiones()
 {
-	for( int cont = 0; cont < MAX_EXPLOSIONES; cont++ )
+	for( int cont = 0; cont <MAX_EXPLOSIONES; cont++ )
 	{
 		if( lista_explosiones[ cont ].a != 0 ) //solo las activas
 		{
@@ -232,7 +246,7 @@ static void mantenimiento_explosiones()
 //cada bala se crea en una posición vertical aleatoria
 static void crea_bala_boss()
 {
-	for( int cont = 0; cont < MAX_BALAS_BOSS; cont++ )
+	for( int cont = 0; cont <MAX_BALAS_BOSS; cont++ )
 	{
 		if( lista_balas_boss[ cont ].a == 0 )
 		{
@@ -259,7 +273,7 @@ static void mantenimiento_balas_boss()
 	{
 		if( lista_balas_boss[ cont ].a == 1 )    //solo las activas
 		{
-			i++; if( i > num_balas_boss ) break; //no vamos a hacer más ciclos del bucle que los necesarios
+			i++; if( i>num_balas_boss ) break; //no vamos a hacer más ciclos del bucle que los necesarios
 
 			if( lista_balas_boss[ cont ].tipo == 0 )  lista_balas_boss[ cont ].x -= VELOCIDAD_BALA_BOSS;
 			if( lista_balas_boss[ cont ].tipo == 1 ) { lista_balas_boss[ cont ].x -= VELOCIDAD_BALA_BOSS; lista_balas_boss[ cont ].y--; }
@@ -275,8 +289,8 @@ static void mantenimiento_balas_boss()
 				num_balas_boss--;
 			}
 			//choca con la caja de colision del player
-			else if( lista_balas_boss[ cont ].x > NAVE.x1 && lista_balas_boss[ cont ].x<NAVE.x2 &&
-				lista_balas_boss[ cont ].y>NAVE.y1 && lista_balas_boss[ cont ].y < NAVE.y2 )
+			else if( lista_balas_boss[ cont ].x>NAVE.x1 && lista_balas_boss[ cont ].x<NAVE.x2 &&
+				lista_balas_boss[ cont ].y>NAVE.y1 && lista_balas_boss[ cont ].y<NAVE.y2 )
 			{
 				lista_balas_boss[ cont ].a = 0;
 				SPR_releaseSprite( lista_balas_boss[ cont ].spr );
@@ -335,8 +349,8 @@ static void handleInput()
 		NAVE.tempo_disparo = 1; //para bloquear el disparo durante un tiempo limitado (y que no salgan 60disparos/seg)
 	}
 	//para liberar el disparo despues de pulsar A
-	if( NAVE.tempo_disparo > 0 ) NAVE.tempo_disparo++;
-	if( NAVE.tempo_disparo > BLOQUEO_DISPARO ) NAVE.tempo_disparo = 0;
+	if( NAVE.tempo_disparo>0 ) NAVE.tempo_disparo++;
+	if( NAVE.tempo_disparo>BLOQUEO_DISPARO ) NAVE.tempo_disparo = 0;
 
 
 	//si pulsamos B: PLAYER disparo triple
@@ -354,8 +368,14 @@ static void handleInput()
 		BOSS.tempo_disparo++;
 	}
 	//para liberar el disparo despues de pulsar C
-	if( BOSS.tempo_disparo > 0 ) BOSS.tempo_disparo++;
-	if( BOSS.tempo_disparo > BLOQUEO_DISPARO_BOSS ) BOSS.tempo_disparo = 0;
+	if( BOSS.tempo_disparo>0 ) BOSS.tempo_disparo++;
+	if( BOSS.tempo_disparo>BLOQUEO_DISPARO_BOSS ) BOSS.tempo_disparo = 0;
+
+
+	//DEBUG
+	if( value & BUTTON_START )
+		MEM_free( lista_balas_boss );
+
 
 }
 
@@ -368,7 +388,7 @@ static void MIDEBUG()
 	//balas del player
 	int contador_balas = 0;
 
-	for( int cont = 0; cont < MAX_BALAS_PLAYER; cont++ )
+	for( int cont = 0; cont <MAX_BALAS_PLAYER; cont++ )
 		if( lista_balas_player[ cont ].a != 0 )
 			contador_balas++;
 
@@ -380,7 +400,7 @@ static void MIDEBUG()
 	//balas del boss
 	int contador_balas_boss = 0;
 
-	for( int cont = 0; cont < MAX_BALAS_BOSS; cont++ )
+	for( int cont = 0; cont <MAX_BALAS_BOSS; cont++ )
 		if( lista_balas_boss[ cont ].a != 0 )
 			contador_balas_boss++;
 	char y1_string[ 32 ];
@@ -391,7 +411,7 @@ static void MIDEBUG()
 	//explosiones
 	int contador_explosiones = 0;
 
-	for( int cont = 0; cont < MAX_EXPLOSIONES; cont++ )
+	for( int cont = 0; cont <MAX_EXPLOSIONES; cont++ )
 		if( lista_explosiones[ cont ].a != 0 )
 			contador_explosiones++;
 

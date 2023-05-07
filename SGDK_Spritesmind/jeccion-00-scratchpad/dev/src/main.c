@@ -27,7 +27,8 @@
 #define CAJA_COL_BOSS_X2       290
 #define CAJA_COL_BOSS_Y2       145
 
-#define EXPLOSION_T_VIDA        10 //ciclos de vida de la explosion antes de eliminarse
+#define EXPLOSION_T_VIDA        30 //num de ciclos que se repite una explosion antes de eliminarse
+
 
 //Declaracion de funciones
 
@@ -76,9 +77,10 @@ struct estructura_bala {
 	int tipo;           // 0=disparo normal, 1=disparo triple
 	Sprite *spr;        // sprite
 };
-
 //declaracion de arrays de structs
 struct estructura_bala lista_balas_player[ MAX_BALAS_PLAYER ];
+//numero de balas del player
+int num_balas_player;
 
 
 
@@ -96,17 +98,16 @@ struct estructura_bala2 *lista_balas_boss;
 int num_balas_boss;
 
 
-
 //EXPLOSIONES (tanto player como boss)
 struct estructura_explosion {
 	int a, x, y;        // a=activo, x,y=coordenadas
 	int t_vida;         //lo que dura la explosion (en ciclos)
 	Sprite *spr;
-};
-struct estructura_explosion lista_explosiones[ MAX_EXPLOSIONES ];
+}lista_explosiones[ MAX_EXPLOSIONES ];
+int num_explosiones;
 
-
-
+//total sprites activos
+int total_sprites;
 
 
 
@@ -116,17 +117,19 @@ struct estructura_explosion lista_explosiones[ MAX_EXPLOSIONES ];
 static void inicializa_balas_player() {
 	for( int cont = 0; cont <MAX_BALAS_PLAYER; cont++ ) {
 		lista_balas_player[ cont ].a = 0;
-		lista_balas_player[ cont ].x = 0;
-		lista_balas_player[ cont ].y = 0;
+		lista_balas_player[ cont ].x = -50; // se crean fuera de pantalla visible de forma que
+		lista_balas_player[ cont ].y = -50; // al asignar el sprite (abajo), éste no se vea
 		lista_balas_player[ cont ].tipo = 0;
-		lista_balas_player[ cont ].spr = NULL;
+		lista_balas_player[ cont ].spr = SPR_addSprite( &bala_sprite, lista_balas_player[ cont ].x,
+			lista_balas_player[ cont ].y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
 	}
 }
 static void inicializa_explosiones() {
 	for( int cont = 0; cont <MAX_EXPLOSIONES; cont++ ) {
-		lista_explosiones[ cont ].x = 0;
-		lista_explosiones[ cont ].y = 0;
-		lista_explosiones[ cont ].spr = NULL;
+		lista_explosiones[ cont ].x = -50;
+		lista_explosiones[ cont ].y = -50;
+		lista_explosiones[ cont ].spr = SPR_addSprite( &explosion_sprite, lista_explosiones[ cont ].x,
+			lista_explosiones[ cont ].y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
 	}
 }
 static void inicializa_lista_balas_boss() {
@@ -135,12 +138,17 @@ static void inicializa_lista_balas_boss() {
 
 	for( int cont = 0; cont <MAX_BALAS_BOSS; cont++ ) {
 		lista_balas_boss[ cont ].a = 0;
-		lista_balas_boss[ cont ].x = 0;
-		lista_balas_boss[ cont ].y = 0;
+		lista_balas_boss[ cont ].x = -50;
+		lista_balas_boss[ cont ].y = -50;
 		lista_balas_boss[ cont ].tipo = 0;
-		lista_balas_boss[ cont ].spr = NULL;
+		lista_balas_boss[ cont ].spr = SPR_addSprite( &bala_sprite, lista_balas_boss[ cont ].x,
+			lista_balas_boss[ cont ].y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
 	}
+
+	num_balas_player = 0;
 	num_balas_boss = 0;
+	num_explosiones = 0;
+	total_sprites = 0;
 }
 
 
@@ -158,8 +166,8 @@ static void crea_bala_player( int tipo )
 			lista_balas_player[ cont ].x = NAVE.x + 30;
 			lista_balas_player[ cont ].y = NAVE.y + 15;
 			lista_balas_player[ cont ].tipo = tipo;
-			lista_balas_player[ cont ].spr = SPR_addSprite( &bala_sprite, lista_balas_player[ cont ].x,
-				lista_balas_player[ cont ].y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
+			num_balas_player++;
+			total_sprites++;
 			break;
 		}
 	}
@@ -180,23 +188,28 @@ static void mantenimiento_balas_player()
 			else if( lista_balas_player[ cont ].tipo == 1 ) { lista_balas_player[ cont ].x += VELOCIDAD_BALA_PLAYER; lista_balas_player[ cont ].y--; }
 			else if( lista_balas_player[ cont ].tipo == 2 ) { lista_balas_player[ cont ].x += VELOCIDAD_BALA_PLAYER; lista_balas_player[ cont ].y++; }
 
-			SPR_setPosition( lista_balas_player[ cont ].spr, lista_balas_player[ cont ].x, lista_balas_player[ cont ].y );
-
 			//sale de la pantalla
-			if( lista_balas_player[ cont ].x >= 330 || lista_balas_player[ cont ].y <= 0 || lista_balas_player[ cont ].y >= 220 )
+			if( lista_balas_player[ cont ].x >= 330 || lista_balas_player[ cont ].y <= -20 || lista_balas_player[ cont ].y >= 240 )
 			{
-				lista_balas_player[ cont ].a = 0;                   //marca como inactivo en el vector
-				SPR_releaseSprite( lista_balas_player[ cont ].spr );   //se carga sprite del VDP
+				lista_balas_player[ cont ].a = 0;  //marca como inactivo en el vector
+				num_balas_player--;               //una bala menos
+				total_sprites--;
+				continue;                         //esta ya fuera de la zona visible, sigue el FOR en la sig iteracion
 			}
-
 			//choca con la caja de colision del boss
 			if( lista_balas_player[ cont ].x>BOSS.x1 && lista_balas_player[ cont ].x<BOSS.x2 &&
 				lista_balas_player[ cont ].y>BOSS.y1 && lista_balas_player[ cont ].y<BOSS.y2 )
 			{
-				lista_balas_player[ cont ].a = 0;
-				SPR_releaseSprite( lista_balas_player[ cont ].spr );
 				crea_explosion( lista_balas_player[ cont ].x, lista_balas_player[ cont ].y );
+
+				lista_balas_player[ cont ].a = 0;
+				lista_balas_player[ cont ].x = -50;
+				lista_balas_player[ cont ].y = -50;
+				num_balas_player--;
+				total_sprites--;
 			}
+			//situa la bala donde toque
+			SPR_setPosition( lista_balas_player[ cont ].spr, lista_balas_player[ cont ].x, lista_balas_player[ cont ].y );
 		}
 	}
 }
@@ -212,8 +225,9 @@ static void crea_explosion( int x, int y )
 			lista_explosiones[ cont ].x = x;
 			lista_explosiones[ cont ].y = y;
 			lista_explosiones[ cont ].t_vida = EXPLOSION_T_VIDA;
-			lista_explosiones[ cont ].spr = SPR_addSprite( &explosion_sprite, lista_explosiones[ cont ].x,
-				lista_explosiones[ cont ].y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
+			SPR_setPosition( lista_explosiones[ cont ].spr, lista_explosiones[ cont ].x, lista_explosiones[ cont ].y );
+			num_explosiones++;
+			total_sprites++;
 			break;
 		}
 	}
@@ -232,7 +246,11 @@ static void mantenimiento_explosiones()
 			if( lista_explosiones[ cont ].t_vida <= 0 )
 			{
 				lista_explosiones[ cont ].a = 0;                   //marca como inactivo en el vector
-				SPR_releaseSprite( lista_explosiones[ cont ].spr );   //se carga sprite del VDP
+				lista_explosiones[ cont ].x = -100;                 //posición (fuera de la pantalla), falta decirle
+				lista_explosiones[ cont ].y = -100;                 //al VDP que actualice la posicion en la tabla de sprites
+				SPR_setPosition( lista_explosiones[ cont ].spr, lista_explosiones[ cont ].x, lista_explosiones[ cont ].y );
+				num_explosiones--;
+				total_sprites--;
 			}
 		}
 	}
@@ -242,8 +260,9 @@ static void mantenimiento_explosiones()
 
 
 //CREA BALA DEL BOSS
-//crea una bala en la primera pos libre del array
-//cada bala se crea en una posición vertical aleatoria
+//NO CREA, activa (a=1) la bala de la primera pos libre del array
+//La bala se situa en una posición vertical aleatoria y con x=220
+//El sprite ya lo tenía asignado previamente
 static void crea_bala_boss()
 {
 	for( int cont = 0; cont <MAX_BALAS_BOSS; cont++ )
@@ -254,9 +273,8 @@ static void crea_bala_boss()
 			lista_balas_boss[ cont ].tipo = ( ( ( random() % 3 ) - 1 ) + 1 ); // da 0,1 y 2
 			lista_balas_boss[ cont ].x = 220;
 			lista_balas_boss[ cont ].y = ( ( ( random() % 200 ) - 1 ) + 1 );  //200 es el max de la coordenada y
-			lista_balas_boss[ cont ].spr = SPR_addSprite( &bala_sprite, lista_balas_boss[ cont ].x,
-				lista_balas_boss[ cont ].y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
 			num_balas_boss++;
+			total_sprites++;
 			break;
 		}
 	}
@@ -279,24 +297,29 @@ static void mantenimiento_balas_boss()
 			if( lista_balas_boss[ cont ].tipo == 1 ) { lista_balas_boss[ cont ].x -= VELOCIDAD_BALA_BOSS; lista_balas_boss[ cont ].y--; }
 			if( lista_balas_boss[ cont ].tipo == 2 ) { lista_balas_boss[ cont ].x -= VELOCIDAD_BALA_BOSS; lista_balas_boss[ cont ].y++; }
 
-			SPR_setPosition( lista_balas_boss[ cont ].spr, lista_balas_boss[ cont ].x, lista_balas_boss[ cont ].y );
-
 			//sale de la pantalla
 			if( lista_balas_boss[ cont ].x <= 0 || lista_balas_boss[ cont ].y <= 0 || lista_balas_boss[ cont ].y >= 220 )
 			{
-				lista_balas_boss[ cont ].a = NULL;                 //marca como inactivo en el vector
-				SPR_releaseSprite( lista_balas_boss[ cont ].spr );   //se carga sprite del VDP
+				lista_balas_boss[ cont ].a = 0;       //marca como inactivo en el vector
+				lista_balas_boss[ cont ].x = -50;     //fuera de la pantalla
+				lista_balas_boss[ cont ].y = -50;
 				num_balas_boss--;
+				total_sprites--;
+
 			}
 			//choca con la caja de colision del player
 			else if( lista_balas_boss[ cont ].x>NAVE.x1 && lista_balas_boss[ cont ].x<NAVE.x2 &&
 				lista_balas_boss[ cont ].y>NAVE.y1 && lista_balas_boss[ cont ].y<NAVE.y2 )
 			{
-				lista_balas_boss[ cont ].a = 0;
-				SPR_releaseSprite( lista_balas_boss[ cont ].spr );
 				crea_explosion( lista_balas_boss[ cont ].x, lista_balas_boss[ cont ].y );
+				lista_balas_boss[ cont ].a = 0;
+				lista_balas_boss[ cont ].x = 0;
+				lista_balas_boss[ cont ].y = -50;
 				num_balas_boss--;
+				total_sprites--;
 			}
+
+			SPR_setPosition( lista_balas_boss[ cont ].spr, lista_balas_boss[ cont ].x, lista_balas_boss[ cont ].y );
 		}
 	}
 }
@@ -384,50 +407,10 @@ static void handleInput()
 //MIDEBUG: Muestra num de sprites en pantalla
 static void MIDEBUG()
 {
-
-	//balas del player
-	int contador_balas = 0;
-
-	for( int cont = 0; cont <MAX_BALAS_PLAYER; cont++ )
-		if( lista_balas_player[ cont ].a != 0 )
-			contador_balas++;
-
-	char x1_string[ 32 ];
-	sprintf( x1_string, "%4d", contador_balas );
-	VDP_drawText( "Balas Nave:", 1, 21 );
-	VDP_drawText( x1_string, 15, 21 );
-
-	//balas del boss
-	int contador_balas_boss = 0;
-
-	for( int cont = 0; cont <MAX_BALAS_BOSS; cont++ )
-		if( lista_balas_boss[ cont ].a != 0 )
-			contador_balas_boss++;
-	char y1_string[ 32 ];
-	sprintf( y1_string, "%4d", contador_balas_boss );
-	VDP_drawText( "Balas Boss:", 1, 22 );
-	VDP_drawText( y1_string, 15, 22 );
-
-	//explosiones
-	int contador_explosiones = 0;
-
-	for( int cont = 0; cont <MAX_EXPLOSIONES; cont++ )
-		if( lista_explosiones[ cont ].a != 0 )
-			contador_explosiones++;
-
-	char z1_string[ 32 ];
-	sprintf( z1_string, "%4d", contador_explosiones );
-	VDP_drawText( "Explosiones:", 1, 23 );
-	VDP_drawText( z1_string, 15, 23 );
-
-	//sprites totales
-	int total = contador_balas + contador_balas_boss + contador_explosiones;
-
-	char z2_string[ 32 ];
-	sprintf( z2_string, "%4d", total );
-	VDP_drawText( "Total sprites:", 1, 24 );
-	VDP_drawText( z2_string, 15, 24 );
-
+	//show total sprite number
+	char mi_string[ 32 ];
+	sprintf( mi_string, "Total sprites: %4d", total_sprites );
+	VDP_drawText( mi_string, 1, 24 );
 	//fps
 	VDP_showFPS( FALSE );
 }
@@ -435,8 +418,14 @@ static void MIDEBUG()
 
 
 
+
 int main()
 {
+	//pone la pantalla a 320x224
+	VDP_setScreenWidth320();
+
+	//inicializa motor de sprites
+	SPR_init( 0, 0, 0 );
 
 	//Inicializa estructuras a CERO
 	inicializa_balas_player();
@@ -457,12 +446,6 @@ int main()
 	//variable para llevar el control de tiles
 	u16 ind;
 
-	//pone la pantalla a 320x224
-	VDP_setScreenWidth320();
-
-	//inicializa motor de sprites
-	SPR_init( 0, 0, 0 );
-
 	//recoge la paleta de bala, player y fondo (compartida)
 	VDP_setPalette( PAL0, nave_sprite.palette->data );
 
@@ -481,9 +464,10 @@ int main()
 	NAVE.spr_player = SPR_addSprite( &nave_sprite, NAVE.x, NAVE.y, TILE_ATTR( PAL0, TRUE, FALSE, FALSE ) );
 
 	//AYUDA en pantalla
-	VDP_drawText( "      BULLET HELL HELP    ", 1, 1 );
+	VDP_drawText( "  fps  BULLET HELL HELP  ", 2, 1 );
 	VDP_drawText( "PAD - Controles, A/B: Fire", 2, 2 );
 	VDP_drawText( "C: Boss Bullet Hell       ", 2, 3 );
+
 
 	//Bucle principal
 	while( TRUE )

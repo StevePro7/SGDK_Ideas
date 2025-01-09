@@ -1,4 +1,2 @@
-IMAGE fondo1 "fondos/fondo1.png" BEST
-IMAGE fondo2 "fondos/fondo2.png" BEST
-
-
+IMAGE bg_B_real		"fondos/bgb.png" NONE
+IMAGE bg_prioridad 	"fondos/bga_priority.png" NONE

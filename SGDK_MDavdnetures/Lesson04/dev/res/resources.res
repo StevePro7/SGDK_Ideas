@@ -1,1 +1,1 @@
-IMAGE splash "splash.bmp" 0
+IMAGE moon "moon.png" 0

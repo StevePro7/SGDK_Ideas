@@ -2,6 +2,6 @@
 
 #include "_genesis.h"
 
-const Image splash = { NULL, NULL, NULL };
+const Image moon = { NULL, NULL, NULL };
 
 #endif

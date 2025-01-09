@@ -7,6 +7,6 @@
 #include <genesis.h>
 #endif
 
-#include "resources.h"
+//#include "resources.h"
 
 #endif//__MAIN__

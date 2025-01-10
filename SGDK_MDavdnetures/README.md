@@ -11,3 +11,7 @@ add NULL for the TransferMethod
 
 
 Image.map->tilemap		Image.tilemap->tilemap
+
+
+VDP_setMapEx
+bg_image.map			bg_image.tilemap

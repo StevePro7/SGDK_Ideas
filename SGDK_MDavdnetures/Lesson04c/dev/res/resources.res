@@ -1,3 +1,3 @@
-IMAGE bgb_image "moon.png"      0
-IMAGE bga_image "my64tiles.png" 0
+IMAGE block "moon.png" 0
 
+IMAGE block2 "my64tiles.png" 0

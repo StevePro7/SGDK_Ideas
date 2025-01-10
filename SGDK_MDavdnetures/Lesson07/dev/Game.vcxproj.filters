@@ -18,7 +18,7 @@
     <ClCompile Include="src\main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\gfx\res\resources.c">
+    <ClCompile Include="..\gfx\res\gfx.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -31,7 +31,7 @@
     <ClInclude Include="inc\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="res\resources.h">
+    <ClInclude Include="res\gfx.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

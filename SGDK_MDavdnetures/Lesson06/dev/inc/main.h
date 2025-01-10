@@ -7,4 +7,6 @@
 #include <genesis.h>
 #endif
 
+#include "KDebug.h"
+
 #endif//__MAIN__

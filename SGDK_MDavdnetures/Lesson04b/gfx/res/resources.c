@@ -1,7 +1,3 @@
-#ifdef _CONSOLE
-
-#include "_genesis.h"
+#include "resources.h"
 
 const Image my64tiles = { NULL, NULL, NULL };
-
-#endif

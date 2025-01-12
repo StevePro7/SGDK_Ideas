@@ -1,6 +1,12 @@
 # Adventures in Megadrive
 https://github.com/danibusvlc/aventuras-en-megadrive
 
+Reference:
+https://github.com/And-0/awesome-megadrive?tab=readme-ov-file#sgdk
+
+Tutorial
+https://danibus.wordpress.com
+
 
 Conversions summary
 https://github.com/Stephane-D/SGDK/releases

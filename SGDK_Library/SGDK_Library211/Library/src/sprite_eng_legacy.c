@@ -1,4 +1,6 @@
 #include "_genesis.h"
+
+#if LEGACY_SPRITE_ENGINE
 #include "sprite_eng_legacy.h"
 
 void SPR_init(void) {}
@@ -91,3 +93,5 @@ void SPR_logProfil(void) {}
 
 void SPR_logSprites(void) {}
 
+
+#endif

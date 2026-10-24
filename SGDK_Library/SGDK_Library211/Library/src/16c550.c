@@ -1,5 +1,4 @@
 #include "_genesis.h"
 #include "16c550.h"
 
-void uart_init(void) {}
-
+// uart_init is already defined in ssf.c (declared in both headers)

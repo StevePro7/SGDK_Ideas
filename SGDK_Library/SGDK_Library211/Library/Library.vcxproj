@@ -62,7 +62,6 @@
     <ClInclude Include="src\pal.h" />
     <ClInclude Include="src\psg.h" />
     <ClInclude Include="src\smp_null.h" />
-    <ClInclude Include="src\smp_null_pcm.h" />
     <ClInclude Include="src\sound.h" />
     <ClInclude Include="src\sprite_eng.h" />
     <ClInclude Include="src\sram.h" />
@@ -75,7 +74,6 @@
     <ClInclude Include="src\types.h" />
     <ClInclude Include="src\vdp.h" />
     <ClInclude Include="src\vdp_bg.h" />
-    <ClInclude Include="src\vdp_dma.h" />
     <ClInclude Include="src\vdp_pal.h" />
     <ClInclude Include="src\vdp_spr.h" />
     <ClInclude Include="src\vdp_tile.h" />
@@ -83,8 +81,6 @@
     <ClInclude Include="src\xgm.h" />
     <ClInclude Include="src\ym2612.h" />
     <ClInclude Include="src\z80_ctrl.h" />
-    <ClInclude Include="src\z80_mvsc.h" />
-    <ClInclude Include="src\z80_vgm.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\16c550.c" />
@@ -130,7 +126,6 @@
     <ClCompile Include="src\pal.c" />
     <ClCompile Include="src\psg.c" />
     <ClCompile Include="src\smp_null.c" />
-    <ClCompile Include="src\smp_null_pcm.c" />
     <ClCompile Include="src\sound.c" />
     <ClCompile Include="src\sprite_eng.c" />
     <ClCompile Include="src\sram.c" />
@@ -143,7 +138,6 @@
     <ClCompile Include="src\types.c" />
     <ClCompile Include="src\vdp.c" />
     <ClCompile Include="src\vdp_bg.c" />
-    <ClCompile Include="src\vdp_dma.c" />
     <ClCompile Include="src\vdp_pal.c" />
     <ClCompile Include="src\vdp_spr.c" />
     <ClCompile Include="src\vdp_tile.c" />
@@ -151,8 +145,6 @@
     <ClCompile Include="src\xgm.c" />
     <ClCompile Include="src\ym2612.c" />
     <ClCompile Include="src\z80_ctrl.c" />
-    <ClCompile Include="src\z80_mvsc.c" />
-    <ClCompile Include="src\z80_vgm.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F431679A-9A6E-482A-8D6D-C5F2D11A7E62}</ProjectGuid>

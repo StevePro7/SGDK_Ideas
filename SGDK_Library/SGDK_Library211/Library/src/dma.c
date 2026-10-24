@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "dma.h"
 
 void DMA_init(void) {}

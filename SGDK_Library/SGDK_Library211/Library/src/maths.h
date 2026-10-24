@@ -1,3 +1,5 @@
+#include "types.h"
+
 /**
  *  \file maths.h
  *  \brief Mathematical methods.
@@ -478,7 +480,7 @@ u32 getApproximatedDistance(s32 dx, s32 dy);
  *  \param v
  *      2D vector.
  */
-u32 getApproximatedDistanceV(V2s32* v);
+//u32 getApproximatedDistanceV(V2s32* v);
 
 
 #define distance_approx(dx, dy)     _Pragma("GCC error \"This method is deprecated, use getApproximatedDistance(..) instead.\"")

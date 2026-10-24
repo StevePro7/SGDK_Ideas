@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "psg.h"
 
 void PSG_reset(void) {}

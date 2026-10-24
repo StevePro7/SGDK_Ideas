@@ -4,21 +4,21 @@
 // SGDK replacement for stdint.h
 #include "types.h"
 
-#define MINIMUSIC_MEMORY_BARRIER() asm volatile ("" : : : "memory")
-
-static inline void MINIMUSIC_Z80_GUARD_BEGIN() {
-   volatile uint16_t *port = (uint16_t*)(0xA11100);
-   MINIMUSIC_MEMORY_BARRIER();
-   *port = 0x100;
-   MINIMUSIC_MEMORY_BARRIER();
-}
-
-static inline void MINIMUSIC_Z80_GUARD_END() {
-   volatile uint16_t *port = (uint16_t*)(0xA11100);
-   MINIMUSIC_MEMORY_BARRIER();
-   *port = 0x000;
-   MINIMUSIC_MEMORY_BARRIER();
-}
+//#define MINIMUSIC_MEMORY_BARRIER() asm volatile ("" : : : "memory")
+//
+//static inline void MINIMUSIC_Z80_GUARD_BEGIN() {
+//   volatile uint16_t *port = (uint16_t*)(0xA11100);
+//   MINIMUSIC_MEMORY_BARRIER();
+//   *port = 0x100;
+//   MINIMUSIC_MEMORY_BARRIER();
+//}
+//
+//static inline void MINIMUSIC_Z80_GUARD_END() {
+//   volatile uint16_t *port = (uint16_t*)(0xA11100);
+//   MINIMUSIC_MEMORY_BARRIER();
+//   *port = 0x000;
+//   MINIMUSIC_MEMORY_BARRIER();
+//}
 
 #define MINIMUSIC_STATUS_BGM        0x01
 

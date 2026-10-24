@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "xgm2.h"
 
 void XGM2_loadDriver(bool waitReady) {}

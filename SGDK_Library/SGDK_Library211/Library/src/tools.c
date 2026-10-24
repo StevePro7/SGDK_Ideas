@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "tools.h"
 
 void setRandomSeed(u16 seed) {}

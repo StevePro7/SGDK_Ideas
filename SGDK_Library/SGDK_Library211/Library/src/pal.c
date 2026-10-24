@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "pal.h"
 
 u16 PAL_getColor(u16 index) { return 0; }

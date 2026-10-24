@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "sram.h"
 
 void SRAM_enable(void) {}

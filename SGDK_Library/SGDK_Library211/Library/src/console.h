@@ -140,7 +140,7 @@ typedef int (*vsnprintf_t)(char *buf, int count, const char *fmt, va_list args);
  *  another implementation, e.g., stbsp_vsprintf().
  */
 
-int CON_sprintf(char* buf, const char *fmt, ...)  __attribute__ ((format (printf, 2, 3)));
+//int CON_sprintf(char* buf, const char *fmt, ...)  __attribute__ ((format (printf, 2, 3)));
 
 /**
  *  \brief
@@ -176,7 +176,7 @@ int CON_sprintf(char* buf, const char *fmt, ...)  __attribute__ ((format (printf
  *  implementation, e.g., stbsp_vsnprintf().
  */
 
-int CON_snprintf(char* buf, int count, const char *fmt, ...)  __attribute__ ((format (printf, 3, 4)));
+//int CON_snprintf(char* buf, int count, const char *fmt, ...)  __attribute__ ((format (printf, 3, 4)));
 
 /**
  *  \brief
@@ -391,6 +391,6 @@ V2u16 CON_getCursorPosition();
  *  - \\v : vertical tab
  */
 
-int CON_write(const char *fmt, ...)  __attribute__ ((format (printf, 1, 2)));
+//int CON_write(const char *fmt, ...)  __attribute__ ((format (printf, 1, 2)));
 
 #endif // MODULE_CONSOLE

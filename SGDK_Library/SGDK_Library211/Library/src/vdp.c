@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "vdp.h"
 
 void VDP_init(void) {}

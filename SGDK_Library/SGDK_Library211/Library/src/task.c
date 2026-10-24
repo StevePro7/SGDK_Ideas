@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "task.h"
 
 void TSK_init() {}

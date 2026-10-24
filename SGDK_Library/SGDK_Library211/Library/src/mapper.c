@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "mapper.h"
 
 void SYS_resetBanks() {}

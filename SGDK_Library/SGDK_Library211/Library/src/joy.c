@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "joy.h"
 
 void JOY_init(void) {}

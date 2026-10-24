@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "timer.h"
 
 u32 getSubTick(void) { return 0; }

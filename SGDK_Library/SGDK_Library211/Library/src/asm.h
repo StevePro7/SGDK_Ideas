@@ -38,13 +38,13 @@
       enum_val name
     #define ENUM_END(enum_name)
 #else
-    #define ENUM_BEGIN typedef enum {
-    #define ENUM_BEGIN_EX(tmpName) typedef enum tmpName {
-    #define ENUM_BEGIN_SHORT typedef enum __attribute__ ((__packed__)) {
-    #define ENUM_BEGIN_SHORT_EX(tmpName) typedef enum __attribute__ ((__packed__)) tmpName {
-    #define ENUM_VAL(name) name,
-    #define ENUM_VALASSIGN(name, value) name = value,
-    #define ENUM_END(enum_name) } enum_name;
+    //#define ENUM_BEGIN typedef enum {
+    //#define ENUM_BEGIN_EX(tmpName) typedef enum tmpName {
+    //#define ENUM_BEGIN_SHORT typedef enum __attribute__ ((__packed__)) {
+    //#define ENUM_BEGIN_SHORT_EX(tmpName) typedef enum __attribute__ ((__packed__)) tmpName {
+    //#define ENUM_VAL(name) name,
+    //#define ENUM_VALASSIGN(name, value) name = value,
+    //#define ENUM_END(enum_name) } enum_name;
 #endif
 
 

@@ -26,7 +26,7 @@ u16 getLog2(u32 value) { return 0; }
 
 u32 getApproximatedDistance(s32 dx, s32 dy) { return 0; }
 
-u32 getApproximatedDistanceV(V2s32* v) { return 0; }
+//u32 getApproximatedDistanceV(V2s32* v) { return 0; }
 
 s16 F16_toInt(fix16 value) { return 0; }
 

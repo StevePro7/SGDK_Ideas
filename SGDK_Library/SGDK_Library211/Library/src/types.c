@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "types.h"
 
 u8 getZeroU8(void) { return 0; }

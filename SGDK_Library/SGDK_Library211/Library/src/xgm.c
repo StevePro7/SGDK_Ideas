@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "xgm.h"
 
 void XGM_loadDriver(const bool waitReady) {}

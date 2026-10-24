@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "flash.h"
 
 int16_t flash_init(void) { return 0; }

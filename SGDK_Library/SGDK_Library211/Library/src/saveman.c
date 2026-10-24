@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "saveman.h"
 
 int16_t sm_init(uint8_t num_slots, uint32_t max_length_restrict) { return 0; }

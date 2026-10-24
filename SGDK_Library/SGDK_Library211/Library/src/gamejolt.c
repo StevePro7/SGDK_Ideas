@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "gamejolt.h"
 
 bool gj_init(const char *endpoint, const char *game_id, const char *private_key, const char *username, const char *user_token, char *reply_buf, uint16_t buf_len, uint16_t tout_frames) { return 0; }

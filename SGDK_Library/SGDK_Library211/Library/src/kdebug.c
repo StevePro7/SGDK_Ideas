@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "kdebug.h"
 
 void KDebug_Halt(void) {}

@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "vdp_tile.h"
 
 u16 VDP_getPlaneAddress(VDPPlane plane, u16 x, u16 y) { return 0; }

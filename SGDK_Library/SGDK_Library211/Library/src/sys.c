@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "sys.h"
 
 void SYS_assertReset(void) {}

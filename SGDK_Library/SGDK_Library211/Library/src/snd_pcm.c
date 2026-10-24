@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "snd_pcm.h"
 
 void SND_PCM_loadDriver(const bool waitReady) {}

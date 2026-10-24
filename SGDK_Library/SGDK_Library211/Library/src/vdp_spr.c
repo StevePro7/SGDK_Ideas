@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "vdp_spr.h"
 
 void VDP_resetSprites(void) {}

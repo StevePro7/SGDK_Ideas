@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "pool.h"
 
 Pool*POOL_create(u16 size, u16 objectSize) { return 0; }

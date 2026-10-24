@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "vdp_bg.h"
 
 void VDP_setHorizontalScroll(VDPPlane plane, s16 value) {}

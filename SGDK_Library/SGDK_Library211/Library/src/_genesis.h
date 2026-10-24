@@ -48,14 +48,14 @@
 #include "ym2612.h"
 #include "psg.h"
 
-#include "snd/sound.h"
-#include "snd/xgm.h"
-#include "snd/xgm2.h"
-#include "snd/smp_null.h"
-#include "snd/smp_null_dpcm.h"
-#include "snd/pcm/snd_pcm.h"
-#include "snd/pcm/snd_dpcm2.h"
-#include "snd/pcm/snd_pcm4.h"
+#include "sound.h"
+#include "xgm.h"
+#include "xgm2.h"
+#include "smp_null.h"
+#include "smp_null_dpcm.h"
+#include "snd_pcm.h"
+#include "snd_dpcm2.h"
+#include "snd_pcm4.h"
 
 #include "joy.h"
 #include "timer.h"
@@ -76,12 +76,12 @@
 #endif
 
 #if (MODULE_FLASHSAVE != 0)
-#include "ext/flash-save/flash.h"
-#include "ext/flash-save/saveman.h"
+#include "flash.h"
+#include "saveman.h"
 #endif
 
 #if (MODULE_CONSOLE != 0)
-#include "ext/console.h"
+#include "console.h"
 #endif
 
 // preserve compatibility with old resources name

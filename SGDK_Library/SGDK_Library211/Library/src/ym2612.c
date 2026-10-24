@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "ym2612.h"
 
 void YM2612_reset(void) {}

@@ -68,9 +68,6 @@
     <ClInclude Include="src\smp_null.h">
       <Filter>Header Files\inc</Filter>
     </ClInclude>
-    <ClInclude Include="src\smp_null_pcm.h">
-      <Filter>Header Files\inc</Filter>
-    </ClInclude>
     <ClInclude Include="src\sound.h">
       <Filter>Header Files\inc</Filter>
     </ClInclude>
@@ -107,9 +104,6 @@
     <ClInclude Include="src\vdp_bg.h">
       <Filter>Header Files\inc</Filter>
     </ClInclude>
-    <ClInclude Include="src\vdp_dma.h">
-      <Filter>Header Files\inc</Filter>
-    </ClInclude>
     <ClInclude Include="src\vdp_pal.h">
       <Filter>Header Files\inc</Filter>
     </ClInclude>
@@ -129,12 +123,6 @@
       <Filter>Header Files\inc</Filter>
     </ClInclude>
     <ClInclude Include="src\z80_ctrl.h">
-      <Filter>Header Files\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="src\z80_mvsc.h">
-      <Filter>Header Files\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="src\z80_vgm.h">
       <Filter>Header Files\inc</Filter>
     </ClInclude>
     <ClInclude Include="src\_genesis.h">
@@ -268,9 +256,6 @@
     <ClCompile Include="src\smp_null.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\smp_null_pcm.c">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
     <ClCompile Include="src\sound.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
@@ -307,9 +292,6 @@
     <ClCompile Include="src\vdp_bg.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\vdp_dma.c">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
     <ClCompile Include="src\vdp_pal.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
@@ -329,12 +311,6 @@
       <Filter>Source Files\src</Filter>
     </ClCompile>
     <ClCompile Include="src\z80_ctrl.c">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\z80_mvsc.c">
-      <Filter>Source Files\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\z80_vgm.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
     <ClCompile Include="src\_genesis.c">

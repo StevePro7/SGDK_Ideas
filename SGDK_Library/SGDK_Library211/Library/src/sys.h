@@ -31,25 +31,25 @@
  *  \brief
  *      To force method inlining (not sure that GCC does actually care of it)
  */
-#define FORCE_INLINE                inline __attribute__((always_inline))
+//#define FORCE_INLINE                inline __attribute__((always_inline))
 
 /**
  *  \brief
  *      To force no inlining for this method
  */
-#define NO_INLINE                   __attribute__((noinline))
+//#define NO_INLINE                   __attribute__((noinline))
 
 /**
  *  \brief
  *      Put function in .data (RAM) instead of the default .text
  */
-#define RAM_SECT                    __attribute__((section(".ramprog")))
+//#define RAM_SECT                    __attribute__((section(".ramprog")))
 
 /**
  *  \brief
  *      Declare function for the hint callback (generate a RTE to return from interrupt instead of RTS)
  */
-#define HINTERRUPT_CALLBACK         __attribute__((interrupt)) void
+//#define HINTERRUPT_CALLBACK         __attribute__((interrupt)) void
 
 
 // exist through rom_head.c

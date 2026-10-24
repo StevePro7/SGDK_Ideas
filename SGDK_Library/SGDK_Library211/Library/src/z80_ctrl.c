@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "z80_ctrl.h"
 
 void Z80_init(void) {}

@@ -1,3 +1,5 @@
+#include "types.h"
+
 /**
  *  \file vram.h
  *  \brief SGDK VRAM (Video Memory) management unit

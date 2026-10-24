@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "vram.h"
 
 void VRAM_createRegion(VRAMRegion *region, u16 startIndex, u16 size) {}

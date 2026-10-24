@@ -1,3 +1,4 @@
+#include "_genesis.h"
 #include "sprite_eng_legacy.h"
 
 void SPR_init(void) {}

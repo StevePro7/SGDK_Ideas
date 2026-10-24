@@ -1,3 +1,5 @@
+#include "types.h"
+
 /**
  *  \file string.h
  *  \brief String manipulations
@@ -171,7 +173,7 @@ int vsprintf(char *buffer, const char *fmt, va_list args);
  *  If 'fmt' includes format specifiers (subsequences beginning with %), the additional arguments following format are
  *  formatted and inserted in the resulting string replacing their respective specifiers
  */
-int sprintf(char *buffer, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
+//int sprintf(char *buffer, const char *fmt, ...) __attribute__ ((format (printf, 2, 3)));
 
 #endif  // ENABLE_NEWLIB
 

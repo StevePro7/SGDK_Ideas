@@ -19,21 +19,30 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\asm.c" />
     <ClCompile Include="src\bmp.c" />
     <ClCompile Include="src\config.c" />
     <ClCompile Include="src\dma.c" />
     <ClCompile Include="src\ext\everdrive.c" />
     <ClCompile Include="src\ext\fat16.c" />
+    <ClCompile Include="src\font.c" />
+    <ClCompile Include="src\joy.c" />
     <ClCompile Include="src\kdebug.c" />
+    <ClCompile Include="src\libres.c" />
+    <ClCompile Include="src\map.c" />
     <ClCompile Include="src\mapper.c" />
     <ClCompile Include="src\maths.c" />
     <ClCompile Include="src\maths3D.c" />
+    <ClCompile Include="src\memory.c" />
+    <ClCompile Include="src\memory_base.c" />
     <ClCompile Include="src\object.c" />
     <ClCompile Include="src\pal.c" />
     <ClCompile Include="src\pool.c" />
     <ClCompile Include="src\psg.c" />
     <ClCompile Include="src\sprite_eng.c" />
+    <ClCompile Include="src\sprite_eng_legacy.c" />
     <ClCompile Include="src\sram.c" />
+    <ClCompile Include="src\string.c" />
     <ClCompile Include="src\types.c" />
     <ClCompile Include="src\vdp.c" />
     <ClCompile Include="src\vdp_bg.c" />
@@ -45,21 +54,30 @@
     <ClCompile Include="src\_genesis.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\asm.h" />
     <ClInclude Include="src\bmp.h" />
     <ClInclude Include="src\config.h" />
     <ClInclude Include="src\dma.h" />
     <ClInclude Include="src\ext\everdrive.h" />
     <ClInclude Include="src\ext\fat16.h" />
+    <ClInclude Include="src\font.h" />
+    <ClInclude Include="src\joy.h" />
     <ClInclude Include="src\kdebug.h" />
+    <ClInclude Include="src\libres.h" />
+    <ClInclude Include="src\map.h" />
     <ClInclude Include="src\mapper.h" />
     <ClInclude Include="src\maths.h" />
     <ClInclude Include="src\maths3D.h" />
+    <ClInclude Include="src\memory.h" />
+    <ClInclude Include="src\memory_base.h" />
     <ClInclude Include="src\object.h" />
     <ClInclude Include="src\pal.h" />
     <ClInclude Include="src\pool.h" />
     <ClInclude Include="src\psg.h" />
     <ClInclude Include="src\sprite_eng.h" />
+    <ClInclude Include="src\sprite_eng_legacy.h" />
     <ClInclude Include="src\sram.h" />
+    <ClInclude Include="src\string.h" />
     <ClInclude Include="src\types.h" />
     <ClInclude Include="src\vdp.h" />
     <ClInclude Include="src\vdp_bg.h" />

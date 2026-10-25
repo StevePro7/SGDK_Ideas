@@ -1,4 +1,3 @@
-#include "_genesis.h"
 #include "ssf.h"
 
 void uart_init(void) {}

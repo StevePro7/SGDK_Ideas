@@ -1,4 +1,3 @@
-#include "_genesis.h"
 #include "stb_sprintf.h"
 
 STBSP__PUBLICDEF int STB_SPRINTF_DECORATE(vsprintf)(char *buf, char const *fmt, va_list va) { return 0; }

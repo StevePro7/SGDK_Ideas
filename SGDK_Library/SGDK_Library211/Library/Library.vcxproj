@@ -37,6 +37,7 @@
     <ClCompile Include="src\ext\mw\megawifi.c" />
     <ClCompile Include="src\ext\mw\mw-msg.c" />
     <ClCompile Include="src\ext\mw\ssf.c" />
+    <ClCompile Include="src\ext\stb\stb_sprintf.c" />
     <ClCompile Include="src\font.c" />
     <ClCompile Include="src\joy.c" />
     <ClCompile Include="src\kdebug.c" />
@@ -91,6 +92,7 @@
     <ClInclude Include="src\ext\mw\megawifi.h" />
     <ClInclude Include="src\ext\mw\mw-msg.h" />
     <ClInclude Include="src\ext\mw\ssf.h" />
+    <ClInclude Include="src\ext\stb\stb_sprintf.h" />
     <ClInclude Include="src\font.h" />
     <ClInclude Include="src\joy.h" />
     <ClInclude Include="src\kdebug.h" />

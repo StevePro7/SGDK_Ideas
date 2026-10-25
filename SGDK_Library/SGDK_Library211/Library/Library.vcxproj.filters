@@ -203,6 +203,9 @@
     <ClCompile Include="src\ext\mw\megawifi.c">
       <Filter>Source Files\src\ext\mw</Filter>
     </ClCompile>
+    <ClCompile Include="src\ext\stb\stb_sprintf.c">
+      <Filter>Source Files\src\ext\stb</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\_genesis.h">
@@ -360,6 +363,9 @@
     </ClInclude>
     <ClInclude Include="src\ext\mw\megawifi.h">
       <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\stb\stb_sprintf.h">
+      <Filter>Header Files\inc\ext\stb</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,3 +1,6 @@
+#include "sound.h"
+#include "types.h"
+
 /**
  *  \file SND_DPCM2.h
  *  \brief Z80_DRIVER_DPCM2 sound driver API

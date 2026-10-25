@@ -52,6 +52,10 @@
     <ClCompile Include="src\pal.c" />
     <ClCompile Include="src\pool.c" />
     <ClCompile Include="src\psg.c" />
+    <ClCompile Include="src\snd\pcm\snd_dpcm2.c" />
+    <ClCompile Include="src\snd\pcm\snd_pcm.c" />
+    <ClCompile Include="src\snd\pcm\snd_pcm4.c" />
+    <ClCompile Include="src\snd\pcm\tab_vol.c" />
     <ClCompile Include="src\snd\smp_null.c" />
     <ClCompile Include="src\snd\smp_null_dpcm.c" />
     <ClCompile Include="src\snd\sound.c" />
@@ -112,6 +116,10 @@
     <ClInclude Include="src\pal.h" />
     <ClInclude Include="src\pool.h" />
     <ClInclude Include="src\psg.h" />
+    <ClInclude Include="src\snd\pcm\snd_dpcm2.h" />
+    <ClInclude Include="src\snd\pcm\snd_pcm.h" />
+    <ClInclude Include="src\snd\pcm\snd_pcm4.h" />
+    <ClInclude Include="src\snd\pcm\tab_vol.h" />
     <ClInclude Include="src\snd\smp_null.h" />
     <ClInclude Include="src\snd\smp_null_dpcm.h" />
     <ClInclude Include="src\snd\sound.h" />
@@ -204,7 +212,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
-      <AdditionalIncludeDirectories>$(SolutionDir)\Library\src</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Library\src;$(SolutionDir)\Library\src\snd</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

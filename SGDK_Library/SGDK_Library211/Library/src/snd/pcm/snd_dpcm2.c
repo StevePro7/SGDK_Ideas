@@ -1,4 +1,3 @@
-#include "_genesis.h"
 #include "snd_dpcm2.h"
 
 void SND_DPCM2_loadDriver(const bool waitReady) {}

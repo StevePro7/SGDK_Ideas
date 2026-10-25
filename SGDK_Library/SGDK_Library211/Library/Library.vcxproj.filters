@@ -51,6 +51,12 @@
     <Filter Include="Source Files\src\snd">
       <UniqueIdentifier>{ce603c38-3859-4e36-b50f-4ffae06dd7f0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\inc\snd\pcm">
+      <UniqueIdentifier>{ee8af8fd-315d-482f-bb96-eda38464f3e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\snd\pcm">
+      <UniqueIdentifier>{bdd69397-63fd-4675-a8d1-c1812e627ec4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\_genesis.c">
@@ -227,6 +233,18 @@
     <ClCompile Include="src\snd\smp_null_dpcm.c">
       <Filter>Source Files\src\snd</Filter>
     </ClCompile>
+    <ClCompile Include="src\snd\pcm\snd_dpcm2.c">
+      <Filter>Source Files\src\snd\pcm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\pcm\snd_pcm.c">
+      <Filter>Source Files\src\snd\pcm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\pcm\snd_pcm4.c">
+      <Filter>Source Files\src\snd\pcm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\pcm\tab_vol.c">
+      <Filter>Source Files\src\snd\pcm</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\_genesis.h">
@@ -402,6 +420,18 @@
     </ClInclude>
     <ClInclude Include="src\snd\smp_null_dpcm.h">
       <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\pcm\snd_dpcm2.h">
+      <Filter>Header Files\inc\snd\pcm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\pcm\snd_pcm.h">
+      <Filter>Header Files\inc\snd\pcm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\pcm\snd_pcm4.h">
+      <Filter>Header Files\inc\snd\pcm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\pcm\tab_vol.h">
+      <Filter>Header Files\inc\snd\pcm</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

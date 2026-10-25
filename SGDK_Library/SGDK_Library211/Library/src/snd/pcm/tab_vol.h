@@ -1,3 +1,5 @@
+#include "types.h"
+
 #ifndef _TAB_VOL_H_
 #define _TAB_VOL_H_
 

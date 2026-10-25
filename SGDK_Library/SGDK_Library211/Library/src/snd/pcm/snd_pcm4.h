@@ -1,3 +1,6 @@
+#include "sound.h"
+#include "types.h"
+
 /**
  *  \file snd_pcm4.h
  *  \brief Z80_DRIVER_PCM4 sound driver API

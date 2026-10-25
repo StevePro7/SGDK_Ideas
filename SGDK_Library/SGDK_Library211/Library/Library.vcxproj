@@ -20,16 +20,44 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\config.c" />
+    <ClCompile Include="src\dma.c" />
     <ClCompile Include="src\ext\everdrive.c" />
     <ClCompile Include="src\ext\fat16.c" />
+    <ClCompile Include="src\kdebug.c" />
+    <ClCompile Include="src\mapper.c" />
+    <ClCompile Include="src\maths.c" />
+    <ClCompile Include="src\maths3D.c" />
+    <ClCompile Include="src\object.c" />
+    <ClCompile Include="src\pal.c" />
+    <ClCompile Include="src\pool.c" />
+    <ClCompile Include="src\psg.c" />
+    <ClCompile Include="src\sram.c" />
     <ClCompile Include="src\types.c" />
+    <ClCompile Include="src\vdp_pal.c" />
+    <ClCompile Include="src\vdp_spr.c" />
+    <ClCompile Include="src\ym2612.c" />
+    <ClCompile Include="src\z80_ctrl.c" />
     <ClCompile Include="src\_genesis.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\dma.h" />
     <ClInclude Include="src\ext\everdrive.h" />
     <ClInclude Include="src\ext\fat16.h" />
+    <ClInclude Include="src\kdebug.h" />
+    <ClInclude Include="src\mapper.h" />
+    <ClInclude Include="src\maths.h" />
+    <ClInclude Include="src\maths3D.h" />
+    <ClInclude Include="src\object.h" />
+    <ClInclude Include="src\pal.h" />
+    <ClInclude Include="src\pool.h" />
+    <ClInclude Include="src\psg.h" />
+    <ClInclude Include="src\sram.h" />
     <ClInclude Include="src\types.h" />
+    <ClInclude Include="src\vdp_pal.h" />
+    <ClInclude Include="src\vdp_spr.h" />
+    <ClInclude Include="src\ym2612.h" />
+    <ClInclude Include="src\z80_ctrl.h" />
     <ClInclude Include="src\_genesis.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -80,6 +80,21 @@
     <ClCompile Include="src\maths.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\vdp.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vdp_tile.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vdp_bg.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bmp.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite_eng.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\_genesis.h">
@@ -137,6 +152,21 @@
       <Filter>Header Files\inc</Filter>
     </ClInclude>
     <ClInclude Include="src\maths.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vdp.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vdp_tile.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vdp_bg.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bmp.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite_eng.h">
       <Filter>Header Files\inc</Filter>
     </ClInclude>
   </ItemGroup>

@@ -43,6 +43,11 @@
     <ClCompile Include="src\sprite_eng_legacy.c" />
     <ClCompile Include="src\sram.c" />
     <ClCompile Include="src\string.c" />
+    <ClCompile Include="src\sys.c" />
+    <ClCompile Include="src\tab_cnv.c" />
+    <ClCompile Include="src\task.c" />
+    <ClCompile Include="src\task_cst.c" />
+    <ClCompile Include="src\timer.c" />
     <ClCompile Include="src\types.c" />
     <ClCompile Include="src\vdp.c" />
     <ClCompile Include="src\vdp_bg.c" />
@@ -78,6 +83,11 @@
     <ClInclude Include="src\sprite_eng_legacy.h" />
     <ClInclude Include="src\sram.h" />
     <ClInclude Include="src\string.h" />
+    <ClInclude Include="src\sys.h" />
+    <ClInclude Include="src\tab_cnv.h" />
+    <ClInclude Include="src\task.h" />
+    <ClInclude Include="src\task_cst.h" />
+    <ClInclude Include="src\timer.h" />
     <ClInclude Include="src\types.h" />
     <ClInclude Include="src\vdp.h" />
     <ClInclude Include="src\vdp_bg.h" />

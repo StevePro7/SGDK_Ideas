@@ -1,3 +1,5 @@
+#include "types.h"
+
 /**
  *  \file vdp.h
  *  \brief VDP main

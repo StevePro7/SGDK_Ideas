@@ -1,4 +1,3 @@
-#include "_genesis.h"
 #include "map.h"
 
 Map*MAP_create(const MapDefinition* mapDef, VDPPlane plane, u16 baseTile) { return 0; }

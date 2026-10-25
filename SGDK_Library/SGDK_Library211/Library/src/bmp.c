@@ -1,4 +1,3 @@
-#include "_genesis.h"
 #include "bmp.h"
 
 void BMP_init(u16 double_buffer, VDPPlane plane, u16 palette, u16 priority) {}

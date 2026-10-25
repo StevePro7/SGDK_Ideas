@@ -1,4 +1,3 @@
-#include "_genesis.h"
 #include "memory.h"
 
 u16 MEM_getFree(void) { return 0; }

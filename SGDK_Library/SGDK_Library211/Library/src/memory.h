@@ -1,3 +1,5 @@
+#include "types.h"
+
 /**
  *  \file memory.h
  *  \brief Memory handling methods

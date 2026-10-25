@@ -1,4 +1,3 @@
-#include "_genesis.h"
 
 #if LEGACY_SPRITE_ENGINE
 #include "sprite_eng_legacy.h"

@@ -1,4 +1,3 @@
-#include "_genesis.h"
 #include "string.h"
 
 u16 strlen(const char *str) { return 0; }

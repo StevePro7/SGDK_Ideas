@@ -15,14 +15,44 @@
     <Filter Include="Source Files\src">
       <UniqueIdentifier>{ebac3fac-96c3-44cf-b50c-d30b4640aac2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\src\ext">
+      <UniqueIdentifier>{24913b3c-717f-410b-a8d0-1da574630750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\ext">
+      <UniqueIdentifier>{8387bd38-e80b-4cb7-b4be-3666537d98a8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\_genesis.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\types.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\everdrive.c">
+      <Filter>Source Files\src\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\fat16.c">
+      <Filter>Source Files\src\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="src\config.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\_genesis.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\types.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\everdrive.h">
+      <Filter>Header Files\inc\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\fat16.h">
+      <Filter>Header Files\inc\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config.h">
       <Filter>Header Files\inc</Filter>
     </ClInclude>
   </ItemGroup>

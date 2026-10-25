@@ -1,3 +1,5 @@
+#include "types.h"
+
 /**
  *  \file fat16.h
  *  \brief FAT16 file system support
@@ -11,7 +13,7 @@
 #define _FAT16_H
 
 
-#if (MODULE_FAT16 != 0)
+//#if (MODULE_FAT16 != 0)
 
 #define FAT16_DIR_SIZE 32
 #define FAT16_TYPE_FILE  0x20
@@ -70,15 +72,15 @@ extern Fat16PBR fat16_pbr;
 
 
 u8 fat16Init();
-u8 fat16OpenDir(u16 entry, Fat16Dir *dir);
-u8 fat16OpenFile(Fat16Record *rec, Fat16File *file);
-u8 fat16ReadNextSector(Fat16File *file);
-u8 fat16WriteNextSector(Fat16File *file);
-u8 fat16DeleteRecord(Fat16Record *rec);
-u8 fat16CreateRecord(Fat16Record *rec, Fat16Dir *dir);
-u8 fat16SkipSectors(Fat16File *file, u16 num);
+u8 fat16OpenDir( u16 entry, Fat16Dir *dir );
+u8 fat16OpenFile( Fat16Record *rec, Fat16File *file );
+u8 fat16ReadNextSector( Fat16File *file );
+u8 fat16WriteNextSector( Fat16File *file );
+u8 fat16DeleteRecord( Fat16Record *rec );
+u8 fat16CreateRecord( Fat16Record *rec, Fat16Dir *dir );
+u8 fat16SkipSectors( Fat16File *file, u16 num );
 
-#endif  /* MODULE_FAT16 */
+//#endif  /* MODULE_FAT16 */
 
 
 #endif  /* _FAT16_H */

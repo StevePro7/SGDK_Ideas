@@ -1,4 +1,3 @@
-#include "_genesis.h"
 #include "everdrive.h"
 
 u8 evd_mmcInit() { return 0; }

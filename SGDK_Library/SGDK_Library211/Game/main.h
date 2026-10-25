@@ -1,7 +1,7 @@
 #ifndef __MAIN__
 #define __MAIN__
 
-//#include "_genesis.h"
+#include "_genesis.h"
 
 /*
 //#include "..\lib\asm.h"

@@ -3,7 +3,7 @@
 
 #define SGDK_VERSION    2.11
 
-//#include "types.h"
+#include "types.h"
 
 #define SGDK            TRUE
 

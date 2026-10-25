@@ -1,3 +1,5 @@
+#include "types.h"
+
 /**
  *  \file everdrive.h
  *  \brief Everdrive support
@@ -10,7 +12,7 @@
 #ifndef _EVERDRIVE
 #define _EVERDRIVE
 
-#if (MODULE_EVERDRIVE != 0)
+//#if (MODULE_EVERDRIVE != 0)
 
 //config register bits
 #define _SS 0
@@ -111,6 +113,6 @@ void evd_eprProgBlock(u16 *data, u32 rom_addr, u32 len);
 void evd_init(u16 def_rom_bank, u8 _is_ram_app);
 
 
-#endif // MODULE_EVERDRIVE
+//#endif // MODULE_EVERDRIVE
 
 #endif

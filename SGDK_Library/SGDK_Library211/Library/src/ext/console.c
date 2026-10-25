@@ -1,4 +1,3 @@
-#include "_genesis.h"
 #include "console.h"
 
 int CON_sprintf(char* buf, const char *fmt, ...) { return 0; }

@@ -19,9 +19,17 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\config.c" />
+    <ClCompile Include="src\ext\everdrive.c" />
+    <ClCompile Include="src\ext\fat16.c" />
+    <ClCompile Include="src\types.c" />
     <ClCompile Include="src\_genesis.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\config.h" />
+    <ClInclude Include="src\ext\everdrive.h" />
+    <ClInclude Include="src\ext\fat16.h" />
+    <ClInclude Include="src\types.h" />
     <ClInclude Include="src\_genesis.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -90,6 +98,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <ProgramDataBaseFileName>$(IntDir)$(TargetName).pdb</ProgramDataBaseFileName>
+      <AdditionalIncludeDirectories>$(SolutionDir)\Library\src</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -52,6 +52,11 @@
     <ClCompile Include="src\pal.c" />
     <ClCompile Include="src\pool.c" />
     <ClCompile Include="src\psg.c" />
+    <ClCompile Include="src\snd\smp_null.c" />
+    <ClCompile Include="src\snd\smp_null_dpcm.c" />
+    <ClCompile Include="src\snd\sound.c" />
+    <ClCompile Include="src\snd\xgm.c" />
+    <ClCompile Include="src\snd\xgm2.c" />
     <ClCompile Include="src\sprite_eng.c" />
     <ClCompile Include="src\sprite_eng_legacy.c" />
     <ClCompile Include="src\sram.c" />
@@ -107,6 +112,11 @@
     <ClInclude Include="src\pal.h" />
     <ClInclude Include="src\pool.h" />
     <ClInclude Include="src\psg.h" />
+    <ClInclude Include="src\snd\smp_null.h" />
+    <ClInclude Include="src\snd\smp_null_dpcm.h" />
+    <ClInclude Include="src\snd\sound.h" />
+    <ClInclude Include="src\snd\xgm.h" />
+    <ClInclude Include="src\snd\xgm2.h" />
     <ClInclude Include="src\sprite_eng.h" />
     <ClInclude Include="src\sprite_eng_legacy.h" />
     <ClInclude Include="src\sram.h" />

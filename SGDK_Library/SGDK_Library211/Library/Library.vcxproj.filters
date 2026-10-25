@@ -45,6 +45,12 @@
     <Filter Include="Source Files\src\ext\stb">
       <UniqueIdentifier>{08677133-3521-4619-9064-65c99b61ae82}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\inc\snd">
+      <UniqueIdentifier>{981c35cd-9676-4564-a7b0-f33817cbd761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\snd">
+      <UniqueIdentifier>{ce603c38-3859-4e36-b50f-4ffae06dd7f0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\_genesis.c">
@@ -131,9 +137,6 @@
     <ClCompile Include="src\joy.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\map.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\memory.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
@@ -205,6 +208,24 @@
     </ClCompile>
     <ClCompile Include="src\ext\stb\stb_sprintf.c">
       <Filter>Source Files\src\ext\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\sound.c">
+      <Filter>Source Files\src\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\xgm.c">
+      <Filter>Source Files\src\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\xgm2.c">
+      <Filter>Source Files\src\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\smp_null.c">
+      <Filter>Source Files\src\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\smp_null_dpcm.c">
+      <Filter>Source Files\src\snd</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,9 +346,6 @@
     <ClInclude Include="src\tools.h">
       <Filter>Header Files\inc</Filter>
     </ClInclude>
-    <ClInclude Include="src\vram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\ext\console.h">
       <Filter>Header Files\inc\ext</Filter>
     </ClInclude>
@@ -366,6 +384,24 @@
     </ClInclude>
     <ClInclude Include="src\ext\stb\stb_sprintf.h">
       <Filter>Header Files\inc\ext\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vram.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\sound.h">
+      <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\xgm.h">
+      <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\xgm2.h">
+      <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\smp_null.h">
+      <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\smp_null_dpcm.h">
+      <Filter>Header Files\inc\snd</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

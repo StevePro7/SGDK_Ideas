@@ -1,5 +1,5 @@
-#include "sound.h"
 #include "types.h"
+#include "../sound.h"
 
 /**
  *  \file SND_DPCM2.h

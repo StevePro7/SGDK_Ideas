@@ -44,44 +44,44 @@
 #include "sprite_eng.h"
 #include "sprite_eng_legacy.h"
 
-//#include "z80_ctrl.h"
-//#include "ym2612.h"
-//#include "psg.h"
-//
-//#include "sound.h"
-//#include "xgm.h"
-//#include "xgm2.h"
-//#include "smp_null.h"
-//#include "smp_null_dpcm.h"
-//#include "snd_pcm.h"
-//#include "snd_dpcm2.h"
-//#include "snd_pcm4.h"
+#include "z80_ctrl.h"
+#include "ym2612.h"
+#include "psg.h"
+
+#include "snd/sound.h"
+#include "snd/xgm.h"
+#include "snd/xgm2.h"
+#include "snd/smp_null.h"
+#include "snd/smp_null_dpcm.h"
+#include "snd/pcm/snd_pcm.h"
+#include "snd/pcm/snd_dpcm2.h"
+#include "snd/pcm/snd_pcm4.h"
 
 #include "joy.h"
 #include "timer.h"
 
 #include "task.h"
 
-//// modules
+// modules
 //#if (MODULE_EVERDRIVE != 0)
-//#include "ext/everdrive.h"
+#include "ext/everdrive.h"
 //#endif
-//
+
 //#if (MODULE_FAT16 != 0)
-//#include "ext/fat16.h"
+#include "ext/fat16.h"
 //#endif
-//
+
 //#if (MODULE_MEGAWIFI != 0)
-//#include "ext/mw/megawifi.h"
+#include "ext/mw/megawifi.h"
 //#endif
-//
+
 //#if (MODULE_FLASHSAVE != 0)
-//#include "flash.h"
-//#include "saveman.h"
+#include "ext/flash-save/flash.h"
+#include "ext/flash-save/saveman.h"
 //#endif
-//
+
 //#if (MODULE_CONSOLE != 0)
-//#include "console.h"
+#include "ext/console.h"
 //#endif
 
 // preserve compatibility with old resources name

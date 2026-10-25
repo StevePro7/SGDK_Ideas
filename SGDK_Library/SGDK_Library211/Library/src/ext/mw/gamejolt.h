@@ -1,3 +1,5 @@
+#include "types.h"
+
 /************************************************************************//**
  * \file
  *
@@ -26,7 +28,7 @@
 
 #include "types.h"
 
-#if (MODULE_MEGAWIFI != 0)
+//#if (MODULE_MEGAWIFI != 0)
 
 /// \brief Module error codes.
 ///
@@ -123,30 +125,30 @@ enum gj_data_store_update_operation {
 	type field;
 
 /// Holds the data of a single trophy.
-struct gj_trophy {
-	GJ_TROPHY_RESPONSE_TABLE(X_AS_STRUCT);
-	bool secret;	///< If true, trophy is secret
-};
+//struct gj_trophy {
+//	GJ_TROPHY_RESPONSE_TABLE(X_AS_STRUCT);
+//	bool secret;	///< If true, trophy is secret
+//};
 
 /// Holds the date/time from server
-struct gj_time {
-	GJ_TIME_RESPONSE_TABLE(X_AS_STRUCT);
-};
+//struct gj_time {
+//	GJ_TIME_RESPONSE_TABLE(X_AS_STRUCT);
+//};
 
 /// Holds data of a single score.
-struct gj_score {
-	GJ_SCORE_RESPONSE_TABLE(X_AS_STRUCT);
-};
+//struct gj_score {
+//	GJ_SCORE_RESPONSE_TABLE(X_AS_STRUCT);
+//};
 
 /// Holds data of a single score table.
-struct gj_score_table {
-	GJ_SCORE_TABLE_RESPONSE_TABLE(X_AS_STRUCT);
-};
+//struct gj_score_table {
+//	GJ_SCORE_TABLE_RESPONSE_TABLE(X_AS_STRUCT);
+//};
 
 /// Holds user data
-struct gj_user {
-	GJ_USER_RESPONSE_TABLE(X_AS_STRUCT);
-};
+//struct gj_user {
+//	GJ_USER_RESPONSE_TABLE(X_AS_STRUCT);
+//};
 
 /************************************************************************//**
  * \brief Initialize the GameJolt API.
@@ -537,7 +539,7 @@ char *gj_friend_get_next(char *pos, char **user_id);
 char *gj_request(const char **path, uint8_t num_paths, const char **key,
 		const char **value, uint8_t num_kv_pairs, uint32_t *out_len);
 
-#endif // MODULE_MEGAWIFI
+//#endif // MODULE_MEGAWIFI
 
 #endif /*_GAMEJOLT_H_*/
 

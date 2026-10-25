@@ -21,6 +21,30 @@
     <Filter Include="Header Files\inc\ext">
       <UniqueIdentifier>{8387bd38-e80b-4cb7-b4be-3666537d98a8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\inc\ext\flash-save">
+      <UniqueIdentifier>{80048d1f-d32e-4aa9-bc60-0e6920095822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ext\flash-save">
+      <UniqueIdentifier>{bb8e5d61-43e2-4035-80fe-d03811c34165}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\ext\minimusic">
+      <UniqueIdentifier>{67dd6761-5c99-4f05-906e-772dc3086f23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ext\minimusic">
+      <UniqueIdentifier>{053aac83-b397-47a6-8ace-c799a37c7e8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\ext\mw">
+      <UniqueIdentifier>{d7659b70-d5b2-4f1e-8005-62b2448f0ebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\ext\stb">
+      <UniqueIdentifier>{4f902e6c-8ac0-4cac-bdfe-8b5992b59c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ext\mw">
+      <UniqueIdentifier>{faee1f8a-7d94-45d6-9278-528e8ceed285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ext\stb">
+      <UniqueIdentifier>{08677133-3521-4619-9064-65c99b61ae82}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\_genesis.c">
@@ -146,6 +170,39 @@
     <ClCompile Include="src\ext\console.c">
       <Filter>Source Files\src\ext</Filter>
     </ClCompile>
+    <ClCompile Include="src\ext\flash-save\flash.c">
+      <Filter>Source Files\src\ext\flash-save</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\flash-save\saveman.c">
+      <Filter>Source Files\src\ext\flash-save</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\minimusic\minimus.c">
+      <Filter>Source Files\src\ext\minimusic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\16c550.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\gamejolt.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\mw-msg.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\ssf.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\jsmn.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\json.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\lsd.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\megawifi.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\_genesis.h">
@@ -270,6 +327,39 @@
     </ClInclude>
     <ClInclude Include="src\ext\console.h">
       <Filter>Header Files\inc\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\flash-save\flash.h">
+      <Filter>Header Files\inc\ext\flash-save</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\flash-save\saveman.h">
+      <Filter>Header Files\inc\ext\flash-save</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\minimusic\minimus.h">
+      <Filter>Header Files\inc\ext\minimusic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\16c550.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\gamejolt.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\mw-msg.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\ssf.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\jsmn.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\json.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\lsd.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\megawifi.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

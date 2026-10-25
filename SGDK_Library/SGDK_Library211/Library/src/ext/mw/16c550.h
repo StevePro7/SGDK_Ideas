@@ -12,7 +12,7 @@
 
 #include "types.h"
 
-#if (MODULE_MEGAWIFI == 1 && MODULE_EVERDRIVE == 0)
+//#if (MODULE_MEGAWIFI == 1 && MODULE_EVERDRIVE == 0)
 
 /// 16C550 UART base address
 #define UART_BASE		0xA130C1
@@ -185,7 +185,7 @@ void uart_init(void);
 #define uart_test(reg, val) reg = val; \
                             if (reg != val) return MW_ERR
 
-#endif // MODULE_MEGAWIFI
+//#endif // MODULE_MEGAWIFI
 
 #endif /*_16C550_H_*/
 

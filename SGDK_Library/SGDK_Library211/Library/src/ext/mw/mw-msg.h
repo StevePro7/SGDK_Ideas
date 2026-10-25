@@ -20,10 +20,10 @@
 
 #include "types.h"
 
-#if (MODULE_MEGAWIFI != 0)
+//#if (MODULE_MEGAWIFI != 0)
 
 /// Macro for packing structures and enumerates
-#define PACKED		__attribute__((__packed__))
+#define PACKED		//__attribute__((__packed__))
 
 /// Maximum buffer length (bytes)
 #define MW_MSG_MAX_BUFLEN	512
@@ -381,7 +381,7 @@ struct mw_reuse_payload {
 	char payload[MW_CMD_MAX_BUFLEN - 4 - 2];
 };
 
-#endif // MODULE_MEGAWIFI
+//#endif // MODULE_MEGAWIFI
 
 #endif //_MW_MSG_H_
 

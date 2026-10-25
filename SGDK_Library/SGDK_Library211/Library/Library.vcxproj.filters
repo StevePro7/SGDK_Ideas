@@ -137,6 +137,15 @@
     <ClCompile Include="src\timer.c">
       <Filter>Source Files\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\tools.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vram.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\console.c">
+      <Filter>Source Files\src\ext</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\_genesis.h">
@@ -252,6 +261,15 @@
     </ClInclude>
     <ClInclude Include="src\timer.h">
       <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\console.h">
+      <Filter>Header Files\inc\ext</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

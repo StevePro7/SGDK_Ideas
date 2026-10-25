@@ -10,11 +10,11 @@
 #include "config.h"
 #include "asm.h"
 
-//#include "sys.h"
+#include "sys.h"
 #include "sram.h"
 #include "mapper.h"
 #include "memory.h"
-//#include "tools.h"
+#include "tools.h"
 
 #include "pool.h"
 #include "object.h"
@@ -22,7 +22,7 @@
 #include "font.h"
 #include "string.h"
 
-//#include "tab_cnv.h"
+#include "tab_cnv.h"
 
 #include "maths.h"
 #include "maths3D.h"
@@ -35,7 +35,7 @@
 
 #include "pal.h"
 
-//#include "vram.h"
+#include "vram.h"
 #include "dma.h"
 
 #include "map.h"
@@ -56,12 +56,12 @@
 //#include "snd_pcm.h"
 //#include "snd_dpcm2.h"
 //#include "snd_pcm4.h"
-//
-//#include "joy.h"
-//#include "timer.h"
-//
-//#include "task.h"
-//
+
+#include "joy.h"
+#include "timer.h"
+
+#include "task.h"
+
 //// modules
 //#if (MODULE_EVERDRIVE != 0)
 //#include "ext/everdrive.h"

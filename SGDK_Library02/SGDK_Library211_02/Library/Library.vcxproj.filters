@@ -1,0 +1,437 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\inc">
+      <UniqueIdentifier>{a5bd00f4-93f4-4509-a8cb-54a2383f25db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src">
+      <UniqueIdentifier>{ebac3fac-96c3-44cf-b50c-d30b4640aac2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ext">
+      <UniqueIdentifier>{24913b3c-717f-410b-a8d0-1da574630750}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\ext">
+      <UniqueIdentifier>{8387bd38-e80b-4cb7-b4be-3666537d98a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\ext\flash-save">
+      <UniqueIdentifier>{80048d1f-d32e-4aa9-bc60-0e6920095822}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ext\flash-save">
+      <UniqueIdentifier>{bb8e5d61-43e2-4035-80fe-d03811c34165}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\ext\minimusic">
+      <UniqueIdentifier>{67dd6761-5c99-4f05-906e-772dc3086f23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ext\minimusic">
+      <UniqueIdentifier>{053aac83-b397-47a6-8ace-c799a37c7e8d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\ext\mw">
+      <UniqueIdentifier>{d7659b70-d5b2-4f1e-8005-62b2448f0ebb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\ext\stb">
+      <UniqueIdentifier>{4f902e6c-8ac0-4cac-bdfe-8b5992b59c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ext\mw">
+      <UniqueIdentifier>{faee1f8a-7d94-45d6-9278-528e8ceed285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\ext\stb">
+      <UniqueIdentifier>{08677133-3521-4619-9064-65c99b61ae82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\snd">
+      <UniqueIdentifier>{981c35cd-9676-4564-a7b0-f33817cbd761}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\snd">
+      <UniqueIdentifier>{ce603c38-3859-4e36-b50f-4ffae06dd7f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\inc\snd\pcm">
+      <UniqueIdentifier>{ee8af8fd-315d-482f-bb96-eda38464f3e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\src\snd\pcm">
+      <UniqueIdentifier>{bdd69397-63fd-4675-a8d1-c1812e627ec4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\_genesis.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\types.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\everdrive.c">
+      <Filter>Source Files\src\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\fat16.c">
+      <Filter>Source Files\src\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="src\config.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\z80_ctrl.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ym2612.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vdp_spr.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vdp_pal.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sram.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\psg.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pool.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\pal.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\object.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\maths3D.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mapper.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\kdebug.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\dma.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\maths.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vdp.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vdp_tile.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vdp_bg.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\bmp.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite_eng.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\asm.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\libres.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\font.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\joy.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\memory.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\memory_base.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sprite_eng_legacy.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\string.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\sys.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tab_cnv.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\task_cst.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\timer.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tools.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vram.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\console.c">
+      <Filter>Source Files\src\ext</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\flash-save\flash.c">
+      <Filter>Source Files\src\ext\flash-save</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\flash-save\saveman.c">
+      <Filter>Source Files\src\ext\flash-save</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\minimusic\minimus.c">
+      <Filter>Source Files\src\ext\minimusic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\16c550.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\gamejolt.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\mw-msg.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\ssf.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\jsmn.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\json.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\lsd.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\mw\megawifi.c">
+      <Filter>Source Files\src\ext\mw</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ext\stb\stb_sprintf.c">
+      <Filter>Source Files\src\ext\stb</Filter>
+    </ClCompile>
+    <ClCompile Include="src\map.c">
+      <Filter>Source Files\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\sound.c">
+      <Filter>Source Files\src\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\xgm.c">
+      <Filter>Source Files\src\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\xgm2.c">
+      <Filter>Source Files\src\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\smp_null.c">
+      <Filter>Source Files\src\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\smp_null_dpcm.c">
+      <Filter>Source Files\src\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\pcm\snd_dpcm2.c">
+      <Filter>Source Files\src\snd\pcm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\pcm\snd_pcm.c">
+      <Filter>Source Files\src\snd\pcm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\pcm\snd_pcm4.c">
+      <Filter>Source Files\src\snd\pcm</Filter>
+    </ClCompile>
+    <ClCompile Include="src\snd\pcm\tab_vol.c">
+      <Filter>Source Files\src\snd\pcm</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\_genesis.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\types.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\everdrive.h">
+      <Filter>Header Files\inc\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\fat16.h">
+      <Filter>Header Files\inc\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="src\config.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\z80_ctrl.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ym2612.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vdp_spr.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vdp_pal.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sram.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\psg.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pool.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\pal.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\object.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\maths3D.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\mapper.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\kdebug.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\dma.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\maths.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vdp.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vdp_tile.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vdp_bg.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\bmp.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite_eng.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\asm.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\libres.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\font.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\joy.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\map.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\memory.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\memory_base.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sprite_eng_legacy.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\string.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\sys.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tab_cnv.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\task_cst.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\timer.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tools.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\console.h">
+      <Filter>Header Files\inc\ext</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\flash-save\flash.h">
+      <Filter>Header Files\inc\ext\flash-save</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\flash-save\saveman.h">
+      <Filter>Header Files\inc\ext\flash-save</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\minimusic\minimus.h">
+      <Filter>Header Files\inc\ext\minimusic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\16c550.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\gamejolt.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\mw-msg.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\ssf.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\jsmn.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\json.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\lsd.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\mw\megawifi.h">
+      <Filter>Header Files\inc\ext\mw</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ext\stb\stb_sprintf.h">
+      <Filter>Header Files\inc\ext\stb</Filter>
+    </ClInclude>
+    <ClInclude Include="src\vram.h">
+      <Filter>Header Files\inc</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\sound.h">
+      <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\xgm.h">
+      <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\xgm2.h">
+      <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\smp_null.h">
+      <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\smp_null_dpcm.h">
+      <Filter>Header Files\inc\snd</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\pcm\snd_dpcm2.h">
+      <Filter>Header Files\inc\snd\pcm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\pcm\snd_pcm.h">
+      <Filter>Header Files\inc\snd\pcm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\pcm\snd_pcm4.h">
+      <Filter>Header Files\inc\snd\pcm</Filter>
+    </ClInclude>
+    <ClInclude Include="src\snd\pcm\tab_vol.h">
+      <Filter>Header Files\inc\snd\pcm</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

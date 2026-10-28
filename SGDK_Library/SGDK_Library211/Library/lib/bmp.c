@@ -1,5 +1,8 @@
 #include "bmp.h"
 
+u8 *bmp_buffer_read = NULL;
+u8 *bmp_buffer_write = NULL;
+
 void BMP_init(u16 double_buffer, VDPPlane plane, u16 palette, u16 priority) {}
 
 void BMP_end(void) {}

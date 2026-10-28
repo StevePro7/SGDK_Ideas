@@ -1,1 +1,3 @@
 #include "smp_null.h"
+
+const u8 smp_null[0x100] = { 0 };

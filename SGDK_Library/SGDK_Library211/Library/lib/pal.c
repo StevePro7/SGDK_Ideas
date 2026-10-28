@@ -1,5 +1,13 @@
 #include "pal.h"
 
+const u16* const palette_black = NULL;
+const u16 palette_grey[16] = { 0 };
+const u16 palette_red[16] = { 0 };
+const u16 palette_green[16] = { 0 };
+const u16 palette_blue[16] = { 0 };
+u16 fadeCurrentPal[64] = { 0 };
+u16 fadeEndPal[64] = { 0 };
+
 u16 PAL_getColor(u16 index) { return 0; }
 
 void PAL_getColors(u16 index, u16* dest, u16 count) {}

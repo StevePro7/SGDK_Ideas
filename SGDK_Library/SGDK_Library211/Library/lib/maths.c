@@ -1,5 +1,11 @@
 #include "maths.h"
 
+const fix16 trigtab_f16[90 + 1] = { 0 };
+const fix32 trigtab_f32[(90 * 4) + 1] = { 0 };
+const fix16 log2tab_f16[0x10000] = { 0 };
+const fix16 log10tab_f16[0x10000] = { 0 };
+const fix16 sqrttab_f16[0x10000] = { 0 };
+
 u32 mulu(u16 op1, u16 op2) { return 0; }
 
 s32 muls(s16 op1, s16 op2) { return 0; }

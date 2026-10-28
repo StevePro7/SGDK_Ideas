@@ -1,5 +1,7 @@
 #include "everdrive.h"
 
+u16 cfg = 0;
+
 u8 evd_mmcInit() { return 0; }
 
 u8 evd_mmcRdBlock(u32 mmc_addr, u8 *stor) { return 0; }

@@ -1,5 +1,7 @@
 #include "vdp_bg.h"
 
+u16 curTileInd = 0;
+
 void VDP_setHorizontalScroll(VDPPlane plane, s16 value) {}
 
 void VDP_setHorizontalScrollVSync(VDPPlane plane, s16 value) {}

@@ -1,5 +1,20 @@
 #include "sys.h"
 
+const ROMHeader rom_header = { 0 };
+u32 _stext = 0;
+u32 _sdata = 0;
+VoidCallback *busErrorCB = NULL;
+VoidCallback *addressErrorCB = NULL;
+VoidCallback *illegalInstCB = NULL;
+VoidCallback *zeroDivideCB = NULL;
+VoidCallback *chkInstCB = NULL;
+VoidCallback *trapvInstCB = NULL;
+VoidCallback *privilegeViolationCB = NULL;
+VoidCallback *traceCB = NULL;
+VoidCallback *line1x1xCB = NULL;
+VoidCallback *errorExceptionCB = NULL;
+VoidCallback *intCB = NULL;
+
 void SYS_assertReset(void) {}
 
 void SYS_reset(void) {}

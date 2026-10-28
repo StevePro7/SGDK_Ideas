@@ -2,6 +2,11 @@
 #if LEGACY_SPRITE_ENGINE
 #include "sprite_eng_legacy.h"
 
+Pool* spritesPool = NULL;
+Sprite* firstSprite = NULL;
+Sprite* lastSprite = NULL;
+u16 spriteVramSize = 0;
+
 void SPR_init(void) {}
 
 void SPR_initEx(u16 vramSize) {}

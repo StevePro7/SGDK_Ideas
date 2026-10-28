@@ -1,0 +1,93 @@
+Debugging Emulation
+28-Oct-2026
+
+Chat GPT
+Retro indie game development - for Sega Master System debugging source code we can use Emulicious emulator which has tiles, tileset, palette viewers plus there is a VS Code extension for Emulicious that we can use to remote debug the emulator and debug step thru the code.  Question: is there a similar emulator and VS Code extension for debugging Sega Genesis / MegaDrive?
+
+
+Yes — the Sega Genesis / Mega Drive has a very similar development and debugging setup, and there is a particularly good option if you want the same workflow you have with Emulicious on the Master System.
+
+My first recommendation would be BlastEm + VS Code + SGDK + GDB. BlastEm supports source-level debugging through GDB, breakpoints and single-stepping, as well as graphical debugging tools for the Genesis video hardware. The main difference is that the VS Code integration is generally configured through GDB rather than using the Emulicious-specific debugger extension.
+
+
+01.
+BlastEm
+https://www.retrodev.com/blastem/?utm_source=chatgpt.com
+
+An accuracy-focused Genesis emulator with an integrated debugger, GDB remote debugging, a VRAM viewer, CRAM (palette) viewer, plane viewer and plane-composition debugger. It is particularly well suited to homebrew development. 
+rhope.retrodev.com
++1
+
+    Emulator: BlastEm official website 
+
+    VS Code debugging: use the C/C++ extension and GDB configuration, or the project template below.
+
+
+
+02.  VS Code
+Genesis Code
+https://marketplace.visualstudio.com/items?itemName=zerasul.genesis-code&utm_source=chatgpt.com
+
+A VS Code extension designed for Genesis development with SGDK, GENDEV and MarsDev. It provides build/run commands and can generate a remote GDB debugging configuration for BlastEm or Gens KMod. 
+Visual Studio Marketplace
++1
+
+    Install Genesis Code 
+
+    Debugging setup documentation 
+
+
+
+03.
+Another option to investigate for hardware-level debugging, particularly if you want to inspect the Genesis video display processor (VDP) and graphics state. It is less directly aligned with the ready-made VS Code/GDB workflow
+
+
+SGDK Debugging in VSCode
+https://github.com/humbertodias/sgdk-vscode-debug?utm_source=chatgpt.com
+
+
+
+It demonstrates loading rom.out (the ELF containing debug symbols) into GDB while BlastEm runs rom.bin. VS Code can then set breakpoints, single-step, and inspect variables and memory. 
+GitHub
+What about the tile and palette viewers?
+
+This is an important distinction if you're used to Emulicious.
+
+Debugging feature				Genesis option
+Source-level stepping and breakpoints		BlastEm + GDB + VS Code
+CPU registers and memory			BlastEm debugger / GDB
+Tile graphics in VRAM				BlastEm VRAM viewer
+Palette inspection				BlastEm CRAM viewer
+Background plane inspection			BlastEm plane viewer
+Combined background composition			BlastEm plane-composition debugger
+	
+
+
+
+BlastEm provides these graphics debugging facilities alongside its CPU debugger. 
+rhope.retrodev.com
++1
+
+The Genesis hardware does work differently from the Master System: the video display processor has its own VRAM, CRAM palette memory and scrolling planes. So you'll be inspecting different hardware structures, even though the debugging workflow is familiar.
+My recommended starting point
+
+5.
+Install BlastEm .
+https://www.retrodev.com/blastem/?utm_source=chatgpt.com
+
+6.
+Install Genesis Code  for VS Code.
+https://marketplace.visualstudio.com/items?itemName=zerasul.genesis-code&utm_source=chatgpt.com
+
+7.
+Set up SGDK  if you're planning to develop in C.
+https://github.com/Stephane-D/SGDK?utm_source=chatgpt.com
+
+    Follow the Genesis Code GDB debugging guide  and compile with debug options enabled. Note that the guide documents some version-dependent BlastEm/GDB compatibility issues, so the example template is also worth trying. 
+
+Genesis Code Documentation
+https://zerasul.github.io/genesis-code-docs/debug/?utm_source=chatgpt.com
+
+One final consideration: if you intend to write 68000 assembly rather than C, BlastEm still has an integrated debugger, but the source-level workflow and symbol configuration will differ.
+
+Are you planning to develop the Genesis game in C using SGDK, or in 68000 assembly? That determines the best exact VS Code setup to recommend.

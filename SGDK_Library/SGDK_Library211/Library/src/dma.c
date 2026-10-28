@@ -1,5 +1,8 @@
 #include "dma.h"
 
+DMAOpInfo *dmaQueues = NULL;
+u16* dmaDataBuffer = NULL;
+
 void DMA_init(void) {}
 
 void DMA_initEx(u16 size, u16 capacity, u16 bufferSize) {}

@@ -1,5 +1,21 @@
 #include "vdp.h"
 
+u16 window_addr = 0;
+u16 bga_addr = 0;
+u16 bgb_addr = 0;
+u16 hscrl_addr = 0;
+u16 slist_addr = 0;
+u16 maps_addr = 0;
+u16 userTileMaxIndex = 0;
+u16 screenWidth = 0;
+u16 screenHeight = 0;
+u16 planeWidth = 0;
+u16 planeHeight = 0;
+u16 windowWidth = 0;
+u16 planeWidthSft = 0;
+u16 planeHeightSft = 0;
+u16 windowWidthSft = 0;
+
 void VDP_init(void) {}
 
 void VDP_resetScreen(void) {}

@@ -1,5 +1,9 @@
 #include "vdp_spr.h"
 
+VDPSprite vdpSpriteCache[SAT_MAX_SIZE + 16] = { 0 };
+VDPSprite* lastAllocatedVDPSprite = NULL;
+s16 highestVDPSpriteIndex = 0;
+
 void VDP_resetSprites(void) {}
 
 void VDP_releaseAllSprites(void) {}

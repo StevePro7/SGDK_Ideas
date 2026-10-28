@@ -1,5 +1,7 @@
 #include "timer.h"
 
+vu32 vtimer = 0;
+
 u32 getSubTick(void) { return 0; }
 
 u32 getTick(void) { return 0; }

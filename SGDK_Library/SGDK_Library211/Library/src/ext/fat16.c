@@ -1,5 +1,7 @@
 #include "fat16.h"
 
+Fat16PBR fat16_pbr = { 0 };
+
 u8 fat16Init() { return 0; }
 
 u8 fat16OpenDir( u16 entry, Fat16Dir *dir ) { return 0; }

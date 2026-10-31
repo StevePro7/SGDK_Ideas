@@ -5,3 +5,4 @@ megawifi
 
 snd
 sound-test
+xgm-player

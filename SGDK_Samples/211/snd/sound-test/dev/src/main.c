@@ -12,7 +12,7 @@
 typedef struct
 {
 	const char name[ PARAM_NAME_LEN ];
-	const u16 value;
+	const u8 value;
 } param_def;
 
 typedef struct
@@ -32,7 +32,7 @@ typedef struct
 
 
 static void joyEvent( u16 joy, u16 changed, u16 state );
-static void vintEvent();
+static void vintEvent( void );
 
 static void setTextPalette( u16 selected );
 
@@ -42,10 +42,10 @@ static void refreshDriverCmd();
 
 static s16 getDriverIndex( const driver_def *d );
 static s16 getCmdIndex( const cmd_def *c );
-static s16 getParamIndex( const param_def *p );
+//static s16 getParamIndex( const param_def *p );
 static s16 getCurrentDriverIndex();
 static s16 getCurrentCmdIndex();
-static s16 getCurrentParamIndex();
+//static s16 getCurrentParamIndex();
 static const param_def *getParam( const driver_def *d, const cmd_def *c );
 static const param_def *getCurrentParam();
 static void setCurrentParam( const param_def *param );
@@ -317,20 +317,20 @@ static s16 getCmdIndex( const cmd_def *c )
 	return -1;
 }
 
-static s16 getParamIndex( const param_def *p )
-{
-	u16 i, j, k;
-	const driver_def *cur_driver;
-	const cmd_def *cur_cmd;
-	const param_def* cur_param;
-
-	for( i = 0, cur_driver = drivers; i < NUM_DRIVER; i++, cur_driver++ )
-		for( j = 0, cur_cmd = cur_driver->cmds; j < cur_driver->num_cmd; j++, cur_cmd++ )
-			for( k = 0, cur_param = cur_cmd->params; k < cur_cmd->num_param; k++, cur_param++ )
-				if( cur_param == p ) return k;
-
-	return -1;
-}
+//static s16 getParamIndex( const param_def *p )
+//{
+//	u16 i, j, k;
+//	const driver_def *cur_driver;
+//	const cmd_def *cur_cmd;
+//	const param_def* cur_param;
+//
+//	for( i = 0, cur_driver = drivers; i < NUM_DRIVER; i++, cur_driver++ )
+//		for( j = 0, cur_cmd = cur_driver->cmds; j < cur_driver->num_cmd; j++, cur_cmd++ )
+//			for( k = 0, cur_param = cur_cmd->params; k < cur_cmd->num_param; k++, cur_param++ )
+//				if( cur_param == p ) return k;
+//
+//	return -1;
+//}
 
 static s16 getCurrentDriverIndex()
 {
@@ -342,10 +342,10 @@ static s16 getCurrentCmdIndex()
 	return getCmdIndex( cmd );
 }
 
-static s16 getCurrentParamIndex()
-{
-	return getParamIndex( getParam( driver, cmd ) );
-}
+//static s16 getCurrentParamIndex()
+//{
+//	return getParamIndex( getParam( driver, cmd ) );
+//}
 
 static const param_def *getParam( const driver_def *d, const cmd_def *c )
 {
@@ -436,7 +436,7 @@ static void joyEvent( u16 joy, u16 changed, u16 state )
 	}
 
 	const u16 driver_ind = getCurrentDriverIndex();
-	const u16 loop = params_value[ driver_ind ][ 0 ]->value;
+	const bool loop = params_value[ driver_ind ][ 0 ]->value;
 
 	// driver commands
 	switch( driver->id )
@@ -656,7 +656,7 @@ static void joyEvent( u16 joy, u16 changed, u16 state )
 }
 
 
-static void vintEvent()
+static void vintEvent( void )
 {
 	u16 i;
 	u16 in, out;
@@ -696,7 +696,7 @@ static void vintEvent()
 	if( driver->id == Z80_DRIVER_XGM )
 	{
 		// get Z80 cpu estimated load
-		u16 load = XGM_getCPULoad();
+		u32 load = XGM_getCPULoad();
 
 		uintToStr( load, str, 3 );
 		strcat( str, " %" );

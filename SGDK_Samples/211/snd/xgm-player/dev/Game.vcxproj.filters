@@ -70,9 +70,6 @@
     <ClInclude Include="inc\tracklist.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="inc\xd3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="inc\ym_state.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -1,5 +1,5 @@
 #include "tracklist.h"
-
+#include "music.h"
 
 const u8* const xgm_musics[MAX_MUSIC] =
 {

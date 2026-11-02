@@ -1,7 +1,11 @@
 #ifndef YM_STATE_H
 #define YM_STATE_H
 
-#include "main.h"
+#ifdef _CONSOLE
+#include "_genesis.h"
+#else
+#include <genesis.h>
+#endif
 
 #define MIN_ATT_LEVEL       0
 #define MAX_ATT_LEVEL       (0X7F << 6)

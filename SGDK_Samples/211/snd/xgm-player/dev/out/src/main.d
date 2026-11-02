@@ -19,4 +19,4 @@ out/src/main.o: src/main.c inc/main.h C:/SGDK/inc/genesis.h \
  C:/SGDK/inc/ext/flash-save/saveman.h C:/SGDK/inc/ext/console.h \
  C:/SGDK/inc/config.h C:/SGDK/inc/string.h C:/SGDK/inc/maths.h \
  C:/SGDK/inc/dma.h res/gfx.h res/music.h inc/log_tab.h inc/psg_state.h \
- inc/tracklist.h inc/xd3.h inc/xgm_tool.h inc/ym_state.h
+ inc/tracklist.h inc/xgm_tool.h inc/ym_state.h

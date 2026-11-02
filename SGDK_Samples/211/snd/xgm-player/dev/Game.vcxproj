@@ -164,7 +164,6 @@
     <ClInclude Include="inc\main.h" />
     <ClInclude Include="inc\psg_state.h" />
     <ClInclude Include="inc\tracklist.h" />
-    <ClInclude Include="inc\xd3.h" />
     <ClInclude Include="inc\xgm_tool.h" />
     <ClInclude Include="inc\ym_state.h" />
     <ClInclude Include="res\gfx.h" />

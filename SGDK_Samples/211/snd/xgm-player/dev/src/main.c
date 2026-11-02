@@ -2,7 +2,7 @@
 
 int main( bool hardReset )
 {
-	VDP_drawText( "Hello world !", 12, 12 );
+	VDP_drawText( "Hello XGM !!", 12, 12 );
 
 	while( TRUE )
 	{

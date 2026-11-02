@@ -1,4 +1,4 @@
-out/src/xgm_tool.o: src/xgm_tool.c C:/SGDK/inc/genesis.h \
+out/src/xgm_tool.o: src/xgm_tool.c inc/xgm_tool.h C:/SGDK/inc/genesis.h \
  C:/SGDK/inc/types.h C:/SGDK/inc/config.h C:/SGDK/inc/asm.h \
  C:/SGDK/inc/sys.h C:/SGDK/inc/sram.h C:/SGDK/inc/mapper.h \
  C:/SGDK/inc/memory.h C:/SGDK/inc/memory_base.h C:/SGDK/inc/tools.h \
@@ -18,4 +18,4 @@ out/src/xgm_tool.o: src/xgm_tool.c C:/SGDK/inc/genesis.h \
  C:/SGDK/inc/ext/flash-save/flash.h C:/SGDK/inc/types.h \
  C:/SGDK/inc/ext/flash-save/saveman.h C:/SGDK/inc/ext/console.h \
  C:/SGDK/inc/config.h C:/SGDK/inc/string.h C:/SGDK/inc/maths.h \
- C:/SGDK/inc/dma.h inc/xd3.h inc/ym_state.h inc/psg_state.h
+ C:/SGDK/inc/dma.h inc/psg_state.h inc/ym_state.h

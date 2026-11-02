@@ -1,7 +1,11 @@
 #ifndef TRACKLIST_H
 #define TRACKLIST_H
 
-#include "main.h"
+#ifdef _CONSOLE
+#include "_genesis.h"
+#else
+#include <genesis.h>
+#endif
 
 #define MAX_MUSIC           100
 

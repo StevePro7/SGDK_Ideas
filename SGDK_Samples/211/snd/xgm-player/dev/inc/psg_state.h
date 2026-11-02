@@ -1,7 +1,11 @@
 #ifndef PSG_STATE_H
 #define PSG_STATE_H
 
-#include "main.h"
+#ifdef _CONSOLE
+#include "_genesis.h"
+#else
+#include <genesis.h>
+#endif
 
 typedef struct
 {

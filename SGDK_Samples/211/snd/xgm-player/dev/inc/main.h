@@ -13,7 +13,6 @@
 #include "log_tab.h"
 #include "psg_state.h"
 #include "tracklist.h"
-#include "xd3.h"
 #include "xgm_tool.h"
 #include "ym_state.h"
 

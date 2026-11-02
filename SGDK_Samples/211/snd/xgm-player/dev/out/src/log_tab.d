@@ -1,4 +1,4 @@
-out/src/log_tab.o: src/log_tab.c C:/SGDK/inc/genesis.h \
+out/src/log_tab.o: src/log_tab.c inc/log_tab.h C:/SGDK/inc/genesis.h \
  C:/SGDK/inc/types.h C:/SGDK/inc/config.h C:/SGDK/inc/asm.h \
  C:/SGDK/inc/sys.h C:/SGDK/inc/sram.h C:/SGDK/inc/mapper.h \
  C:/SGDK/inc/memory.h C:/SGDK/inc/memory_base.h C:/SGDK/inc/tools.h \

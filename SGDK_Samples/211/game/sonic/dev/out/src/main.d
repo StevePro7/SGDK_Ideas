@@ -18,4 +18,6 @@ out/src/main.o: src/main.c inc/main.h C:/SGDK/inc/genesis.h \
  C:/SGDK/inc/ext/flash-save/flash.h C:/SGDK/inc/types.h \
  C:/SGDK/inc/ext/flash-save/saveman.h C:/SGDK/inc/ext/console.h \
  C:/SGDK/inc/config.h C:/SGDK/inc/string.h C:/SGDK/inc/maths.h \
- C:/SGDK/inc/dma.h res/res_gfx.h res/res_sound.h res/res_sprite.h
+ C:/SGDK/inc/dma.h res/res_gfx.h res/res_sound.h res/res_sprite.h \
+ inc/camera.h inc/entities.h inc/hud.h inc/level.h inc/player.h \
+ inc/utils.h

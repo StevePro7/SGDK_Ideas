@@ -150,13 +150,25 @@
     <ClCompile Include="..\gfx\res\res_gfx.c" />
     <ClCompile Include="..\gfx\res\res_sprite.c" />
     <ClCompile Include="..\sfx\res\res_sound.c" />
+    <ClCompile Include="src\camera.c" />
+    <ClCompile Include="src\entities.c" />
+    <ClCompile Include="src\hud.c" />
+    <ClCompile Include="src\level.c" />
     <ClCompile Include="src\main.c" />
+    <ClCompile Include="src\player.c" />
+    <ClCompile Include="src\utils.c" />
   </ItemGroup>
   <ItemGroup>
     <None Include="build.bat" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="inc\camera.h" />
+    <ClInclude Include="inc\entities.h" />
+    <ClInclude Include="inc\hud.h" />
+    <ClInclude Include="inc\level.h" />
     <ClInclude Include="inc\main.h" />
+    <ClInclude Include="inc\player.h" />
+    <ClInclude Include="inc\utils.h" />
     <ClInclude Include="res\res_gfx.h" />
     <ClInclude Include="res\res_sound.h" />
     <ClInclude Include="res\res_sprite.h" />

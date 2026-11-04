@@ -28,3 +28,4 @@ echo.
 :: Run
 C:\SEGA\Fusion\fusion.exe out\rom.bin
 ::C:\SEGA\gens\gens.exe %~dp0\out\rom.bin
+::D:\GitHubX\DramaDesu\gpgx_debugger\builds\x64-debug\smd_dgx_qt6.exe out\rom.bin
